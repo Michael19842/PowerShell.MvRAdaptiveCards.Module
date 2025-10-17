@@ -31,16 +31,16 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -AllowExpand
-{{ Fill AllowExpand Description }}
+### -Url
+{{ Fill Url Description }}
 
 ```yaml
-Type: SwitchParameter
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -55,7 +55,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -68,10 +68,24 @@ Accept wildcard characters: False
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: Cover, Contain, Fill
 
 Required: False
-Position: 2
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Size
+{{ Fill Size Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -86,7 +100,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -107,32 +121,16 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Size
-{{ Fill Size Description }}
+### -AllowExpand
+{{ Fill AllowExpand Description }}
 
 ```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-Accepted values: Auto, Stretch, Small, Medium, Large
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Url
-{{ Fill Url Description }}
-
-```yaml
-Type: String
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

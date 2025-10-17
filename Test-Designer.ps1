@@ -22,3 +22,43 @@ New-AdaptiveCard {
         }
     }
 } | Out-OnlineDesigner
+
+
+
+
+
+
+
+New-AdaptiveCard -Content {
+     New-CardContainer -Content {
+         New-CardFactSet -Facts @{Michael = 'Geweldig'; Merel = 'leuk'}
+     } -Style 'Good'
+     New-CardImage -Url "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg" -AltText "Example Image" -Id "Monkey"
+
+     New-CardActionSet -Actions {
+            New-CardActionToggleVisibility -Title "Toggle Monkey Image" -TargetElements @("Monkey")
+        }
+
+} | Out-OnlineDesigner 
+
+
+$Template =  New-CardContainer -Content {
+         New-CardFactSet -Facts @{Michael = '!{{Whatever}}'; Merel = 'leuk'} -Id 'Muis'
+         New-CardImage -Url "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg" -AltText "Example Image" -Id "Monkey"
+         New-CardTemplateTag -TagName "Buttons"
+     } -Style 'Good'
+
+
+Find-CardTemplateTags -Content $Template
+
+
+New-AdaptiveCard -Content {
+    Build-CardFromTemplate -Content $Template -Tags @{
+        Whatever = 'Fantastisch'
+        Buttons  = {
+            New-CardActionSet -Actions {
+                New-CardActionToggleVisibility -Title "Toggle Monkey Image" -TargetElements @("Muis")
+            }
+        }
+    }
+} | Out-OnlineDesigner

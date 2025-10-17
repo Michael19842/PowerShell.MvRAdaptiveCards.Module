@@ -37,27 +37,27 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -EveryProperty
-{{ Fill EveryProperty Description }}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Object
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Facts
 {{ Fill Facts Description }}
 
 ```yaml
 Type: Hashtable
 Parameter Sets: Hashtable
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Object
+{{ Fill Object Description }}
+
+```yaml
+Type: Object
+Parameter Sets: Object
 Aliases:
 
 Required: True
@@ -82,15 +82,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Object
-{{ Fill Object Description }}
+### -EveryProperty
+{{ Fill EveryProperty Description }}
 
 ```yaml
-Type: Object
+Type: SwitchParameter
 Parameter Sets: Object
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
