@@ -1,3 +1,9 @@
+[CmdletBinding()]
+param (
+    [switch]$BumpMajorVersion,
+    [switch]$BumpMinorVersion
+)
+
 $ModuleName = 'MvRAdaptiveCards'
 
 $manifestPath = "$PSScriptRoot\..\$ModuleName\$ModuleName.psd1"
@@ -16,13 +22,38 @@ if ($null -eq $Manifest) {
 }
 
 #If the manifest already exports functions, compare and update if necessary
-if ($Manifest.ExportedFunctions.Keys -ne $functionNames) {
+if (($Manifest.ExportedFunctions.Keys -join '|') -ne ($functionNames -join '|') -or $BumpMajorVersion -or $BumpMinorVersion) {
     #Update version number by incrementing the build number
-    $NewVersion = [version]::new($Manifest.Version.Major, $Manifest.Version.Minor, $Manifest.Version.Build + 1, 0)
-
+    Write-Host "Current module version: $($Manifest.Version.ToString())"
+    
+    if ($BumpMajorVersion) {
+        $NewVersion = [version]::new($Manifest.Version.Major + 1, 0, 0, 0)
+    }
+    elseif ($BumpMinorVersion) {
+        $NewVersion = [version]::new($Manifest.Version.Major, $Manifest.Version.Minor + 1, 0, 0)
+    }
+    else {
+        $NewVersion = [version]::new($Manifest.Version.Major, $Manifest.Version.Minor, $Manifest.Version.Build + 1, 0)
+    }
     Write-Host "Updating module manifest at $manifestPath with functions: $($functionNames -join ', ')"
+
+    Write-Host "New module version: $NewVersion"
     
     Update-ModuleManifest -Path $manifestPath -FunctionsToExport $functionNames -ModuleVersion $NewVersion
 } else {
     Write-Host "Module manifest at $manifestPath is already up to date."
 }
+
+#Use PlatyPS to build the documentation
+Import-Module PlatyPS 
+
+Import-Module "${PSScriptRoot}\..\$ModuleName"
+
+$docsPath = "$PSScriptRoot\..\docs"
+if (Test-Path $docsPath) {
+    Update-MarkdownHelp -Path $docsPath  
+}
+Else{
+    New-MarkdownHelp -Module $ModuleName -OutputFolder $docsPath
+}
+
