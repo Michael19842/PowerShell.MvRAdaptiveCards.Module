@@ -1,0 +1,32 @@
+{
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "items": [
+        {
+          "altText": "Example Image",
+          "url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg",
+          "type": "Image"
+        },
+        {
+          "text": "Hello, Michael!",
+          "weight": "Bolder",
+          "color": "Good",
+          "type": "TextBlock",
+          "size": "Large"
+        },
+        {
+          "text": "Your age is !{{UserAge}} years.",
+          "weight": "Default",
+          "color": "Dark",
+          "type": "TextBlock",
+          "size": "Default"
+        }
+      ],
+      "style": "Emphasis",
+      "type": "Container"
+    }
+  ],
+  "type": "AdaptiveCard"
+}

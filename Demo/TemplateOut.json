@@ -1,0 +1,28 @@
+{
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "items": [
+        "!{{UserImage}}",
+        {
+          "text": "Hello, Michael!",
+          "weight": "Bolder",
+          "color": "Good",
+          "type": "TextBlock",
+          "size": "Large"
+        },
+        {
+          "text": "Your age is 41 years.",
+          "weight": "Default",
+          "color": "Dark",
+          "type": "TextBlock",
+          "size": "Default"
+        }
+      ],
+      "style": "Emphasis",
+      "type": "Container"
+    }
+  ],
+  "type": "AdaptiveCard"
+}

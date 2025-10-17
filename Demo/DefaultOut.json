@@ -1,0 +1,18 @@
+{
+  "version": "1.5",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "altText": "Example Image",
+      "url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg",
+      "type": "Image"
+    },
+    {
+      "altText": "Example Image",
+      "url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg",
+      "type": "Image",
+      "separator": true
+    }
+  ],
+  "type": "AdaptiveCard"
+}
