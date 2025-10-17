@@ -8,30 +8,63 @@ schema: 2.0.0
 # Find-CardTemplateTags
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Discovers all template tags within an Adaptive Card content structure.
 
 ## SYNTAX
 
 ```
-Find-CardTemplateTags [[-Content] <Hashtable>] [<CommonParameters>]
+Find-CardTemplateTags [[-Content] <Hashtable>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+The Find-CardTemplateTags function analyzes an Adaptive Card content hashtable and identifies
+all template tag placeholders (in the format "!{{TagName}}") that can be replaced with dynamic content.
+This is useful for understanding what replaceable elements exist in a template before using
+Build-CardFromTemplate to populate them with actual data.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+$template = New-CardContainer -Content {
+    New-CardTextBlock -Text (New-CardTemplateTag -TagName "UserName")
+    New-CardTextBlock -Text (New-CardTemplateTag -TagName "Message")
+    New-CardTextBlock -Text (New-CardTemplateTag -TagName "UserName")  # Duplicate
+}
 ```
 
-{{ Add example description here }}
+Find-CardTemplateTags -Content $template
+# Returns: @("UserName", "Message")
+
+### EXAMPLE 2
+```
+$complexTemplate = New-CardContainer -Content {
+    New-CardTextBlock -Text "Welcome, !{{Name}}!"
+    New-CardFactSet -Facts @{
+        "Department" = (New-CardTemplateTag -TagName "Dept")
+        "Role" = (New-CardTemplateTag -TagName "Position")
+    }
+}
+```
+
+$tags = Find-CardTemplateTags -Content $complexTemplate
+# Returns: @("Name", "Dept", "Position")
+
+### EXAMPLE 3
+```
+$noTagsTemplate = New-CardContainer -Content {
+    New-CardTextBlock -Text "Static content only"
+}
+```
+
+Find-CardTemplateTags -Content $noTagsTemplate
+# Returns: @() (empty array)
 
 ## PARAMETERS
 
 ### -Content
-{{ Fill Content Description }}
+A hashtable representing the Adaptive Card content structure to search for template tags.
+This is typically the output from card creation functions like New-CardContainer, New-CardTextBlock, etc.
 
 ```yaml
 Type: Hashtable
@@ -45,16 +78,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
-
 ## INPUTS
-
-### None
 
 ## OUTPUTS
 
-### System.Object
+### System.String[]
+###     Returns an array of unique template tag names found within the content structure.
+###     Returns an empty array if no template tags are found.
 ## NOTES
+- The function performs a deep search through the entire content structure by converting to JSON
+- Template tags must be in the exact format "!{{TagName}}" to be detected
+- Duplicate tag names are automatically deduplicated in the results
+- The function is case-sensitive and will treat "!{{Name}}" and "!{{name}}" as different tags
+- This function is typically used for template validation and debugging purposes
 
 ## RELATED LINKS
+
+[New-CardTemplateTag]()
+
+[Build-CardFromTemplate]()
+
