@@ -12,7 +12,7 @@
 RootModule = 'MvRAdaptiveCards.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.11.0'
+ModuleVersion = '0.5.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,7 +30,7 @@ CompanyName = 'Personal development project'
 Copyright = '(c) Michael van Rooijen. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'This module provides functions for working with Adaptive Cards in PowerShell.'
+Description = 'This module provides functions for working with Adaptive Cards in PowerShell in a similar fashion as the popular module PSWriteHTML does for HTML generation. Please read the documentation on GitHub for more information. (https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module)'
 
 # Minimum version of the PowerShell engine required by this module
 PowerShellVersion = '5.1'
