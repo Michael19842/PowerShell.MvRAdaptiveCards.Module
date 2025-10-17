@@ -15,4 +15,23 @@ Install-Module -Name MvRAdaptiveCards
 
 This module is compatible with PowerShell 5.1 and later versions.
 
-## Fu
+## Example Usage
+You are probably excited to get started! Here is a simple example of how to create an Adaptive Card using MvRAdaptiveCards:
+
+```powershell 
+# Import the module
+Import-Module MvRAdaptiveCards
+
+# Create a new Adaptive Card
+New-CardAdaptiveCard -Content {
+    New-CardContainer -Content {
+        New-CardTextBlock -Text "Welcome to the Adaptive Cards demo!" -Size 'Large' -Weight 'Bolder' -Color 'Good'
+        New-CardTextBlock -Text "This is a container inside the adaptive card." -Color 'Dark'
+    } -Style 'Emphasis'
+}
+
+#This will output the JSON structure of the Adaptive Card which you can then use in your applications or post to Microsoft Teams.
+```
+
+## Functions
+An extensive set of function documentation (*generated using PlatyPS*) is available **here: [MvRAdaptiveCards Documentation](docs/MvRAdaptiveCards.md)**
