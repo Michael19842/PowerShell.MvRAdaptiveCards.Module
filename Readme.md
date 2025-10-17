@@ -29,9 +29,24 @@ New-CardAdaptiveCard -Content {
         New-CardTextBlock -Text "This is a container inside the adaptive card." -Color 'Dark'
     } -Style 'Emphasis'
 }
-
 #This will output the JSON structure of the Adaptive Card which you can then use in your applications or post to Microsoft Teams.
 ```
+
+You can also directly open and edit your card in the [Adaptive Cards Online Designer](https://adaptivecards.microsoft.com/designer) using the `Out-OnlineDesigner` cmdlet:
+
+```powershell
+New-CardAdaptiveCard -Content {
+    New-CardContainer -Content {
+        New-CardTextBlock -Text "Welcome to the Adaptive Cards demo!" -Size 'Large' -Weight 'Bolder' -Color 'Good'
+        New-CardTextBlock -Text "This is a container inside the adaptive card." -Color 'Dark'
+    } -Style 'Good'
+} | Out-OnlineDesigner 
+
+```
+
+> This generates the Adaptive Card JSON, creates a temporary file, and opens it in the Adaptive Cards Designer in an iFrame. Then it posts the card to that iFrame on the ready event. It is a bit hacky, but it works great when you want to quickly prototype or edit your cards.
+
+
 
 ## Functions
 An extensive set of function documentation (*generated using PlatyPS*) is available **here: [MvRAdaptiveCards Documentation](docs/MvRAdaptiveCards.md)**
