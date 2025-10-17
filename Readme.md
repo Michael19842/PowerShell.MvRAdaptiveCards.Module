@@ -35,7 +35,7 @@ New-CardAdaptiveCard -Content {
 You can also directly open and edit your card in the [Adaptive Cards Online Designer](https://adaptivecards.microsoft.com/designer) using the `Out-OnlineDesigner` cmdlet:
 
 ```powershell
-New-CardAdaptiveCard -Content {
+New-AdaptiveCard -Content {
     New-CardContainer -Content {
         New-CardTextBlock -Text "Welcome to the Adaptive Cards demo!" -Size 'Large' -Weight 'Bolder' -Color 'Good'
         New-CardTextBlock -Text "This is a container inside the adaptive card." -Color 'Dark'
