@@ -51,7 +51,8 @@ Import-Module "${PSScriptRoot}\..\$ModuleName"
 
 $docsPath = "$PSScriptRoot\..\docs"
 if (Test-Path $docsPath) {
-    Update-MarkdownHelp -Path $docsPath 
+    New-MarkdownHelp -Module $ModuleName -OutputFolder $docsPath 
+    update-help -Module $ModuleName 
 }
 Else{
     New-MarkdownHelp -Module $ModuleName -OutputFolder $docsPath -WithModulePage

@@ -11,6 +11,16 @@ $_MaxDepth = 40
 # Export-ModuleMember -Variable none
 $ModuleName = 'MvRAdaptiveCards'
 
+##Collect the stored settings for the module from the appdata folder
+$AppDataFolder = [System.IO.Path]::Combine($env:APPDATA, "PowerShell.$ModuleName.Module")
+$SettingsFile = [System.IO.Path]::Combine($AppDataFolder, 'settings.json')
+
+if (Test-Path $SettingsFile) {
+    $Settings = Get-Content -Path $SettingsFile -Raw | ConvertFrom-Json
+} else {
+    $Settings = $null
+}
+
 foreach ($Folder in @('Private', 'Public')) {
     $LogicFiles = Get-ChildItem -Path $PSScriptRoot\$Folder -Filter '*.ps1' -Recurse
 

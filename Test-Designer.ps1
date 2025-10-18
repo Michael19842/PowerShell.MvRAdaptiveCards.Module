@@ -57,7 +57,7 @@ New-AdaptiveCard -Content {
         Whatever = 'Fantastisch'
         Buttons  = {
             New-CardActionSet -Actions {
-                New-CardActionToggleVisibility -Title "Toggle Monkey Image" -TargetElements @("Muis")
+                New-CardActionToggleVisibility -Title "Toggle Monkey Image" -TargetElements @("Monkey")
             }
         }
     }
