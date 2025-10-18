@@ -218,10 +218,10 @@ function New-CardRichTextBlock {
 
         $CurrentText = $Text.Substring($CurrentIndex, $TagMatch.Index - $CurrentIndex)
 
-        write-Host "Current text segment: '$CurrentText'"
-        Write-Host "Tag found: $($TagMatch.Value) at index $($TagMatch.Index)"
-        Write-Host "Tag length: $($TagMatch.Length)"
-        Write-Host "Current index: $CurrentIndex"
+        Write-Debug "Current text segment: '$CurrentText'"
+        Write-Debug "Tag found: $($TagMatch.Value) at index $($TagMatch.Index)"
+        Write-Debug "Tag length: $($TagMatch.Length)"
+        Write-Debug "Current index: $CurrentIndex"
 
         #Grab all text before the tag
         if ($CurrentText.Length -gt 0) {
@@ -237,7 +237,7 @@ function New-CardRichTextBlock {
             length = $TagMatch.Length
         }
         
-        Write-Host "Processing tag: $($Tag.TagName), IsClosing: $($Tag.IsClosing), Value: $($Tag.Value) at position $($Tag.pos)"
+        Write-Debug "Processing tag: $($Tag.TagName), IsClosing: $($Tag.IsClosing), Value: $($Tag.Value) at position $($Tag.pos)"
         
         #Collect all open tags
         if (-not $Tag.IsClosing) {

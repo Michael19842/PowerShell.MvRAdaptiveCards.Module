@@ -46,7 +46,98 @@ New-AdaptiveCard -Content {
 
 > This generates the Adaptive Card JSON, creates a temporary file, and opens it in the Adaptive Cards Designer in an iFrame. Then it posts the card to that iFrame on the ready event. It is a bit hacky, but it works great when you want to quickly prototype or edit your cards.
 
+## Template System
+The module includes a powerful templating system that allows you to create reusable card templates with dynamic content replacement. You can define template tags in your card structure and replace them with actual content at runtime using the `Build-CardFromTemplate` cmdlet.
 
+Templating supports both simple text and complex structures, making it easy to create Adaptive Cards dynamically.
+
+#### Example: Basic Text Replacement
+```powershell
+# Create a template with placeholder text
+$template = New-CardContainer -Content {
+    New-CardTextBlock -Text "Hello, !{{UserName}}! Welcome to our application." -Wrap
+    New-CardTextBlock -Text "Your role is: !{{UserRole}}" -Color "Accent"
+}
+
+# Create the final card by replacing template tags with actual values
+New-AdaptiveCard -Content {
+    Build-CardFromTemplate -Content $template -Tags @{
+        UserName = "Michael"
+        UserRole = "Administrator"
+    }
+} | Out-OnlineDesigner
+```
+
+#### Example: Dynamic Structure Replacement
+```powershell
+# Create a template with a placeholder for a complex structure
+$template = New-CardContainer -Content {
+    New-CardTextBlock -Text "User Information" -Size "Large" -Weight "Bolder"
+    New-CardContainer -Content {
+        New-CardTemplateTag -TagName "UserFacts"
+    }
+}
+
+#Use the Find-CardTemplateTags cmdlet to retrieve the tags defined in the template (optional step for debugging)
+Find-CardTemplateTags -Content $template
+
+# Create the final card by replacing the template tag with a FactSet
+New-AdaptiveCard -Content {
+    Build-CardFromTemplate -Content $template -Tags @{
+        UserFacts = {
+            New-CardFactSet -Facts @{
+                Name       = "Ben"
+                Role       = "Administrator"
+                Department = "IT"
+            }
+    }
+}
+} | Out-OnlineDesigner
+```
+## Using RichTextBlock
+The module provides the `New-CardRichTextBlock` cmdlet to create RichTextBlock elements in Adaptive Cards. RichTextBlock allows for advanced inline formatting, including bold, italic, strikethrough, color changes, and more. This is done using a simple markup syntax (HTML like) within the text string. The following tags are supported:
+- `{{bolder}}...{{/bolder}}` for **bold** (Also `{{b}}...{{/b}}`,`{{bold}}...{{/bold}}`,`{{strong}}...{{/strong}}`)
+- `{{italic}}...{{/italic}}` for *italic* (Also `{{i}}...{{/i}}`,`{{emphasis}}...{{/emphasis}}`)
+- `{{strikethrough}}...{{/strikethrough}}` for ~~strikethrough~~ (Also `{{s}}...{{/s}}`,`{{strike}}...{{/strike}}`)
+- `{{color:ColorName}}...{{/color}}` for changing text color
+- `{{size:SizeName}}...{{/size}}` for changing text size
+- `{{action:ActionName}}...{{/action}}` for defining selectable actions
+- `{{id:Identifier}}...{{/id}}` for assigning identifiers to text segments
+- `{{small}}...{{/small}}` for small text size
+- `{{medium}}...{{/medium}}` for medium text size
+- `{{large}}...{{/large}}` for large text size
+- `{{extralarge}}...{{/extralarge}}` for extra large text size
+- `{{hidden}}...{{/hidden}}` for hidden text
+- `{{fontType:FontType}}...{{/fontType}}` for specifying font type (e.g., `Default`, `Monospace`)
+- `{{monospace}}...{{/monospace}}` for monospace font type
+
+> Important: Tags must be properly closed. the module can throw an error if it encounters unclosed tags.
+
+### Example: Creating a RichTextBlock
+```powershell
+# Create a RichTextBlock with various formatting options
+New-AdaptiveCard -Content {
+    New-CardRichTextBlock -text "This is a {{bolder}}bold{{/bolder}} text, this is a {{italic}}italic{{/italic}} text, and this is a {{strikethrough}}strikethrough{{/strikethrough}} text."
+} | Out-OnlineDesigner
+```
+
+### Example: RichTextBlock with Actions
+```powershell
+# Create a RichTextBlock with selectable actions
+New-AdaptiveCard -Content {
+    New-CardRichTextBlock -Text "Click {{action:ShowDetails}}{{b}}here{{/b}}{{/action}} to see more details." -NamedSelectActions @{
+        ShowDetails = {
+            New-CardActionToggleVisibility -Title "Toggle Details" -TargetElements @("DetailsSection")
+        }
+    }
+    New-CardContainer -Id "DetailsSection" -Content {
+        New-CardTextBlock -Text "Here are the additional details you wanted to see!" -Wrap
+    }
+} | Out-OnlineDesigner
+```
+
+## Sending Adaptive Cards
+The module provides cmdlets to send Adaptive Cards via various channels, including Microsoft Teams, classic Outlook, and SMTP. Do note that sending card via some SMTP might result in cards not rendering properly due to security restrictions in service (e.g. Google Gmail).
 
 ## Functions
 An extensive set of function documentation (*generated using PlatyPS*) is available **here: [MvRAdaptiveCards Documentation](docs/MvRAdaptiveCards.md)**
