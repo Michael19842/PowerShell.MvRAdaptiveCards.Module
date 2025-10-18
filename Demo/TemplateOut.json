@@ -1,28 +1,28 @@
 {
-  "type": "AdaptiveCard",
   "version": "1.5",
   "body": [
     {
       "type": "Container",
-      "style": "Emphasis",
       "items": [
         "!{{UserImage}}",
         {
-          "weight": "Bolder",
-          "type": "TextBlock",
-          "text": "Hello, Michael!",
           "color": "Good",
+          "type": "TextBlock",
+          "weight": "Bolder",
+          "text": "Hello, Michael!",
           "size": "Large"
         },
         {
-          "weight": "Default",
-          "type": "TextBlock",
-          "text": "Your age is 41 years.",
           "color": "Dark",
+          "type": "TextBlock",
+          "weight": "Default",
+          "text": "Your age is 41 years.",
           "size": "Default"
         }
-      ]
+      ],
+      "style": "Emphasis"
     }
   ],
+  "type": "AdaptiveCard",
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
 }

@@ -41,6 +41,9 @@ Creates a new FactSet element for an Adaptive Card to display key-value pairs.
 ### [New-CardImage](New-CardImage.md)
 Creates a new Image element for an Adaptive Card.
 
+### [New-CardRichTextBlock](New-CardRichTextBlock.md)
+{{ Fill in the Synopsis }}
+
 ### [New-CardTable](New-CardTable.md)
 Creates a new Table element for an Adaptive Card from a collection of objects or hashtables.
 

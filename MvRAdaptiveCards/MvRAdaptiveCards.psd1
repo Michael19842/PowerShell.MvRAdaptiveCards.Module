@@ -12,7 +12,7 @@
 RootModule = 'MvRAdaptiveCards.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.5.5.0'
+ModuleVersion = '0.5.6.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -73,9 +73,9 @@ FunctionsToExport = 'Build-CardFromTemplate', 'Find-CardTemplateTags', 'New-Adap
                'New-CardActionSet', 'New-CardActionShowCard', 
                'New-CardActionToggleVisibility', 'New-CardCodeBlock', 
                'New-CardContainer', 'New-CardFactSet', 'New-CardImage', 
-               'New-CardTable', 'New-CardTemplateTag', 'New-CardTextBlock', 
-               'Out-OnlineDesigner', 'Send-CardViaClassicOutlook', 
-               'Send-CardViaSMTP', 'Send-CardViaTeams', 
+               'New-CardRichTextblock', 'New-CardTable', 'New-CardTemplateTag', 
+               'New-CardTextBlock', 'Out-OnlineDesigner', 
+               'Send-CardViaClassicOutlook', 'Send-CardViaSMTP', 'Send-CardViaTeams', 
                'Set-CardDefaultSmtpSettings', 'Set-CardDefaultTeamsSettings'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
@@ -102,7 +102,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        Tags = 'AdaptiveCards','Cards','PowerShell','MvRAdaptiveCards','MvR','MicrosoftTeams','Outlook','SMTP','Email','MsTeams','Teams'
 
         # A URL to the license for this module.
         # LicenseUri = ''
@@ -114,7 +114,12 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = ' Initial release: MvRAdaptiveCards module.
+        ---------------------------------------------------------------------------
+        - Added functions for creating card elements like text blocks, images, containers, and action sets.
+        - Implemented template tagging and building for dynamic card generation.
+        - Included integration functions for sending cards via Microsoft Teams and SMTP email.
+        - Improved documentation and added examples for all public functions.'
 
         # Prerelease string of this module
         # Prerelease = ''
@@ -130,7 +135,7 @@ PrivateData = @{
  } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-# HelpInfoURI = ''
+HelpInfoURI = 'https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
