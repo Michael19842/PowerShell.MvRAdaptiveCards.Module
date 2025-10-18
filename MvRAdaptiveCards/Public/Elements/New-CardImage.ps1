@@ -89,7 +89,8 @@ Function New-CardImage {
         [Parameter(Mandatory = $false)]
         $Id,
         [switch]$Separator, 
-        [switch]$AllowExpand
+        [switch]$AllowExpand,
+        [switch]$AsBase64
         
     )
 
@@ -98,6 +99,16 @@ Function New-CardImage {
         url     = $Url
         altText = $AltText
     }
+
+    if( $AsBase64 ) {
+        #Download the image and convert to base64
+        $WebClient = New-Object System.Net.WebClient
+        $ImageBytes = $WebClient.DownloadData($Url)
+        $Base64String = [Convert]::ToBase64String($ImageBytes)
+
+        $Image.url = "data:image/png;base64,$Base64String"
+    }
+
     if ($Separator) {
         $Image.separator = $true
     }

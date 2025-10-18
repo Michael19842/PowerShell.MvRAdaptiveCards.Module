@@ -44,12 +44,24 @@ New-AdaptiveCard -Content {
 
 $Template =  New-CardContainer -Content {
          New-CardFactSet -Facts @{Michael = '!{{Whatever}}'; Merel = 'leuk'} -Id 'Muis'
-         New-CardImage -Url "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg" -AltText "Example Image" -Id "Monkey"
+         New-CardImage -Url "https://adaptivecards.io/content/cats/1.png" -AltText "Example Image" -Id "Monkey"
          New-CardTemplateTag -TagName "Buttons"
      } -Style 'Good'
 
 
 Find-CardTemplateTags -Content $Template
+
+
+New-AdaptiveCard -Content {
+    Build-CardFromTemplate -Content $Template -Tags @{
+        Whatever = 'Fantastisch'
+        Buttons  = {
+            New-CardActionSet -Actions {
+                New-CardActionToggleVisibility -Title "Toggle Monkey Image" -TargetElements @("Monkey")
+            }
+        }
+    }
+} | Send-CardViaClassicOutlook -To 'michael.vanrooijen@outlook.com' -Subject 'Adaptive Card Test Email'
 
 
 New-AdaptiveCard -Content {

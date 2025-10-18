@@ -12,7 +12,7 @@
 RootModule = 'MvRAdaptiveCards.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.5.2.0'
+ModuleVersion = '0.5.5.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -74,8 +74,9 @@ FunctionsToExport = 'Build-CardFromTemplate', 'Find-CardTemplateTags', 'New-Adap
                'New-CardActionToggleVisibility', 'New-CardCodeBlock', 
                'New-CardContainer', 'New-CardFactSet', 'New-CardImage', 
                'New-CardTable', 'New-CardTemplateTag', 'New-CardTextBlock', 
-               'Out-OnlineDesigner', 'Send-CardViaEmail', 'Send-CardViaTeams', 
-               'Set-CardDefaultEmailSettings', 'Set-CardDefaultTeamsSettings'
+               'Out-OnlineDesigner', 'Send-CardViaClassicOutlook', 
+               'Send-CardViaSMTP', 'Send-CardViaTeams', 
+               'Set-CardDefaultSmtpSettings', 'Set-CardDefaultTeamsSettings'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()

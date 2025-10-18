@@ -1,14 +1,14 @@
-function Send-CardViaEmail {
+function Send-CardViaSMTP {
 
     param (
+        [Parameter(Mandatory = $true, valueFromPipeline = $true)]
+        [string]$CardJson,
+
         [Parameter(Mandatory = $true)]
         [string]$To,
         
         [Parameter(Mandatory = $true)]
         [string]$Subject,
-
-        [Parameter(Mandatory = $true)]
-        [string]$CardJson,
         
         [Parameter(Mandatory = $false)]
         [string]$From,
@@ -28,27 +28,31 @@ function Send-CardViaEmail {
     )
 
     #If the SMTPServer is set to default, check for module settings
-    if ($SmtpServer -eq 'default' -and $script:Settings.Email.SmtpServer) {
-        $SmtpServer = $script:Settings.Email.SmtpServer
-        $SmtpPort = $script:Settings.Email.SmtpPort
+    if ($SmtpServer -eq 'default' -and $_MvRACSettings.Smtp.Server) {
+        $SmtpServer = $_MvRACSettings.Smtp.Server
+        $SmtpPort = $_MvRACSettings.Smtp.Port
 
-        if ($script:Settings.Email.From -and -not $From) {
-            $From = $script:Settings.Email.From
+        if ($_MvRACSettings.Smtp.From -and -not $From) {
+            $From = $_MvRACSettings.Smtp.From
         }
 
-        if ($script:Settings.Email.SmtpUsername) {  
-            $SmtpUsername = $script:Settings.Email.SmtpUsername
+        if ($_MvRACSettings.Smtp.Username) {
+            $SmtpUsername = $_MvRACSettings.Smtp.Username
         }
-        if ($script:Settings.Email.SmtpPassword) {
-            $SmtpPassword = $script:Settings.Email.SmtpPassword
+        if ($_MvRACSettings.Smtp.Password) {
+            $SmtpPassword = ConvertTo-SecureString -String $_MvRACSettings.Smtp.Password
         }
     }
 
-    #Get the HTML template
-    $HtmlTemplatePath = Join-Path -Path (Split-Path -Parent $MyInvocation.MyCommand.Path) -ChildPath 'HtmlTemplate.html'
-    $HtmlTemplate = Get-Content -Path $HtmlTemplatePath -Raw    
+    #If Smtp is Gmail trow a warning that script tags are not supported
+    if ($SmtpServer -like 'smtp.gmail.com*') {
+        Write-Warning "Gmail does not support script tags in Adaptive Cards. The card may not render correctly in Gmail clients."
+    }
 
-    $HtmlTemplate = $ExecutionContext.InvokeCommand.ExpandString($HtmlTemplate)
+    #Get the HTML template
+    $HtmlTemplate = Get-Content -Path "$PSScriptRoot\HtmlTemplate.html" -Raw    
+
+    $HtmlBody= $ExecutionContext.InvokeCommand.ExpandString($HtmlTemplate)
     
     # Create a new MailMessage object
     $mailMessage = New-Object System.Net.Mail.MailMessage
@@ -56,14 +60,16 @@ function Send-CardViaEmail {
     $mailMessage.To.Add($To)
     $mailMessage.Subject = $Subject
     $mailMessage.IsBodyHtml = $true
+    $mailMessage.Headers.Add("X-AdaptiveCard-Format", "json")
 
     # Create a new SmtpClient object
     $smtpClient = New-Object System.Net.Mail.SmtpClient($SmtpServer, $SmtpPort) 
 
     # Create the HTML body with the Adaptive Card JSON embedded
-    $mailMessage.Body = $HtmlTemplate
+    $mailMessage.Body = $HtmlBody
 
     if ($SmtpUsername -and $SmtpPassword) {
+        $smtpClient.EnableSsl = $true
         $smtpClient.Credentials = New-Object System.Net.NetworkCredential($SmtpUsername, $SmtpPassword)
     }
     # Send the email

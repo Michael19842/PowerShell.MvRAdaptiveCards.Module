@@ -1,11 +1,11 @@
 ---
 external help file: MvRAdaptiveCards-help.xml
 Module Name: MvRAdaptiveCards
-online version: https://adaptivecards.microsoft.com/designer
+online version:
 schema: 2.0.0
 ---
 
-# Send-CardViaEmail
+# Send-CardViaSMTP
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Send-CardViaEmail [-To] <String> [-Subject] <String> [-CardJson] <String> [[-From] <String>]
+Send-CardViaSMTP [-CardJson] <String> [-To] <String> [-Subject] <String> [[-From] <String>]
  [[-SmtpServer] <String>] [[-SmtpPort] <Int32>] [[-SmtpUsername] <String>] [[-SmtpPassword] <SecureString>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
@@ -41,9 +41,9 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -131,7 +131,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -146,7 +146,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 0
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -172,7 +172,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None
+### System.String
 
 ## OUTPUTS
 

@@ -1,11 +1,11 @@
 ---
 external help file: MvRAdaptiveCards-help.xml
 Module Name: MvRAdaptiveCards
-online version: https://adaptivecards.microsoft.com/designer
+online version:
 schema: 2.0.0
 ---
 
-# Set-CardDefaultEmailSettings
+# Send-CardViaClassicOutlook
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -13,8 +13,8 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Set-CardDefaultEmailSettings [[-From] <String>] [[-SmtpServer] <String>] [[-SmtpPort] <Int32>]
- [[-SmtpUsername] <String>] [[-SmtpPassword] <SecureString>]
+Send-CardViaClassicOutlook [-CardJson] <String> [-To] <String> [-Subject] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,84 +31,72 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -From
-{{ Fill From Description }}
+### -CardJson
+{{ Fill CardJson Description }}
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -SmtpPassword
-{{ Fill SmtpPassword Description }}
+### -Subject
+{{ Fill Subject Description }}
 
 ```yaml
-Type: SecureString
+Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SmtpPort
-{{ Fill SmtpPort Description }}
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
+Required: True
 Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SmtpServer
-{{ Fill SmtpServer Description }}
+### -To
+{{ Fill To Description }}
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SmtpUsername
-{{ Fill SmtpUsername Description }}
+### -ProgressAction
+{{ Fill ProgressAction Description }}
 
 ```yaml
-Type: String
+Type: ActionPreference
 Parameter Sets: (All)
-Aliases:
+Aliases: proga
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
-### None
+### System.String
 
 ## OUTPUTS
 

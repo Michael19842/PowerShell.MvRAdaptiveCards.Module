@@ -11,24 +11,16 @@ $_MaxDepth = 40
 # Export-ModuleMember -Variable none
 $ModuleName = 'MvRAdaptiveCards'
 
-##Collect the stored settings for the module from the appdata folder
-$AppDataFolder = [System.IO.Path]::Combine($env:APPDATA, "PowerShell.$ModuleName.Module")
-$SettingsFile = [System.IO.Path]::Combine($AppDataFolder, 'settings.json')
-
-if (Test-Path $SettingsFile) {
-    $Settings = Get-Content -Path $SettingsFile -Raw | ConvertFrom-Json
-} else {
-    $Settings = $null
-}
 
 foreach ($Folder in @('Private', 'Public')) {
     $LogicFiles = Get-ChildItem -Path $PSScriptRoot\$Folder -Filter '*.ps1' -Recurse
-
+    
     # dot source each file except tests
     $LogicFiles | Where-Object { $_.name -NotLike '*.Tests.ps1' } | ForEach-Object { 
         . $_.FullName 
     }
 }
+
 Write-Verbose "Functions defined: $(Get-Command -Module $MyInvocation.MyCommand.Module | Select-Object -ExpandProperty Name | where {$_ -like '*-MvR*'} )"
 
 Export-ModuleMember -Function (Get-ChildItem -Path "$PSScriptRoot\Public\*.ps1" -Recurse).BaseName
@@ -37,4 +29,20 @@ if ($ExposePrivateFunctions) {
     Export-ModuleMember -Function (Get-ChildItem -Path "$PSScriptRoot\Private\*.ps1" -Recurse).BaseName
 }
 
+##Collect the stored settings for the module from the appdata folder
+$_AppDataFolder = [System.IO.Path]::Combine($env:APPDATA, "PowerShell.$ModuleName.Module")
+$_SettingsFile = [System.IO.Path]::Combine($_AppDataFolder, 'settings.json')
 
+$Global:_MvRACSettings = $null
+
+# Load existing settings if the settings file exists
+if (Test-Path $_SettingsFile) {
+    $_MvRACSettings = Get-Content -Path $_SettingsFile -Raw | ConvertFrom-JsonAsHashtable
+} else {
+    $_MvRACSettings = $null
+}
+
+#Test and warn if the context does not match the current user/machine
+if ($Null -ne $_MvRACSettings -and $_MvRACSettings.Context.User -ne $env:USERNAME -or $_MvRACSettings.Context.Host -ne $env:COMPUTERNAME) {
+    Write-Warning "The existing settings file was created for user '$($_MvRACSettings.Context.User)' on host '$($_MvRACSettings.Context.Host)'. The current user is '$env:USERNAME' on host '$env:COMPUTERNAME'. Settings will be updated to match the current context. But additional steps may be required to ensure proper operation."
+}

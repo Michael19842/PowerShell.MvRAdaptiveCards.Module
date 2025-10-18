@@ -14,7 +14,7 @@ Creates a new Image element for an Adaptive Card.
 
 ```
 New-CardImage [[-Url] <String>] [[-AltText] <String>] [[-FitMode] <String>] [[-Size] <String>] [[-Id] <String>]
- [-Separator] [-AllowExpand] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-Separator] [-AllowExpand] [-AsBase64] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -167,6 +167,21 @@ Accept wildcard characters: False
 ### -AllowExpand
 A switch parameter that allows the image to be expanded when clicked/tapped.
 When enabled, users can interact with the image to view it in a larger format.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AsBase64
+{{ Fill AsBase64 Description }}
 
 ```yaml
 Type: SwitchParameter
