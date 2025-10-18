@@ -1,3 +1,163 @@
+<#
+.SYNOPSIS
+    Creates a new RichTextBlock element for an Adaptive Card with advanced inline formatting capabilities.
+
+.DESCRIPTION
+    The New-CardRichTextBlock function creates a RichTextBlock element that supports rich text formatting
+    through an intuitive tag-based markup system. Unlike simple TextBlocks, RichTextBlocks can contain
+    multiple text runs with different styles, colors, weights, and even interactive actions within a single block.
+    
+    The function uses a custom markup language with tags like {{bold}}, {{color:Good}}, {{action:myAction}}, etc.
+    to define formatting and behavior for different parts of the text. This enables complex text layouts
+    with mixed formatting, colors, and interactivity all within a single text element.
+
+.PARAMETER Text
+    The text content with embedded formatting tags. Tags use the format {{tagname}} for opening and {{/tagname}} 
+    for closing. Some tags support values using {{tagname:value}} syntax.
+    
+    Supported formatting tags:
+    - Style: {{bold}}, {{italic}}, {{strikethrough}}, {{underline}}, {{highlight}}
+    - Weight: {{bolder}}, {{lighter}}, {{weight:value}}
+    - Size: {{small}}, {{medium}}, {{large}}, {{extraLarge}}, {{size:value}}
+    - Color: {{color:colorname}} (Default, Dark, Light, Accent, Good, Warning, Attention)
+    - Font: {{monospace}}, {{fontType:value}}
+    - Visibility: {{hidden}}, {{subtle}}
+    - Language: {{lang:code}}
+    - Actions: {{action:actionname}} (references NamedSelectActions)
+
+.PARAMETER Id
+    An optional unique identifier for the RichTextBlock element. Useful for referencing the element
+    in actions like toggle visibility or for accessibility purposes.
+
+.PARAMETER HorizontalAlignment
+    The horizontal alignment of the text block. Valid values are:
+    - Left: Align text to the left (default)
+    - Center: Center the text
+    - Right: Align text to the right
+    - Justify: Justify the text (stretch to fill width)
+
+.PARAMETER FontType
+    The font family to use for the text block. Valid values are:
+    - Default: Use the default system font
+    - Monospace: Use a monospace font (good for code or data)
+
+.PARAMETER Size
+    The default size for text in the block. Valid values are:
+    - Small: Smaller than default text
+    - Default: Standard text size
+    - Medium: Medium sized text
+    - Large: Large text
+    - ExtraLarge: Extra large text
+    Note: Individual text runs can override this with size tags.
+
+.PARAMETER Weight
+    The default weight (boldness) for text in the block. Valid values are:
+    - Lighter: Lighter than normal text
+    - Default: Normal text weight
+    - Bolder: Bold text
+    Note: Individual text runs can override this with weight tags.
+
+.PARAMETER NamedSelectActions
+    A hashtable containing named actions that can be referenced within the text using {{action:name}} tags.
+    Each key in the hashtable should be an action name, and each value should be a ScriptBlock that
+    generates an action using functions like New-CardActionToggleVisibility, New-CardActionShowCard, etc.
+    
+    Example: @{ "showDetails" = { New-CardActionShowCard -Title "Details" -Card {...} } }
+
+.PARAMETER Separator
+    A switch parameter that adds a separator line above the RichTextBlock element. Useful for
+    visually separating the text block from preceding elements.
+
+.OUTPUTS
+    System.Collections.Hashtable
+        Returns a hashtable representing the RichTextBlock element structure for the Adaptive Card.
+
+.EXAMPLE
+    New-CardRichTextBlock -Text "This is {{bold}}bold text{{/bold}} and this is {{color:Good}}green text{{/color}}."
+    
+    Creates a rich text block with bold formatting and colored text using inline tags.
+
+.EXAMPLE
+    $text = @"
+Welcome {{bold}}{{color:Good}}John Doe{{/color}}{{/bold}}!
+Your account status is {{color:Good}}{{bold}}Active{{/bold}}{{/color}}.
+Click {{action:viewProfile}}here{{/action}} to view your profile.
+"@
+    
+    $actions = @{
+        "viewProfile" = { New-CardActionShowCard -Title "Profile" -Card {
+            New-AdaptiveCard -AsObject -Content { 
+                New-CardTextBlock -Text "Profile details..." 
+            }
+        }}
+    }
+    
+    New-CardRichTextBlock -Text $text -NamedSelectActions $actions
+    
+    Creates a rich text block with nested formatting, colors, and an interactive action link.
+
+.EXAMPLE
+    $complexText = @"
+{{size:Large}}{{bold}}System Status Report{{/bold}}{{/size}}
+
+{{color:Good}}✅ All systems operational{{/color}}
+{{color:Warning}}⚠️ Minor performance degradation detected{{/color}}
+{{color:Attention}}🚨 Critical error in database connection{{/color}}
+
+{{monospace}}Error Code: DB_CONN_001{{/monospace}}
+{{italic}}Last updated: $(Get-Date){{/italic}}
+
+For more information, {{action:contactSupport}}contact support{{/action}}.
+"@
+    
+    $actions = @{
+        "contactSupport" = { New-CardActionOpenUrl -Url "mailto:support@company.com" }
+    }
+    
+    New-CardRichTextBlock -Text $complexText -NamedSelectActions $actions -Id "StatusReport"
+    
+    Creates a complex system status report with multiple formatting styles, colors, and an action link.
+
+.EXAMPLE
+    New-CardRichTextBlock -Text "Code example: {{monospace}}{{highlight}}Get-Process | Select-Object Name{{/highlight}}{{/monospace}}" -FontType "Default" -HorizontalAlignment "Left"
+    
+    Creates a text block demonstrating code formatting with monospace font and highlighting.
+
+.EXAMPLE
+    $styledText = @"
+{{bold}}{{size:Large}}Product Features{{/size}}{{/bold}}
+
+• {{color:Good}}Fast performance{{/color}} - Up to 10x faster
+• {{color:Accent}}Easy integration{{/color}} - Simple API
+• {{strikethrough}}Expensive licensing{{/strikethrough}} {{color:Good}}Now free!{{/color}}
+• {{underline}}24/7 support{{/underline}} available
+
+{{subtle}}{{size:Small}}* Terms and conditions apply{{/size}}{{/subtle}}
+"@
+    
+    New-CardRichTextBlock -Text $styledText -HorizontalAlignment "Left" -Separator
+    
+    Creates a product features list with various formatting styles and a separator.
+
+.NOTES
+    - Tags can be nested for combined effects (e.g., {{bold}}{{color:Good}}text{{/color}}{{/bold}})
+    - All opening tags must have corresponding closing tags
+    - Color values must match Adaptive Card color scheme values
+    - Action names in {{action:name}} tags must exist in the NamedSelectActions hashtable
+    - The function performs validation to ensure proper tag matching and valid values
+    - Text runs are automatically created for each formatted segment
+    - Unknown tags generate warnings but don't break the function
+    - The markup language is designed to be intuitive and similar to HTML/XML
+
+.LINK
+    https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/card-schema#richtextblock
+
+.LINK
+    New-CardTextRun
+
+.LINK
+    New-CardTextBlock
+#>
 function New-CardRichTextBlock {
     param (
         [Parameter(Mandatory = $true)]
