@@ -42,7 +42,7 @@ Creates a new FactSet element for an Adaptive Card to display key-value pairs.
 Creates a new Image element for an Adaptive Card.
 
 ### [New-CardRichTextBlock](New-CardRichTextBlock.md)
-{{ Fill in the Synopsis }}
+Creates a new RichTextBlock element for an Adaptive Card with advanced inline formatting capabilities.
 
 ### [New-CardTable](New-CardTable.md)
 Creates a new Table element for an Adaptive Card from a collection of objects or hashtables.
