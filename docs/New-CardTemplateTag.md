@@ -90,7 +90,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.String
-###     Returns a template tag string in the format "!{{TagName}}".
+### Returns a template tag string in the format "!{{TagName}}".
 ## NOTES
 - Template tags use the format "!{{TagName}}" to avoid conflicts with other templating systems
 - The TagName should be descriptive and unique within the template

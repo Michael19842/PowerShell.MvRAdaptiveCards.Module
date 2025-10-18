@@ -13,7 +13,7 @@ Builds a complete Adaptive Card by replacing template tags with actual content.
 ## SYNTAX
 
 ```
-Build-CardFromTemplate [[-Content] <Hashtable>] [[-Tags] <Hashtable>]
+Build-CardFromTemplate [[-Content] <Hashtable>] [[-Tags] <Hashtable>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -118,12 +118,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
 
 ### System.Collections.Hashtable
-###     Returns a hashtable representing the completed Adaptive Card content with all template tags replaced.
+### Returns a hashtable representing the completed Adaptive Card content with all template tags replaced.
 ## NOTES
 - Template tag names in the Tags hashtable should not include the !{{ }} wrapper syntax
 - ScriptBlocks in tag values are executed in the current scope and can access variables

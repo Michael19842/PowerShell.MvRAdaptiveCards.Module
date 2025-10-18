@@ -169,7 +169,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Collections.Hashtable
-###     Returns a hashtable representing the Table element structure for the Adaptive Card.
+### Returns a hashtable representing the Table element structure for the Adaptive Card.
 ## NOTES
 - The function automatically detects whether the input is hashtables or objects
 - ScriptBlocks in cell values are executed to generate dynamic content

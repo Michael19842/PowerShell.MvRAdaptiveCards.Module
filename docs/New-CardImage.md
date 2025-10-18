@@ -203,7 +203,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Collections.Hashtable
-###     Returns a hashtable representing the Image element structure for the Adaptive Card.
+### Returns a hashtable representing the Image element structure for the Adaptive Card.
 ## NOTES
 - The Url parameter should point to an accessible image resource
 - AltText is crucial for accessibility and should meaningfully describe the image

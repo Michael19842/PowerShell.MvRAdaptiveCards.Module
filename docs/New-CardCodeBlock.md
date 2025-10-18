@@ -204,7 +204,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Collections.Hashtable
-###     Returns a hashtable representing the CodeBlock element structure for the Adaptive Card.
+### Returns a hashtable representing the CodeBlock element structure for the Adaptive Card.
 ## NOTES
 - CodeBlock elements are supported in Adaptive Cards schema version 1.2 and later
 - Syntax highlighting appearance depends on the host application's implementation

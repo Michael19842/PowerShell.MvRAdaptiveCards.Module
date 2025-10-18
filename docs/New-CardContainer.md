@@ -136,7 +136,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Collections.Hashtable
-###     Returns a hashtable representing the Container element structure for the Adaptive Card.
+### Returns a hashtable representing the Container element structure for the Adaptive Card.
 ## NOTES
 - Containers automatically handle both single elements and arrays of elements from the Content ScriptBlock
 - The Style parameter only adds the style property when it's not "Default" to keep the JSON clean

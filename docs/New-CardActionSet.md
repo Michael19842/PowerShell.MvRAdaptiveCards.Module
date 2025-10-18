@@ -137,7 +137,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Collections.Hashtable
-###     Returns a hashtable representing the ActionSet element structure for the Adaptive Card.
+### Returns a hashtable representing the ActionSet element structure for the Adaptive Card.
 ## NOTES
 - ActionSets are supported in Adaptive Cards schema version 1.2 and later
 - Unlike card-level actions, ActionSets can be placed anywhere in the card body

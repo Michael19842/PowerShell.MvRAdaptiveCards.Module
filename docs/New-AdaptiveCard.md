@@ -150,9 +150,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.String
-###     By default, returns the Adaptive Card as a JSON string.
+### By default, returns the Adaptive Card as a JSON string.
 ### System.Collections.Hashtable
-###     When -AsObject is specified, returns the card as a PowerShell hashtable object.
+### When -AsObject is specified, returns the card as a PowerShell hashtable object.
 ## NOTES
 - The function automatically sets the schema version to "1.5" and includes the appropriate schema reference
 - Content elements are executed in the provided ScriptBlock and added to the card body

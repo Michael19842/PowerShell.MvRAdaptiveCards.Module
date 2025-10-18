@@ -1,32 +1,32 @@
 {
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "body": [
     {
       "items": [
         {
+          "url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg",
           "type": "Image",
-          "altText": "Example Image",
-          "url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg"
+          "altText": "Example Image"
         },
         {
-          "type": "TextBlock",
           "text": "Hello, Michael!",
+          "color": "Good",
           "size": "Large",
           "weight": "Bolder",
-          "color": "Good"
+          "type": "TextBlock"
         },
         {
-          "type": "TextBlock",
           "text": "Your age is !{{UserAge}} years.",
+          "color": "Dark",
           "size": "Default",
           "weight": "Default",
-          "color": "Dark"
+          "type": "TextBlock"
         }
       ],
-      "type": "Container",
-      "style": "Emphasis"
+      "style": "Emphasis",
+      "type": "Container"
     }
   ],
   "version": "1.5",
-  "type": "AdaptiveCard",
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+  "type": "AdaptiveCard"
 }

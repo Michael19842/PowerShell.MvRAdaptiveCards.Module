@@ -146,7 +146,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Collections.Hashtable
-###     Returns a hashtable representing the Action.ToggleVisibility structure for the Adaptive Card.
+### Returns a hashtable representing the Action.ToggleVisibility structure for the Adaptive Card.
 ## NOTES
 - All target elements must have unique IDs set for the toggle action to function properly
 - Elements are toggled individually - if some are visible and others hidden, they will all switch states

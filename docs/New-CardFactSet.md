@@ -165,7 +165,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Collections.Hashtable
-###     Returns a hashtable representing the FactSet element structure for the Adaptive Card.
+### Returns a hashtable representing the FactSet element structure for the Adaptive Card.
 ## NOTES
 - The function uses parameter sets to handle different input types (hashtable vs object)
 - When using Object parameter, null values are converted to empty strings

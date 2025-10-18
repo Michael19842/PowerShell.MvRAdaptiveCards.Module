@@ -160,7 +160,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Collections.Hashtable
-###     Returns a hashtable representing the Action.ShowCard structure for the Adaptive Card.
+### Returns a hashtable representing the Action.ShowCard structure for the Adaptive Card.
 ## NOTES
 - ShowCard actions create inline expansion of content within the same card
 - The Card parameter should use New-AdaptiveCard with -AsObject for proper nesting

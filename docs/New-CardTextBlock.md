@@ -195,7 +195,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Collections.Hashtable
-###     Returns a hashtable representing the TextBlock element structure for the Adaptive Card.
+### Returns a hashtable representing the TextBlock element structure for the Adaptive Card.
 ## NOTES
 - The Size and Weight parameters accept string values that correspond to Adaptive Card schema values
 - Color values map to the host application's theme colors

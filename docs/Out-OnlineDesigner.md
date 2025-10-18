@@ -108,7 +108,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### None
-###     This function doesn't return any output. It creates a temporary HTML file and opens it in the browser.
+### This function doesn't return any output. It creates a temporary HTML file and opens it in the browser.
 ## NOTES
 - The function creates a temporary HTML file in the user's %TEMP% directory
 - The HTML file automatically loads the Adaptive Cards Designer from adaptivecards.microsoft.com
