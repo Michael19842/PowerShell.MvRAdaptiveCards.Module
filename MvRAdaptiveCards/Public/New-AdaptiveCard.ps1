@@ -176,13 +176,6 @@
 
     Creates a card that requires authentication before displaying content.
 
-.EXAMPLE
-    New-AdaptiveCard -Content {
-        New-CardTextBlock -Text "مرحبا بالعالم"
-    } -Language "ar" -RightToLeft -verticalContentAlignment "Center"
-
-    Creates a card with Arabic text, right-to-left layout, and centered content alignment.
-
 .NOTES
     - The function automatically sets the schema version to "1.5" and includes the appropriate schema reference
     - Content elements are executed in the provided ScriptBlock and added to the card body
@@ -386,6 +379,18 @@ function New-AdaptiveCard {
     }
 
 
+
+    if ($Requires) {
+        $BaseCard.requires = $Requires
+    }
+
+    if ($Hidden) {
+        $BaseCard.isVisible = $false
+    }
+
+    if ($verticalContentAlignment) {
+        $BaseCard.verticalContentAlignment = $verticalContentAlignment
+    }
     #Test if the output conforms to the Adaptive Card schema
     $Json = $BaseCard | ConvertTo-Json -Depth $_MaxDepth
 
@@ -402,18 +407,6 @@ function New-AdaptiveCard {
 
     }
 
-    if ($Requires) {
-        $BaseCard.requires = $Requires
-    }
-
-    if ($Hidden) {
-        $BaseCard.isVisible = $false
-    }
-
-    if ($verticalContentAlignment) {
-        $BaseCard.verticalContentAlignment = $verticalContentAlignment
-    }
-
 
     if ($PSCmdlet.ShouldProcess("Returning Adaptive Card")) {
         if ($AsObject) {
@@ -423,11 +416,3 @@ function New-AdaptiveCard {
     }
 }
 
-Register-ArgumentCompleter -CommandName New-AdaptiveCard -ParameterName Style -ScriptBlock {
-    param ( $commandName,
-        $parameterName,
-        $wordToComplete,
-        $commandAst,
-        $fakeBoundParameters )
-    $_AdaptiveCardStyleCollection | Where-Object { $_ -like "$wordToComplete*" } | ForEach-Object { [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_) }
-}

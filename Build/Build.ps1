@@ -1,5 +1,8 @@
 #Requires -Version 5.1
-
+#ignore PSAvoidUsingWriteHost
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Justification = 'write-host used for build progress indication')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '', Justification = 'Variables are used in tasks')]
+param()
 Properties {
     $ModuleName = 'MvRAdaptiveCards'
 

@@ -13,7 +13,7 @@ $_MaxDepth = 40
 $ModuleName = 'MvRAdaptiveCards'
 
 
-foreach ($Folder in @('Private', 'Public', 'Collection')) {
+foreach ($Folder in @('Private', 'Public', 'Collection', 'ArgumentCompleters')) {
     $LogicFiles = Get-ChildItem -Path $PSScriptRoot\$Folder -Filter '*.ps1' -Recurse
 
     # dot source each file except tests
