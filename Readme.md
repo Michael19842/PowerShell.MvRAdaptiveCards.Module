@@ -9,7 +9,7 @@ PowerShell Module for creating (and posting) Adaptive Cards in PowerShell.
 
 
 ## Overview
-This module provides functions for working with Adaptive Cards in PowerShell in a similar fashion as the popular module PSWriteHTML does for HTML generation. Creating Adaptive Cards in PowerShell can be complex due to the JSON structure required by Adaptive Cards. This module simplifies the process by providing cmdlets that allow you to build Adaptive Cards using PowerShell objects (and has built-in support for posting these cards to Microsoft Teams channels).
+This module provides a framework of easy-to-use functions for working with Adaptive Cards in PowerShell in a similar fashion as the popular module PSWriteHTML does for HTML generation. Creating Adaptive Cards in PowerShell can be complex due to the JSON structure required by Adaptive Cards. This module simplifies the process by providing cmdlets that allow you to build Adaptive Cards using PowerShell objects (and has built-in support for posting these cards to Microsoft Teams channels).
 
 If you are familiar with PSWriteHTML, you'll find the approach in MvRAdaptiveCards quite similar.
 
@@ -52,6 +52,20 @@ New-AdaptiveCard -Content {
 ```
 
 > This generates the Adaptive Card JSON, creates a temporary file, and opens it in the Adaptive Cards Designer in an iFrame. Then it posts the card to that iFrame on the ready event. It is a bit hacky, but it works great when you want to quickly prototype or edit your cards.
+
+## Sending Cards using Outlook as client
+You can send Adaptive Cards via Outlook using the `Send-CardViaClassicOutlook` cmdlet. Here's an example:
+
+```powershell
+# Create an Adaptive Card
+New-AdaptiveCard -Content {
+    New-CardContainer -Content {
+        New-CardTextBlock -Text "Hello from MvRAdaptiveCards!" -Size 'Large' -Weight 'Bolder' -Color 'Good'
+        New-CardTextBlock -Text "This card was sent via Outlook." -Color 'Dark'
+    } -Style 'Emphasis'
+} | Send-CardViaClassicOutlook -To  'someone.who.uses@outlook.com' -Subject 'Adaptive Card from PowerShell'
+```
+> Note: You do need to have Outlook installed and configured on your machine for this to work.
 
 ## Template System
 The module includes a powerful templating system that allows you to create reusable card templates with dynamic content replacement. You can define template tags in your card structure and replace them with actual content at runtime using the `Build-CardFromTemplate` cmdlet.
@@ -145,6 +159,8 @@ New-AdaptiveCard -Content {
 
 ## Sending Adaptive Cards
 The module provides cmdlets to send Adaptive Cards via various channels, including Microsoft Teams, classic Outlook, and SMTP. Do note that sending card via some SMTP might result in cards not rendering properly due to security restrictions in service (e.g. Google Gmail).
+
+It also has built-in support for saving the configuration of your Teams connection, or SMTTP configuration for easy reuse. The saved configuration is stored in the appdata folder of the current user. Any sensitive information like passwords are securely encrypted, and can only be used by the same user on the same machine.
 
 ## Functions
 An extensive set of function documentation (*generated using PlatyPS*) is available **here: [MvRAdaptiveCards Documentation](docs/MvRAdaptiveCards.md)**
