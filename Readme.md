@@ -1,7 +1,7 @@
 # MvRAdaptiveCards
 PowerShell Module for creating (and posting) Adaptive Cards in PowerShell.
 
-![header](./docs/Images/MvRAdaptiveCards.png)
+![header](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/header.png)
 
 ![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/MvRAdaptiveCards)
 ![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/MvRAdaptiveCards)
