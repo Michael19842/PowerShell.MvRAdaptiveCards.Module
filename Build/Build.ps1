@@ -1,70 +1,91 @@
-[CmdletBinding()]
-param (
-    [switch]$BumpMajorVersion,
-    [switch]$BumpMinorVersion
-)
+#Requires -Version 5.1
 
-$ModuleName = 'MvRAdaptiveCards'
+Properties {
+    $ModuleName = 'MvRAdaptiveCards'
 
-$manifestPath = "$PSScriptRoot\..\$ModuleName\$ModuleName.psd1"
-$publicFolder = "$PSScriptRoot\..\$ModuleName\Public"
+    #Shared variables
+    $manifestPath = "$PSScriptRoot\..\$ModuleName\$ModuleName.psd1"
+    $publicFolder = "$PSScriptRoot\..\$ModuleName\Public"
 
-
-# Step 1: Discover all function names in Public folder
-$functionNames = Get-ChildItem -Path $publicFolder -Filter '*.ps1' -Recurse |
-Where-Object { $_.Name -notlike '*.Tests.ps1' } |
-ForEach-Object { $_.BaseName } | Sort-Object -Unique
-
-# Step 2: Update manifest
-$Manifest = Test-ModuleManifest -Path $manifestPath
-if ($null -eq $Manifest) {
-    throw "Module manifest not found or invalid at path: $manifestPath"
+    #Define the variable so that it can be used in the tasks
+    $Manifest = $null
 }
 
-Write-Host "Discovered functions to export: $($functionNames -join ', ')"
-
-#Run script analysis to determine if any breaking changes were made
-$AnalysisResults = Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\$ModuleName" -Recurse
-
-#Output the analysis results for debugging
-$AnalysisResults
-
-
-#If the manifest already exports functions, compare and update if necessary
-if (($Manifest.ExportedFunctions.Keys -join '|') -ne ($functionNames -join '|') -or $BumpMajorVersion -or $BumpMinorVersion) {
-    #Update version number by incrementing the build number
-    Write-Debug "Current module version: $($Manifest.Version.ToString())"
-
-    if ($BumpMajorVersion) {
-        $NewVersion = [version]::new($Manifest.Version.Major + 1, 0, 0, 0)
+task prepare {
+    $requiredModules = @('Pester', 'PlatyPS', 'PsScriptAnalyzer', 'PSake')
+    #Install the required modules if they are not already installed
+    foreach ($module in $requiredModules) {
+        if (-not (Get-Module -ListAvailable -Name $module)) {
+            Install-Module -Name $module -Scope CurrentUser -Force -AllowClobber
+        }
     }
-    elseif ($BumpMinorVersion) {
-        $NewVersion = [version]::new($Manifest.Version.Major, $Manifest.Version.Minor + 1, 0, 0)
+}
+
+task updateManifest -Depends prepare -PreAction {
+    #Grab the current version from the manifest
+    $Manifest = Test-ModuleManifest -Path $manifestPath
+
+    Write-Debug "Current module version: $($Manifest.Version.ToString())"
+} -Action {
+    # Step 1: Discover all function names in Public folder
+    $functionNames = Get-ChildItem -Path $publicFolder -Filter '*.ps1' -Recurse |
+    Where-Object { $_.Name -notlike '*.Tests.ps1' } |
+    ForEach-Object { $_.BaseName } | Sort-Object -Unique
+
+    if (($Manifest.ExportedFunctions.Keys -join '|') -ne ($functionNames -join '|') -or $BumpMajorVersion -or $BumpMinorVersion) {
+        #Update version number by incrementing the build number
+        $NewVersion = [version]::new($Manifest.Version.Major, $Manifest.Version.Minor, $Manifest.Version.Build + 1, 0)
+
+        Write-Debug "Updating module manifest at $manifestPath with functions: $($functionNames -join ', ')"
+        #Save the updated manifest
+        Update-ModuleManifest -Path $manifestPath -FunctionsToExport $functionNames -ModuleVersion $NewVersion
+    }
+}
+
+task test -Action {
+    Invoke-Pester -Path ".\..\tests\"
+}
+
+task analyse -Action {
+    #Run script analysis to determine if any breaking changes were made
+    $AnalysisResults = Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\$ModuleName" -Recurse
+
+    #Output the analysis results as an aggregated summary
+    $AnalysisResults | Group-Object Severity | ForEach-Object {
+        [PSCustomObject]@{
+            Severity = $_.Name
+            Count    = $_.Count
+        }
+    } | Format-Table -AutoSize
+
+    #Throw an error if any errors were found
+    $ErrorCount = ($AnalysisResults | Where-Object { $_.Severity -eq 'Error' }).Count
+
+    if ($ErrorCount -gt 0) {
+        throw "$ErrorCount script analysis errors found. Please fix them before proceeding."
+    }
+}
+
+
+task buildDocumentation -RequiredVariables 'ModuleName' -PreAction {
+    Import-Module "$PSScriptRoot\..\$ModuleName" -Global
+    Import-Module PlatyPS
+} -Action {
+    Write-Host "Building documentation for module $ModuleName in path $PSScriptRoot\..\$ModuleName"
+    $docsPath = "$PSScriptRoot\..\docs"
+    if (Test-Path $docsPath) {
+        [void](Update-MarkdownHelpModule -RefreshModulePage -Path $docsPath -ModulePagePath "$docsPath\$ModuleName.md")
+        [void](Update-MarkdownHelp -Path $docsPath)
     }
     else {
-        $NewVersion = [version]::new($Manifest.Version.Major, $Manifest.Version.Minor, $Manifest.Version.Build + 1, 0)
+        [void](New-MarkdownHelp -Module $ModuleName -OutputFolder $docsPath -WithModulePage)
     }
-    Write-Debug "Updating module manifest at $manifestPath with functions: $($functionNames -join ', ')"
-
-    Write-Debug "New module version: $NewVersion"
-
-    Update-ModuleManifest -Path $manifestPath -FunctionsToExport $functionNames -ModuleVersion $NewVersion
-}
-else {
-    Write-Debug "Module manifest at $manifestPath is already up to date."
 }
 
-#Use PlatyPS to build the documentation
-Import-Module PlatyPS
 
-Import-Module "$PSScriptRoot\..\$ModuleName"
+task default -Depends prepare, updateManifest, test, analyse, buildDocumentation
 
-$docsPath = "$PSScriptRoot\..\docs"
-if (Test-Path $docsPath) {
-    [void](Update-MarkdownHelpModule -RefreshModulePage -Path $docsPath -ModulePagePath "$docsPath\$ModuleName.md")
-    [void](Update-MarkdownHelp -Path $docsPath)
-}
-else {
-    [void](New-MarkdownHelp -Module $ModuleName -OutputFolder $docsPath -WithModulePage)
-}
+
+
+
 
