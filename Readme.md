@@ -166,3 +166,6 @@ It also has built-in support for saving the configuration of your Teams connecti
 
 ## Functions
 An extensive set of function documentation (*generated using PlatyPS*) is available **here: [MvRAdaptiveCards Documentation](docs/MvRAdaptiveCards.md)**
+
+## Contributing
+Contributions are welcome! If you have ideas for new features, improvements, or bug fixes, please feel free to open an issue or submit a pull request on the [GitHub repository](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module). And remember to be kind and respectful in all interactions.
