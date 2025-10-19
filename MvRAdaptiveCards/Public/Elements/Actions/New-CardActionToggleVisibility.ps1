@@ -22,7 +22,7 @@
     - default: Standard button appearance
     - positive: Positive/success styling (typically green or blue)
     - destructive: Destructive/warning styling (typically red)
-    
+
     The actual appearance depends on the host application's theme and implementation.
     Note: This parameter is defined but may not be fully implemented in the current function.
 
@@ -35,17 +35,17 @@
 
 .EXAMPLE
     New-CardActionToggleVisibility -Title "Show Details" -TargetElements @("DetailPanel", "AdditionalInfo")
-    
+
     Creates a toggle action that shows/hides elements with IDs "DetailPanel" and "AdditionalInfo".
 
 .EXAMPLE
-    New-CardActionToggleVisibility -Title "🔍 Toggle Chart" -TargetElements @("SalesChart") -Id "ChartToggle"
-    
+    New-CardActionToggleVisibility -Title "Toggle Chart" -TargetElements @("SalesChart") -Id "ChartToggle"
+
     Creates a toggle action for a single chart element with an emoji icon and an action ID.
 
 .EXAMPLE
     New-CardActionToggleVisibility -Title "Hide Sensitive Data" -TargetElements @("SSN", "CreditCard", "BankAccount") -Style "destructive"
-    
+
     Creates a toggle action to hide multiple sensitive data fields with destructive styling.
 
 .NOTES
@@ -60,6 +60,8 @@
     https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/card-schema#actiontogglevisibility
 #>
 function New-CardActionToggleVisibility {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([hashtable])]
 
     param (
         [Parameter(Mandatory = $true)]
@@ -71,7 +73,7 @@ function New-CardActionToggleVisibility {
         [Parameter(Mandatory = $false)]
         [ValidateSet("default", "positive", "destructive")]
         [string]$Style,
-        
+
         [Parameter(Mandatory = $false)]
         [string]$Id
 
@@ -82,8 +84,8 @@ function New-CardActionToggleVisibility {
         title = $Title
     }
 
-    If ($TargetElements) {
-       $ToggleVisibilityAction.targetElements = $TargetElements
+    if ($TargetElements) {
+        $ToggleVisibilityAction.targetElements = $TargetElements
     }
 
 
@@ -91,5 +93,11 @@ function New-CardActionToggleVisibility {
         $ToggleVisibilityAction.id = $Id
     }
 
-    return $ToggleVisibilityAction
+    if ($Style) {
+        $ToggleVisibilityAction.style = $Style
+    }
+
+    if ( $PSCmdlet.ShouldProcess("Creating ToggleVisibility action with title '$Title'." ) ) {
+        return $ToggleVisibilityAction
+    }
 }

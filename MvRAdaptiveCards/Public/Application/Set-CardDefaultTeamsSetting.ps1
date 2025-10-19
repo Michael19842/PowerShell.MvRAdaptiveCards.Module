@@ -21,12 +21,12 @@
 
 .EXAMPLE
     Set-CardDefaultTeamsSettings -WebhookUrl "https://outlook.office.com/webhook/12345..."
-    
+
     Sets the default Teams webhook URL for sending Adaptive Cards.
 
 .EXAMPLE
     Set-CardDefaultTeamsSettings -WebhookUrl "https://outlook.office.com/webhook/12345..." -ChannelName "General" -TeamName "Development Team"
-    
+
     Sets the Teams webhook with additional reference information about the channel and team.
 
 .NOTES
@@ -38,7 +38,9 @@
 .LINK
     https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/
 #>
-function Set-CardDefaultTeamsSettings {
+function Set-CardDefaultTeamsSetting {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    [OutputType([void])]
     param (
         [Parameter(Mandatory = $true)]
         [string]$WebhookUrl
@@ -46,39 +48,42 @@ function Set-CardDefaultTeamsSettings {
 
     # Initialize global settings if not exist
     if ($null -eq $script:_MvRACSettings) {
-        $script:_MvRACSettings = @{}
+        $_MvRACSettings = @{}
     }
     if ($null -eq $script:_MvRACSettings.Context) {
-        $script:_MvRACSettings.Context = @{}
+        $_MvRACSettings.Context = @{}
     }
     if ($null -eq $script:_MvRACSettings.Teams) {
-        $script:_MvRACSettings.Teams = @{}
+        $_MvRACSettings.Teams = @{}
     }
 
     # Set Teams settings
-    $script:_MvRACSettings.Teams.WebhookUrl = $WebhookUrl
-    
+    $_MvRACSettings.Teams.WebhookUrl = $WebhookUrl
+
 
     # Create settings file if it doesn't exist
-    if (-not (Test-Path $script:_SettingsFile)) {
+    if (-not (Test-Path $_SettingsFile)) {
 
-        $script:_MvRACSettings = @{
+        $_MvRACSettings = @{
             Context = @{
                 User = $env:USERNAME
                 Host = $env:COMPUTERNAME
             }
         }
 
-        $script:_MvRACSettingsJson = $script:_MvRACSettings | ConvertTo-Json -Depth 5
-        $script:_MvRACSettingsJson | Set-Content -Path $script:_SettingsFile -Encoding UTF8
+        $_MvRACSettingsJson = $_MvRACSettings | ConvertTo-Json -Depth 5
+
+        if ( $PSCmdlet.ShouldProcess("Creating settings file at '$_SettingsFile' because it does not exist.") ) {
+            $_MvRACSettingsJson | Set-Content -Path $_SettingsFile -Encoding UTF8
+        }
     }
 
     # Get the now existing settings file
-    $script:_CurrentMvRACSettings = Get-Content -Path $script:_SettingsFile -Raw | ConvertFrom-JsonAsHashtable
+    $_CurrentMvRACSettings = Get-Content -Path $_SettingsFile -Raw | ConvertFrom-JsonAsHashtable
 
     # If the settings were not found, initialize them
     if ($null -eq $script:_MvRACSettings) {
-        $script:_MvRACSettings = @{
+        $_MvRACSettings = @{
             Context = @{
                 User = $env:USERNAME
                 Host = $env:COMPUTERNAME
@@ -87,12 +92,17 @@ function Set-CardDefaultTeamsSettings {
     }
 
     # Validate the context to ensure it matches the current user/machine
-    if ($script:_CurrentMvRACSettings.Context.User -ne $env:USERNAME -or $script:_CurrentMvRACSettings.Context.Host -ne $env:COMPUTERNAME) {
-        Write-Warning "The existing settings file was created for user '$($script:_CurrentMvRACSettings.Context.User)' on host '$($script:_CurrentMvRACSettings.Context.Host)'. The current user is '$env:USERNAME' on host '$env:COMPUTERNAME'. Settings will be updated to match the current context. But additional steps may be required to ensure proper operation."
-        $script:_MvRACSettings.Context.User = $env:USERNAME
-        $script:_MvRACSettings.Context.Host = $env:COMPUTERNAME
+    if ($script:_CurrentMvRACSettings.Context.User -ne $env:USERNAME -or $_CurrentMvRACSettings.Context.Host -ne $env:COMPUTERNAME) {
+        Write-Warning "The existing settings file was created for user '$($_CurrentMvRACSettings.Context.User)' on host '$($_CurrentMvRACSettings.Context.Host)'. The current user is '$env:USERNAME' on host '$env:COMPUTERNAME'. Settings will be updated to match the current context. But additional steps may be required to ensure proper operation."
+        $_MvRACSettings.Context.User = $env:USERNAME
+        $_MvRACSettings.Context.Host = $env:COMPUTERNAME
     }
 
     # Save the updated settings
-    $script:_MvRACSettings | ConvertTo-Json -Depth 5 | Set-Content -Path $script:_SettingsFile -Encoding UTF8 -Force
+    if ( $PSCmdlet.ShouldProcess("Saving updated Teams settings to '$_SettingsFile'.") ) {
+        $_MvRACSettings | ConvertTo-Json -Depth 5 | Set-Content -Path $_SettingsFile -Encoding UTF8 -Force
+    }
 }
+
+#Add an alias for plural form (Reverse compatibility)
+Set-Alias -Name Set-CardDefaultTeamsSettings -Value Set-CardDefaultTeamsSetting

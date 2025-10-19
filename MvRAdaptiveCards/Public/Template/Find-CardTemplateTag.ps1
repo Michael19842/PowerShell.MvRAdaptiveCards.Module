@@ -23,7 +23,7 @@
         New-CardTextBlock -Text (New-CardTemplateTag -TagName "Message")
         New-CardTextBlock -Text (New-CardTemplateTag -TagName "UserName")  # Duplicate
     }
-    
+
     Find-CardTemplateTags -Content $template
     # Returns: @("UserName", "Message")
 
@@ -35,7 +35,7 @@
             "Role" = (New-CardTemplateTag -TagName "Position")
         }
     }
-    
+
     $tags = Find-CardTemplateTags -Content $complexTemplate
     # Returns: @("Name", "Dept", "Position")
 
@@ -43,7 +43,7 @@
     $noTagsTemplate = New-CardContainer -Content {
         New-CardTextBlock -Text "Static content only"
     }
-    
+
     Find-CardTemplateTags -Content $noTagsTemplate
     # Returns: @() (empty array)
 
@@ -56,22 +56,25 @@
 
 .LINK
     New-CardTemplateTag
-    
+
 .LINK
     Build-CardFromTemplate
 #>
-function Find-CardTemplateTags {
+function Find-CardTemplateTag {
     param (
         [hashtable]$Content
     )
 
     $TemplateAsJson = $Content | ConvertTo-Json -Depth 10
     $TagPattern = '!{{(.*?)}}'
-    $Matches = [regex]::Matches($TemplateAsJson, $TagPattern)
+    $TagMatches = [regex]::Matches($TemplateAsJson, $TagPattern)
 
-    if($Matches.Count -eq 0) {
+    if ($TagMatches.Count -eq 0) {
         return @()
     }
 
-    return $Matches | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique
+    return $TagMatches | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique
 }
+
+#Alias for function name for reverse compatibility
+Set-Alias -Name Find-CardTemplateTags -Value Find-CardTemplateTag -Force

@@ -7,7 +7,8 @@ function IIF {
 
     if ($Condition) {
         & $Then
-    } else {
+    }
+    else {
         & $Else
     }
 }

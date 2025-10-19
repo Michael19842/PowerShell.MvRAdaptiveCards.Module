@@ -17,6 +17,9 @@ Builds a complete Adaptive Card by replacing template tags with actual content.
 ### [Build-CardFromTemplate](Build-CardFromTemplate.md)
 Builds a complete Adaptive Card by replacing template tags with actual content.
 
+### [Build-CardFromTemplate](Build-CardFromTemplate.md)
+Builds a complete Adaptive Card by replacing template tags with actual content.
+
 ### [New-AdaptiveCard](New-AdaptiveCard.md)
 Creates a new Adaptive Card with the specified content and configuration options.
 
@@ -65,9 +68,9 @@ Opens an Adaptive Card in the online Adaptive Cards Designer for visualization a
 ### [Send-CardViaTeams](Send-CardViaTeams.md)
 {{ Fill in the Synopsis }}
 
-### [Set-CardDefaultSmtpSettings](Set-CardDefaultSmtpSettings.md)
+### [Set-CardDefaultSmtpSetting](Set-CardDefaultSmtpSetting.md)
 {{ Fill in the Synopsis }}
 
-### [Set-CardDefaultTeamsSettings](Set-CardDefaultTeamsSettings.md)
-{{ Fill in the Synopsis }}
+### [Set-CardDefaultTeamsSetting](Set-CardDefaultTeamsSetting.md)
+Sets the default Microsoft Teams webhook settings for Adaptive Card delivery.
 

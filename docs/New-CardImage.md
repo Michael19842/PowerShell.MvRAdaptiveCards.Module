@@ -14,7 +14,8 @@ Creates a new Image element for an Adaptive Card.
 
 ```
 New-CardImage [[-Url] <String>] [[-AltText] <String>] [[-FitMode] <String>] [[-Size] <String>] [[-Id] <String>]
- [-Separator] [-AllowExpand] [-AsBase64] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-Separator] [-AllowExpand] [-AsBase64] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -191,6 +192,36 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

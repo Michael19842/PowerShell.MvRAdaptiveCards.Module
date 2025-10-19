@@ -30,7 +30,7 @@
         New-CardActionToggleVisibility -Title "Show Details" -TargetElements @("DetailPanel")
         New-CardActionToggleVisibility -Title "Show Chart" -TargetElements @("ChartContainer")
     }
-    
+
     Creates an ActionSet with two toggle visibility actions.
 
 .EXAMPLE
@@ -41,7 +41,7 @@
             }
         }
     } -Id "ProfileActions"
-    
+
     Creates an ActionSet with a ShowCard action and assigns an ID for reference.
 
 .EXAMPLE
@@ -51,7 +51,7 @@
     } -Fallback {
         New-CardTextBlock -Text "Actions not supported on this client"
     }
-    
+
     Creates an ActionSet with fallback content for unsupported clients.
 
 .NOTES
@@ -65,10 +65,12 @@
     https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/card-schema#actionset
 #>
 function New-CardActionSet {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([hashtable])]
     param (
         [Parameter(Mandatory = $true)]
         [scriptblock[]]$Actions,
-        
+
         [Parameter(Mandatory = $false)]
         [scriptblock]$Fallback,
 
@@ -79,8 +81,8 @@ function New-CardActionSet {
     )
 
     $ActionSet = @{
-        type  = "ActionSet"
-        actions = @()   
+        type    = "ActionSet"
+        actions = @()
     }
 
     if ($Id) {
@@ -95,5 +97,7 @@ function New-CardActionSet {
         $ActionSet.actions += Invoke-Command -ScriptBlock $Action
     }
 
-    return $ActionSet
+    if ( $PSCmdlet.ShouldProcess("Creating ActionSet element with ID '$Id'." ) ) {
+        return $ActionSet
+    }
 }

@@ -17,12 +17,12 @@
 
 .EXAMPLE
     New-CardTemplateTag -TagName "UserName"
-    
+
     Returns: "!{{UserName}}"
 
 .EXAMPLE
     New-CardTextBlock -Text (New-CardTemplateTag -TagName "WelcomeMessage") -Size "Large"
-    
+
     Creates a text block with a template tag that can be replaced later with dynamic content.
 
 .EXAMPLE
@@ -30,7 +30,7 @@
         New-CardTextBlock -Text (New-CardTemplateTag -TagName "Title")
         New-CardTextBlock -Text (New-CardTemplateTag -TagName "Description")
     }
-    
+
     Creates a container template with two replaceable text sections.
 
 .NOTES
@@ -42,11 +42,13 @@
 
 .LINK
     Build-CardFromTemplate
-    
+
 .LINK
     Find-CardTemplateTags
 #>
 function New-CardTemplateTag {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([string])]
     param (
         [Parameter(Mandatory = $true)]
         [string]$TagName
@@ -54,5 +56,7 @@ function New-CardTemplateTag {
 
     $Tag = "!{{$TagName}}"
 
-    return $Tag
+    if ($PSCmdlet.ShouldProcess("Creating template tag: $Tag")) {
+        return $Tag
+    }
 }

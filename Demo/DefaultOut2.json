@@ -1,14 +1,13 @@
 {
-  "version": "1.5",
+  "type": "AdaptiveCard",
   "body": [
     {
+      "url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg",
       "type": "Image",
       "altText": "Example Image",
-      "id": "Monkey",
-      "url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg"
+      "id": "Monkey"
     },
     {
-      "firstRowAsHeaders": false,
       "rows": [
         {
           "type": "TableRow",
@@ -16,9 +15,9 @@
             {
               "items": [
                 {
-                  "type": "TextBlock",
+                  "text": "41",
                   "wrap": true,
-                  "text": "Michael"
+                  "type": "TextBlock"
                 }
               ],
               "type": "TableCell"
@@ -26,9 +25,9 @@
             {
               "items": [
                 {
-                  "type": "TextBlock",
+                  "text": "Blue",
                   "wrap": true,
-                  "text": "Blue"
+                  "type": "TextBlock"
                 }
               ],
               "type": "TableCell"
@@ -36,9 +35,9 @@
             {
               "items": [
                 {
-                  "type": "TextBlock",
+                  "text": "Michael",
                   "wrap": true,
-                  "text": "41"
+                  "type": "TextBlock"
                 }
               ],
               "type": "TableCell"
@@ -51,9 +50,9 @@
             {
               "items": [
                 {
-                  "type": "TextBlock",
+                  "text": "39",
                   "wrap": true,
-                  "text": "Merel"
+                  "type": "TextBlock"
                 }
               ],
               "type": "TableCell"
@@ -61,9 +60,9 @@
             {
               "items": [
                 {
-                  "type": "TextBlock",
+                  "text": "Green",
                   "wrap": true,
-                  "text": "Green"
+                  "type": "TextBlock"
                 }
               ],
               "type": "TableCell"
@@ -71,9 +70,9 @@
             {
               "items": [
                 {
-                  "type": "TextBlock",
+                  "text": "Merel",
                   "wrap": true,
-                  "text": "39"
+                  "type": "TextBlock"
                 }
               ],
               "type": "TableCell"
@@ -86,9 +85,9 @@
             {
               "items": [
                 {
-                  "type": "TextBlock",
+                  "text": "8",
                   "wrap": true,
-                  "text": "Roan"
+                  "type": "TextBlock"
                 }
               ],
               "type": "TableCell"
@@ -96,9 +95,9 @@
             {
               "items": [
                 {
-                  "type": "TextBlock",
+                  "text": "Brown",
                   "wrap": true,
-                  "text": "Brown"
+                  "type": "TextBlock"
                 }
               ],
               "type": "TableCell"
@@ -106,9 +105,9 @@
             {
               "items": [
                 {
-                  "type": "TextBlock",
+                  "text": "Roan",
                   "wrap": true,
-                  "text": "8"
+                  "type": "TextBlock"
                 }
               ],
               "type": "TableCell"
@@ -117,20 +116,20 @@
         }
       ],
       "type": "Table",
+      "firstRowAsHeaders": false,
       "columns": [
         {
-          "width": 2
-        },
-        {
-          "width": 2
-        },
-        {
           "width": 1
+        },
+        {
+          "width": 2
+        },
+        {
+          "width": 2
         }
       ]
     },
     {
-      "type": "ActionSet",
       "actions": [
         {
           "targetElements": [
@@ -141,76 +140,77 @@
         },
         {
           "card": {
-            "version": "1.5",
+            "type": "AdaptiveCard",
             "body": [
               {
-                "type": "Container",
                 "items": [
                   {
+                    "url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg",
                     "type": "Image",
-                    "altText": "Example Image",
-                    "url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?cs=srgb&dl=pexels-thatguycraig000-1563356.jpg&fm=jpg"
+                    "altText": "Example Image"
                   },
                   {
-                    "color": "Good",
-                    "type": "TextBlock",
-                    "weight": "Bolder",
                     "text": "Hello, Michael!",
-                    "size": "Large"
+                    "size": "Large",
+                    "type": "TextBlock",
+                    "color": "Good",
+                    "weight": "Bolder"
                   },
                   {
-                    "color": "Dark",
-                    "type": "TextBlock",
-                    "weight": "Default",
                     "text": "Your age is !{{UserAge}} years.",
-                    "size": "Default"
+                    "size": "Default",
+                    "type": "TextBlock",
+                    "color": "Dark",
+                    "weight": "Default"
                   }
                 ],
-                "style": "Emphasis"
+                "style": "Emphasis",
+                "type": "Container"
               }
             ],
-            "type": "AdaptiveCard",
-            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+            "version": "1.5"
           },
           "type": "Action.ShowCard",
           "title": "show details"
         },
         {
           "card": {
-            "version": "1.5",
+            "type": "AdaptiveCard",
             "body": [
               {
-                "type": "Container",
                 "items": [
                   "!{{UserImage}}",
                   {
-                    "color": "Good",
-                    "type": "TextBlock",
-                    "weight": "Bolder",
                     "text": "Hello, Michael!",
-                    "size": "Large"
+                    "size": "Large",
+                    "type": "TextBlock",
+                    "color": "Good",
+                    "weight": "Bolder"
                   },
                   {
-                    "color": "Dark",
-                    "type": "TextBlock",
-                    "weight": "Default",
                     "text": "Your age is !{{UserAge}} years.",
-                    "size": "Default"
+                    "size": "Default",
+                    "type": "TextBlock",
+                    "color": "Dark",
+                    "weight": "Default"
                   }
                 ],
-                "style": "Emphasis"
+                "style": "Emphasis",
+                "type": "Container"
               }
             ],
-            "type": "AdaptiveCard",
-            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+            "version": "1.5"
           },
+          "style": "positive",
           "type": "Action.ShowCard",
-          "title": "show monkeys",
-          "style": "positive"
+          "title": "show monkeys"
         }
-      ]
+      ],
+      "type": "ActionSet"
     }
   ],
-  "type": "AdaptiveCard",
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5"
 }

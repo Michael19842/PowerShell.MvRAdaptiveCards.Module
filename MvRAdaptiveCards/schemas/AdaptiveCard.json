@@ -323,7 +323,7 @@
               "type": "null"
             }
           ],
-          "description":  "When `true` content in this Adaptive Card should be presented right to left. When 'false' content in this Adaptive Card should be presented left to right. If unset, the default platform behavior will apply.",
+          "description": "When `true` content in this Adaptive Card should be presented right to left. When 'false' content in this Adaptive Card should be presented left to right. If unset, the default platform behavior will apply.",
           "version": "1.5"
         },
         "speak": {
@@ -2115,7 +2115,6 @@
         }
       ]
     },
-
     "ImageSize": {
       "description": "Controls the approximate size of the image. The physical dimensions will vary per host. Every option preserves aspect ratio.",
       "anyOf": [

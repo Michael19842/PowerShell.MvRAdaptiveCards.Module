@@ -1,4 +1,6 @@
-function Set-CardDefaultSmtpSettings {
+function Set-CardDefaultSmtpSetting {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    [OutputType([void])]
     param (
         [string]$From,
         [string]$Server,
@@ -18,26 +20,26 @@ function Set-CardDefaultSmtpSettings {
     }
 
     $_MvRACSettings.Smtp.From = $From
-    $_MvRACSettings.Smtp.Server = $SmtpServer
-    $_MvRACSettings.Smtp.Port = $SmtpPort
-    
-    if($SmtpUsername) {
-        $_MvRACSettings.Smtp.Username = $SmtpUsername
+    $_MvRACSettings.Smtp.Server = $Server
+    $_MvRACSettings.Smtp.Port = $Port
+
+    if ($SmtpUsername) {
+        $_MvRACSettings.Smtp.Username = $Username
     }
     else {
         $_MvRACSettings.Smtp.Username = $null
     }
-    
-    if($null -ne $SmtpPassword) {
+
+    if ($null -ne $Password) {
         #Since the securestring is strictly bound to the current user/machine, we can store it as plain text
-        $_MvRACSettings.Smtp.Password = ConvertFrom-SecureString $SmtpPassword
+        $_MvRACSettings.Smtp.Password = ConvertFrom-SecureString $Password
     }
     else {
         $_MvRACSettings.Smtp.Password = $null
     }
 
 
-    
+
     #Create settings file if it doesn't exist
     if (-not (Test-Path $_SettingsFile)) {
 
@@ -48,8 +50,11 @@ function Set-CardDefaultSmtpSettings {
             }
         }
 
-        $_MvRACSettingsJson = $_MvRACSettings| ConvertTo-Json -Depth 5
-        $_MvRACSettingsJson | Set-Content -Path $_SettingsFile -Encoding UTF8
+        $_MvRACSettingsJson = $_MvRACSettings | ConvertTo-Json -Depth 5
+
+        if ( $PSCmdlet.ShouldProcess("Creating module settings file at '$_SettingsFile' because it does not exist")) {
+            $_MvRACSettingsJson | Set-Content -Path $_SettingsFile -Encoding UTF8
+        }
     }
 
     #Get the now existing settings file
@@ -73,5 +78,10 @@ function Set-CardDefaultSmtpSettings {
     }
 
     #Save the updated settings
-    $_MvRACSettings | ConvertTo-Json -Depth 5 | Set-Content -Path $_SettingsFile -Encoding UTF8 -Force
+    if ( $PSCmdlet.ShouldProcess("Saving SMTP settings to module settings file at '$_SettingsFile'")) {
+        $_MvRACSettings | ConvertTo-Json -Depth 5 | Set-Content -Path $_SettingsFile -Encoding UTF8 -Force
+    }
 }
+
+# Add an alias for plural form (Reverse compatibility)
+Set-Alias -Name Set-CardDefaultSmtpSettings -Value Set-CardDefaultSmtpSetting

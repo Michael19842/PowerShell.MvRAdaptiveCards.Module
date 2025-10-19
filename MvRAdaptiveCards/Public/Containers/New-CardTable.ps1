@@ -18,7 +18,7 @@
     - Name: The property/key name to match (required)
     - width: Relative width of the column (e.g., 1, 2, 3 for proportional sizing)
     - Other column properties supported by Adaptive Cards
-    
+
     If not specified for a column, default width of 1 is used.
 
 .PARAMETER NoHeader
@@ -40,7 +40,7 @@
         @{Name = "Bob"; Age = 35; City = "Chicago"}
     )
     New-CardTable -Collection $data
-    
+
     Creates a table with automatic headers (Name, Age, City) and default column widths.
 
 .EXAMPLE
@@ -50,24 +50,24 @@
         @{Name = "CPU"; width = 1},
         @{Name = "WorkingSet"; width = 2}
     )
-    
+
     Creates a table from process objects with custom column widths (Name and WorkingSet twice as wide as CPU).
 
 .EXAMPLE
     New-CardTable -Collection $data -NoHeader -Id "DataTable"
-    
+
     Creates a table without headers and assigns an ID for potential reference in actions.
 
 .EXAMPLE
     $complexData = @(
         @{
             Name = "User 1"
-            Status = { New-CardTextBlock -Text "✅ Active" -Color "Good" }
+            Status = { New-CardTextBlock -Text "Active" -Color "Good" }
             Details = "Regular user"
         }
     )
     New-CardTable -Collection $complexData
-    
+
     Creates a table where the Status column contains a ScriptBlock that generates a colored text block,
     demonstrating support for complex cell content.
 
@@ -82,15 +82,17 @@
     https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/card-schema#table
 #>
 function New-CardTable {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([hashtable])]
     param (
         [array]$Collection,
-        [array]$CustomColums = @(),  
+        [array]$CustomColums = @(),
         [switch]$NoHeader,
 
         [string]
         [Parameter(Mandatory = $false)]
         $Id
-         
+
     )
 
     $Table = @{
@@ -116,7 +118,7 @@ function New-CardTable {
     else {
         throw "The collection must be an array of hashtables or an array of objects."
     }
-        
+
     foreach ($Header in $Headers) {
         $ThisCustomColumn = $CustomColums | Where-Object { $_.Name -eq $Header }
         # If a custom column definition is found, use it. Otherwise, use a default column definition
@@ -130,7 +132,7 @@ function New-CardTable {
 
     # Add the header row if needed
     if (-not $NoHeader) {
-        
+
         $HeaderRow = @{
             type  = "TableRow"
             cells = @()
@@ -155,12 +157,12 @@ function New-CardTable {
             cells = @()
         }
         foreach ($Header in $Headers) {
-            $CellContent = if ($Item -is [hashtable]) { 
+            $CellContent = if ($Item -is [hashtable]) {
                 $Item[$Header]
             }
             else { $Item.$Header }
 
-            $DataRow.cells += 
+            $DataRow.cells +=
             switch ($CellContent) {
                 { $_ -is [scriptblock] } {
                     @{
@@ -178,14 +180,19 @@ function New-CardTable {
                                 text = if ($null -ne $CellContent) { $CellContent.ToString() } else { "" }
                                 wrap = $true
                             })
-                    } 
+                    }
                 }
             }
-            
+
         }
         [void]($Table.rows.Add($DataRow))
 
     }
 
-    return $Table
+    if ($PSCmdlet.ShouldProcess("Adaptive Card Table", "Create Table Element")) {
+        return $Table
+    }
+    else {
+        Write-Information ($Table | ConvertTo-Json -Depth 10)
+    }
 }

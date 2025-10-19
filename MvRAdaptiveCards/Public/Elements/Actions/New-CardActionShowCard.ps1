@@ -22,7 +22,7 @@
     - default: Standard button appearance
     - positive: Positive/success styling (typically green or blue)
     - destructive: Destructive/warning styling (typically red)
-    
+
     The actual appearance depends on the host application's theme and implementation.
 
 .OUTPUTS
@@ -39,7 +39,7 @@
             }
         }
     }
-    
+
     Creates a ShowCard action that reveals a card with details when clicked.
 
 .EXAMPLE
@@ -51,17 +51,17 @@
             }
         }
     } -Id "EditAction"
-    
+
     Creates a positive-styled ShowCard action for editing settings with an ID.
 
 .EXAMPLE
-    New-CardActionShowCard -Title "⚠️ Delete Item" -Style "destructive" -Card {
+    New-CardActionShowCard -Title "Delete Item" -Style "destructive" -Card {
         New-AdaptiveCard -AsObject -Content {
             New-CardTextBlock -Text "Are you sure you want to delete this item?" -Color "Attention"
             New-CardTextBlock -Text "This action cannot be undone." -Size "Small"
         }
     }
-    
+
     Creates a destructive-styled ShowCard action for a deletion confirmation.
 
 .NOTES
@@ -76,10 +76,12 @@
     https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/card-schema#actionshowcard
 #>
 function New-CardActionShowCard {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([hashtable])]
     param (
         [Parameter(Mandatory = $true)]
         [scriptblock]$Card,
-        
+
         [Parameter(Mandatory = $true)]
         [string]$Title,
 
@@ -106,5 +108,7 @@ function New-CardActionShowCard {
         $ShowCardAction.style = $Style
     }
 
-    return $ShowCardAction
+    if ( $PSCmdlet.ShouldProcess("Creating ShowCard action with title '$Title'." ) ) {
+        return $ShowCardAction
+    }
 }

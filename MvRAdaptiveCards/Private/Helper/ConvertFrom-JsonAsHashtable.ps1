@@ -9,13 +9,14 @@ function ConvertFrom-JsonAsHashtable {
     $InputObject
   )
 
-    process {
-        if ($PSVersionTable.PSVersion.Major -ge 7) {
-        return $InputObject | ConvertFrom-Json -AsHashtable
-        } else {
-        $JsonObject = $InputObject | ConvertFrom-Json
-        return Convert-ObjectToHashtable -Object $JsonObject
-        }
+  process {
+    if ($PSVersionTable.PSVersion.Major -ge 7) {
+      return $InputObject | ConvertFrom-Json -AsHashtable
     }
+    else {
+      $JsonObject = $InputObject | ConvertFrom-Json
+      return Convert-ObjectToHashtable -Object $JsonObject
+    }
+  }
 
 }

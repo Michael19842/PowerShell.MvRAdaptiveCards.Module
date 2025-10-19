@@ -17,7 +17,7 @@
     The programming language for syntax highlighting. Supported languages include:
     - plaintext (default): No syntax highlighting
     - csharp: C# programming language
-    - cpp: C++ programming language  
+    - cpp: C++ programming language
     - css: Cascading Style Sheets
     - dockerfile: Docker configuration files
     - fsharp: F# programming language
@@ -67,7 +67,7 @@
 
 .EXAMPLE
     New-CardCodeBlock -CodeSnippet 'Write-Host "Hello, World!"' -Language "powershell"
-    
+
     Creates a code block displaying a PowerShell command with syntax highlighting.
 
 .EXAMPLE
@@ -79,19 +79,19 @@
 }
 '@
     New-CardCodeBlock -CodeSnippet $jsonCode -Language "json" -Id "JsonExample"
-    
+
     Creates a JSON code block with an ID for reference.
 
 .EXAMPLE
     New-CardCodeBlock -Text "SELECT * FROM Users WHERE Active = 1" -Language "sql" -Wrap $false
-    
+
     Creates a SQL code block without text wrapping (using the 'Text' alias for CodeSnippet).
 
 .EXAMPLE
     New-CardCodeBlock -CodeSnippet "function hello() { console.log('Hello!'); }" -Language "javascript" -Fallback {
         New-CardTextBlock -Text "JavaScript code: function hello() { console.log('Hello!'); }"
     }
-    
+
     Creates a JavaScript code block with fallback content for unsupported clients.
 
 .NOTES
@@ -105,12 +105,14 @@
     https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/card-schema#codeblock
 #>
 function New-CardCodeBlock {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([hashtable])]
     param (
         [Alias('Text')][string]$CodeSnippet,
         [ValidateSet("plaintext", "csharp", "cpp", "css", "dockerfile", "fsharp", "go", "html", "ini",
-    "java", "javascript", "json", "kotlin", "less", "lua", "markdown", "objectivec",
-    "perl", "php", "powershell", "python", "r", "ruby", "rust", "scss", "shell",
-    "sql", "swift", "typescript", "vb", "xml", "yaml")]
+            "java", "javascript", "json", "kotlin", "less", "lua", "markdown", "objectivec",
+            "perl", "php", "powershell", "python", "r", "ruby", "rust", "scss", "shell",
+            "sql", "swift", "typescript", "vb", "xml", "yaml")]
         [string]
         $Language = "plaintext",
         [bool]
@@ -123,10 +125,10 @@ function New-CardCodeBlock {
     )
 
     $CodeBlock = @{
-        type = "CodeBlock"
+        type        = "CodeBlock"
         codeSnippet = $CodeSnippet
-        language = $Language
-        wrap = $Wrap
+        language    = $Language
+        wrap        = $Wrap
     }
 
     if ($Fallback) {
@@ -137,6 +139,9 @@ function New-CardCodeBlock {
         $CodeBlock.id = $Id
     }
 
-    Return ($CodeBlock)
+    if ($PSCmdlet.ShouldProcess("Creating CodeBlock element with ID '$Id'.")) {
+        return $CodeBlock
+    }
+
 
 }

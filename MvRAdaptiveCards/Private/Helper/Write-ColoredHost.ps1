@@ -1,11 +1,12 @@
-Function Write-ColoredHost {
+function Write-ColoredHost {
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Justification = 'This function is specifically designed to write colored output to the host')]
     param (
         [Parameter(Mandatory = $true)]
         [string]$Text,
         [switch]$NoNewLine
     )
 
-    # Detect tags in the text to change the color {red} for foreground and {RED} for background 
+    # Detect tags in the text to change the color {red} for foreground and {RED} for background
     $Pattern = '\{([a-zA-Z]+)\}'
 
     $Segments = [System.Text.RegularExpressions.Regex]::Split($Text, $Pattern)

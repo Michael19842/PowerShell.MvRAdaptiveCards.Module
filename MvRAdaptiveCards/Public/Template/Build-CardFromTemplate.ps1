@@ -28,12 +28,12 @@
         New-CardTextBlock -Text (New-CardTemplateTag -TagName "Greeting")
         New-CardTextBlock -Text (New-CardTemplateTag -TagName "UserName")
     }
-    
+
     $card = Build-CardFromTemplate -Content $template -Tags @{
         Greeting = "Welcome!"
         UserName = "John Doe"
     }
-    
+
     Replaces the template tags with simple string values.
 
 .EXAMPLE
@@ -41,7 +41,7 @@
         New-CardTextBlock -Text (New-CardTemplateTag -TagName "Message")
         New-CardTemplateTag -TagName "DynamicContent"
     }
-    
+
     $card = Build-CardFromTemplate -Content $template -Tags @{
         Message = "Current Status:"
         DynamicContent = {
@@ -51,7 +51,7 @@
             }
         }
     }
-    
+
     Combines string replacement with dynamic content generation using ScriptBlocks.
 
 .EXAMPLE
@@ -59,7 +59,7 @@
         New-CardTextBlock -Text "User: !{{Name}}"
         New-CardTemplateTag -TagName "UserDetails"
     } -Id (New-CardTemplateTag -TagName "ContainerID")
-    
+
     $users = @("Alice", "Bob", "Charlie")
     $cards = foreach ($user in $users) {
         Build-CardFromTemplate -Content $userTemplate -Tags @{
@@ -68,7 +68,7 @@
             ContainerID = "User_$user"
         }
     }
-    
+
     Demonstrates creating multiple cards from a single template with different data.
 
 .NOTES
@@ -82,7 +82,7 @@
 
 .LINK
     New-CardTemplateTag
-    
+
 .LINK
     Find-CardTemplateTags
 #>
@@ -94,28 +94,30 @@ function Build-CardFromTemplate {
 
     $TemplateTags = Find-CardTemplateTags -Content $Content
     $ContentAsJson = $Content | ConvertTo-Json -Depth $_MaxDepth
-    
-    ForEach ($Key in $Tags.Keys) {
-        If ($TemplateTags -contains $Key) {
+
+    foreach ($Key in $Tags.Keys) {
+        if ($TemplateTags -contains $Key) {
             $TagValue = $Tags[$Key]
-            If ($TagValue -is [scriptblock]) {
+            if ($TagValue -is [scriptblock]) {
                 $ResolvedValue = Invoke-Command -ScriptBlock $TagValue
-            } Else {
+            }
+            else {
                 $ResolvedValue = $TagValue
             }
             $ResolvedValueIsString = $ResolvedValue -is [string] -or $ResolvedValue -is [int] -or $ResolvedValue -is [double] -or $ResolvedValue -is [bool]
 
             if ($ResolvedValueIsString) {
                 $ReplaceValue = ($ResolvedValue | ConvertTo-Json -Depth $_MaxDepth -Compress).Trim('"')
-                $TagPlaceholder = New-CardTemplateTag -TagName $Key 
+                $TagPlaceholder = New-CardTemplateTag -TagName $Key
             }
             else {
                 $ReplaceValue = $ResolvedValue | ConvertTo-Json -Depth $_MaxDepth -Compress
                 $TagPlaceholder = New-CardTemplateTag -TagName $Key | ConvertTo-Json -Depth $_MaxDepth -Compress
             }
-            
+
             $ContentAsJson = $ContentAsJson -replace [regex]::Escape($TagPlaceholder), $ReplaceValue
-        } Else {
+        }
+        else {
             Write-Warning "Tag '$Key' not found in template."
         }
     }

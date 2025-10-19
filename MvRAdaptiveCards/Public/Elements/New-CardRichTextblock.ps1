@@ -6,15 +6,15 @@
     The New-CardRichTextBlock function creates a RichTextBlock element that supports rich text formatting
     through an intuitive tag-based markup system. Unlike simple TextBlocks, RichTextBlocks can contain
     multiple text runs with different styles, colors, weights, and even interactive actions within a single block.
-    
+
     The function uses a custom markup language with tags like {{bold}}, {{color:Good}}, {{action:myAction}}, etc.
     to define formatting and behavior for different parts of the text. This enables complex text layouts
     with mixed formatting, colors, and interactivity all within a single text element.
 
 .PARAMETER Text
-    The text content with embedded formatting tags. Tags use the format {{tagname}} for opening and {{/tagname}} 
+    The text content with embedded formatting tags. Tags use the format {{tagname}} for opening and {{/tagname}}
     for closing. Some tags support values using {{tagname:value}} syntax.
-    
+
     Supported formatting tags:
     - Style: {{bold}}, {{italic}}, {{strikethrough}}, {{underline}}, {{highlight}}
     - Weight: {{bolder}}, {{lighter}}, {{weight:value}}
@@ -61,7 +61,7 @@
     A hashtable containing named actions that can be referenced within the text using {{action:name}} tags.
     Each key in the hashtable should be an action name, and each value should be a ScriptBlock that
     generates an action using functions like New-CardActionToggleVisibility, New-CardActionShowCard, etc.
-    
+
     Example: @{ "showDetails" = { New-CardActionShowCard -Title "Details" -Card {...} } }
 
 .PARAMETER Separator
@@ -74,7 +74,7 @@
 
 .EXAMPLE
     New-CardRichTextBlock -Text "This is {{bold}}bold text{{/bold}} and this is {{color:Good}}green text{{/color}}."
-    
+
     Creates a rich text block with bold formatting and colored text using inline tags.
 
 .EXAMPLE
@@ -83,60 +83,60 @@ Welcome {{bold}}{{color:Good}}John Doe{{/color}}{{/bold}}!
 Your account status is {{color:Good}}{{bold}}Active{{/bold}}{{/color}}.
 Click {{action:viewProfile}}here{{/action}} to view your profile.
 "@
-    
+
     $actions = @{
         "viewProfile" = { New-CardActionShowCard -Title "Profile" -Card {
-            New-AdaptiveCard -AsObject -Content { 
-                New-CardTextBlock -Text "Profile details..." 
+            New-AdaptiveCard -AsObject -Content {
+                New-CardTextBlock -Text "Profile details..."
             }
         }}
     }
-    
+
     New-CardRichTextBlock -Text $text -NamedSelectActions $actions
-    
+
     Creates a rich text block with nested formatting, colors, and an interactive action link.
 
 .EXAMPLE
     $complexText = @"
 {{size:Large}}{{bold}}System Status Report{{/bold}}{{/size}}
 
-{{color:Good}}✅ All systems operational{{/color}}
-{{color:Warning}}⚠️ Minor performance degradation detected{{/color}}
-{{color:Attention}}🚨 Critical error in database connection{{/color}}
+{{color:Good}} All systems operational{{/color}}
+{{color:Warning}} Minor performance degradation detected{{/color}}
+{{color:Attention}} Critical error in database connection{{/color}}
 
 {{monospace}}Error Code: DB_CONN_001{{/monospace}}
 {{italic}}Last updated: $(Get-Date){{/italic}}
 
 For more information, {{action:contactSupport}}contact support{{/action}}.
 "@
-    
+
     $actions = @{
         "contactSupport" = { New-CardActionOpenUrl -Url "mailto:support@company.com" }
     }
-    
+
     New-CardRichTextBlock -Text $complexText -NamedSelectActions $actions -Id "StatusReport"
-    
+
     Creates a complex system status report with multiple formatting styles, colors, and an action link.
 
 .EXAMPLE
     New-CardRichTextBlock -Text "Code example: {{monospace}}{{highlight}}Get-Process | Select-Object Name{{/highlight}}{{/monospace}}" -FontType "Default" -HorizontalAlignment "Left"
-    
+
     Creates a text block demonstrating code formatting with monospace font and highlighting.
 
 .EXAMPLE
     $styledText = @"
 {{bold}}{{size:Large}}Product Features{{/size}}{{/bold}}
 
-• {{color:Good}}Fast performance{{/color}} - Up to 10x faster
-• {{color:Accent}}Easy integration{{/color}} - Simple API
-• {{strikethrough}}Expensive licensing{{/strikethrough}} {{color:Good}}Now free!{{/color}}
-• {{underline}}24/7 support{{/underline}} available
+- {{color:Good}}Fast performance{{/color}} - Up to 10x faster
+- {{color:Accent}}Easy integration{{/color}} - Simple API
+- {{strikethrough}}Expensive licensing{{/strikethrough}} {{color:Good}}Now free!{{/color}}
+- {{underline}}24/7 support{{/underline}} available
 
 {{subtle}}{{size:Small}}* Terms and conditions apply{{/size}}{{/subtle}}
 "@
-    
+
     New-CardRichTextBlock -Text $styledText -HorizontalAlignment "Left" -Separator
-    
+
     Creates a product features list with various formatting styles and a separator.
 
 .NOTES
@@ -159,30 +159,32 @@ For more information, {{action:contactSupport}}contact support{{/action}}.
     New-CardTextBlock
 #>
 function New-CardRichTextBlock {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([hashtable])]
     param (
         [Parameter(Mandatory = $true)]
-        [string] 
+        [string]
         $Text,
         [string]
         [Parameter(Mandatory = $false)]
         $Id,
-        [ValidateSet("Left","Center","Right","Justify")]
+        [ValidateSet("Left", "Center", "Right", "Justify")]
         [string]$HorizontalAlignment,
-        [ValidateSet("Default","Monospace")]
+        [ValidateSet("Default", "Monospace")]
         [string]$FontType,
-        [ValidateSet("Small","Default","Medium","Large","ExtraLarge")]
+        [ValidateSet("Small", "Default", "Medium", "Large", "ExtraLarge")]
         [string]$Size,
-        [ValidateSet("Lighter","Default","Bolder")]
+        [ValidateSet("Lighter", "Default", "Bolder")]
         [string]$Weight,
         [Parameter(Mandatory = $false)]
         [ValidateScript( {
-            foreach ($key in $_.Keys) {
-                if($_[$key] -isnot [scriptblock]) {
-                    throw "The NamedSelectActions hashtable must contain scriptblocks as values. The value for key '$key' is of type '$($_[$key].GetType().Name)'. Use the CardAction... functions to create the actions. Then use {{action:$key}} in the text to reference the action."
+                foreach ($key in $_.Keys) {
+                    if ($_[$key] -isnot [scriptblock]) {
+                        throw "The NamedSelectActions hashtable must contain scriptblocks as values. The value for key '$key' is of type '$($_[$key].GetType().Name)'. Use the CardAction... functions to create the actions. Then use {{action:$key}} in the text to reference the action."
+                    }
                 }
-            }   
-            return $true
-        })]
+                return $true
+            })]
         [hashtable]
         $NamedSelectActions,
         [switch]$Separator
@@ -206,14 +208,14 @@ function New-CardRichTextBlock {
     $ColorStack = [System.Collections.Stack]::new()
     #Collect all open tags to mark if they are closed properly
     $OpenTags = [System.Collections.ArrayList]@()
-    
-    If( $TagsMatches.Count -gt 0 ) {
+
+    if ( $TagsMatches.Count -gt 0 ) {
     }
     else {
         $CurrentText = $Text
     }
     $ActiveStyle = @{}
-    
+
     foreach ($TagMatch in $TagsMatches) {
 
         $CurrentText = $Text.Substring($CurrentIndex, $TagMatch.Index - $CurrentIndex)
@@ -228,24 +230,24 @@ function New-CardRichTextBlock {
             $TextRun = New-CardTextRun -Text $CurrentText @ActiveStyle
             [void]$Inlines.Add($TextRun)
         }
-        
+
         $Tag = [pscustomobject]@{
             IsClosing = $TagMatch.Groups[1].Value -eq '/'
-            TagName = $TagMatch.Groups[2].Value
-            Value = $TagMatch.Groups[3].Value
-            pos = $TagMatch.Index
-            length = $TagMatch.Length
+            TagName   = $TagMatch.Groups[2].Value
+            Value     = $TagMatch.Groups[3].Value
+            pos       = $TagMatch.Index
+            length    = $TagMatch.Length
         }
-        
+
         Write-Debug "Processing tag: $($Tag.TagName), IsClosing: $($Tag.IsClosing), Value: $($Tag.Value) at position $($Tag.pos)"
-        
+
         #Collect all open tags
         if (-not $Tag.IsClosing) {
             [void]$OpenTags.Add($Tag)
         }
         else {
             #Test if there is a matching opening tag in the open tags collection
-            If($OpenTags.TagName -notcontains $Tag.TagName) {
+            if ($OpenTags.TagName -notcontains $Tag.TagName) {
                 throw "Closing tag $($Tag.TagName) found without matching opening tag."
             }
 
@@ -263,12 +265,12 @@ function New-CardRichTextBlock {
             "color" {
                 if (-not $Tag.IsClosing) {
                     #Test if the color is valid Adaptive Card color
-                    $ValidColors = @("Default","Dark","Light","Accent","Good","Warning","Attention")
+                    $ValidColors = @("Default", "Dark", "Light", "Accent", "Good", "Warning", "Attention")
                     if ($ValidColors -contains $Tag.Value) {
                         $ActiveStyle["Color"] = $Tag.Value
                         $ColorStack.Push($Tag.Value)
                     }
-                } 
+                }
                 else {
                     if ($ColorStack.Count -gt 0) {
                         [void]($ColorStack.Pop())
@@ -281,12 +283,12 @@ function New-CardRichTextBlock {
                     }
                 }
             }
-        
+
             #Bunch of aliases for bold
-            {"bold","bolder","strong","b" -eq $_} {
+            { "bold", "bolder", "strong", "b" -eq $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Weight"] = "Bolder"
-                } 
+                }
                 else {
                     $ActiveStyle["Weight"] = $null
                 }
@@ -295,7 +297,7 @@ function New-CardRichTextBlock {
             "lighter" {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Weight"] = "Lighter"
-                } 
+                }
                 else {
                     $ActiveStyle["Weight"] = $null
                 }
@@ -304,76 +306,76 @@ function New-CardRichTextBlock {
             "weight" {
                 if (-not $Tag.IsClosing) {
                     #Validate weight value
-                    $ValidWeights = @("Lighter","Default","Bolder")
+                    $ValidWeights = @("Lighter", "Default", "Bolder")
                     if ($ValidWeights -contains $Tag.Value) {
                         $ActiveStyle["Weight"] = $Tag.Value
                     }
-                } 
+                }
                 else {
                     $ActiveStyle["Weight"] = $null
                 }
             }
 
             #Bunch of aliases for italic
-            {"italic","em","i" -eq $_} {
+            { "italic", "em", "i" -eq $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Italic"] = $true
-                } 
+                }
                 else {
                     $ActiveStyle["Italic"] = $null
                 }
             }
 
-            {"strikethrough","strike","s" -eq $_} {
+            { "strikethrough", "strike", "s" -eq $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Strikethrough"] = $true
-                } 
+                }
                 else {
                     $ActiveStyle["Strikethrough"] = $null
                 }
             }
 
-            {"underline","u" -eq $_} {
+            { "underline", "u" -eq $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Underline"] = $true
-                } 
+                }
                 else {
                     $ActiveStyle["Underline"] = $null
                 }
             }
 
-            {"highlight","mark" -eq $_} {
+            { "highlight", "mark" -eq $_ } {
 
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Highlight"] = $true
-                } 
+                }
                 else {
                     $ActiveStyle["Highlight"] = $null
                 }
             }
 
-            {"hidden","invisible" -eq $_} {
+            { "hidden", "invisible" -eq $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["IsVisible"] = $false
-                } 
+                }
                 else {
                     $ActiveStyle["IsVisible"] = $null
                 }
             }
 
-            {"id"} {
+            { "id" } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Id"] = $Tag.Value
-                } 
+                }
                 else {
                     $ActiveStyle["Id"] = $null
                 }
             }
 
-            {"monospace","mono","code" -eq $_} {
+            { "monospace", "mono", "code" -eq $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["FontType"] = "Monospace"
-                } 
+                }
                 else {
                     $ActiveStyle["FontType"] = $null
                 }
@@ -382,60 +384,60 @@ function New-CardRichTextBlock {
             "FontType" {
                 if (-not $Tag.IsClosing) {
                     #Validate FontType value
-                    $ValidFontTypes = @("Default","Monospace")
+                    $ValidFontTypes = @("Default", "Monospace")
                     if ($ValidFontTypes -contains $Tag.Value) {
                         $ActiveStyle["FontType"] = $Tag.Value
                     }
-                } 
+                }
                 else {
                     $ActiveStyle["FontType"] = $null
                 }
             }
 
-            {"lang","language" -eq $_} {
+            { "lang", "language" -eq $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Lang"] = $Tag.Value
-                } 
+                }
                 else {
                     $ActiveStyle["Lang"] = $null
                 }
             }
 
-            {"large","medium","small" -eq $_} {
+            { "large", "medium", "small" -eq $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Size"] = ([System.Globalization.CultureInfo]::InvariantCulture.TextInfo).ToTitleCase($Tag.TagName)
-                } 
+                }
                 else {
                     $ActiveStyle["Size"] = $null
                 }
             }
 
-            {"extraLarge" -eq $_} {
+            { "extraLarge" -eq $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Size"] = "ExtraLarge"
-                } 
+                }
                 else {
                     $ActiveStyle["Size"] = $null
                 }
             }
 
-            "Size"{
+            "Size" {
                 if (-not $Tag.IsClosing) {
                     #Validate Size value
-                    $ValidSizes = @("Small","Default","Medium","Large","ExtraLarge")
+                    $ValidSizes = @("Small", "Default", "Medium", "Large", "ExtraLarge")
                     if ($ValidSizes -contains $Tag.Value) {
                         $ActiveStyle["Size"] = $Tag.Value
                     }
-                } 
+                }
                 else {
                     $ActiveStyle["Size"] = $null
                 }
             }
 
-            {"sub","subtitle","subtle" -eq $_} {
+            { "sub", "subtitle", "subtle" -eq $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["IsSubtle"] = $true
-                } 
+                }
                 else {
                     $ActiveStyle["IsSubtle"] = $null
                 }
@@ -449,12 +451,12 @@ function New-CardRichTextBlock {
                     else {
                         throw "No SelectAction found with name '$($Tag.Value)'. Ensure that the NamedSelectActions hashtable contains an entry with this key."
                     }
-                } 
+                }
                 else {
                     $ActiveStyle["SelectAction"] = $null
                 }
             }
-            
+
 
             default {
                 Write-Warning "Unknown tag: $($Tag.TagName). Ignoring."
@@ -477,7 +479,7 @@ function New-CardRichTextBlock {
     }
 
 
-    
+
 
     $RichTextBlock = @{
         type    = "RichTextBlock"
@@ -512,5 +514,7 @@ function New-CardRichTextBlock {
         $RichTextBlock.separator = $true
     }
 
-    return $RichTextBlock
+    if ( $PSCmdlet.ShouldProcess("Creating RichTextBlock element with text '$Text'." ) ) {
+        return $RichTextBlock
+    }
 }

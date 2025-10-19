@@ -18,7 +18,7 @@
     - Attention: Attention-grabbing styling (typically orange/yellow)
     - Good: Success/positive styling (typically green)
     - Warning: Warning/caution styling (typically red)
-    
+
     Default value is "Default".
 
 .PARAMETER Id
@@ -34,7 +34,7 @@
         New-CardTextBlock -Text "Title" -Weight "Bolder"
         New-CardTextBlock -Text "This is content inside a container"
     }
-    
+
     Creates a basic container with two text blocks using the default styling.
 
 .EXAMPLE
@@ -42,16 +42,16 @@
         New-CardTextBlock -Text "Success!" -Color "Good"
         New-CardTextBlock -Text "Operation completed successfully"
     } -Id "SuccessContainer"
-    
+
     Creates a container with "Good" styling (typically green background) containing success messages,
     with an ID for potential referencing in actions.
 
 .EXAMPLE
     New-CardContainer -Style "Attention" -Content {
-        New-CardTextBlock -Text "⚠️ Warning" -Weight "Bolder"
+        New-CardTextBlock -Text "Warning" -Weight "Bolder"
         New-CardTextBlock -Text "Please review the following information carefully"
     }
-    
+
     Creates an attention-styled container (typically orange/yellow) with warning content.
 
 .NOTES
@@ -64,20 +64,23 @@
     https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/card-schema#container
 #>
 function New-CardContainer {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([hashtable])]
     param (
         [scriptblock]$Content,
-        
+
         [string]
         [ValidateSet("Default", "Emphasis", "Attention", "Good", "Warning")]
         $Style = "Default",
 
         [string]
         [Parameter(Mandatory = $false)]
-        $Id
+        $Id,
+        [switch]$Hidden
     )
 
     $Container = @{
-        type = "Container"
+        type  = "Container"
         items = [System.Collections.ArrayList]@()
     }
 
@@ -87,6 +90,9 @@ function New-CardContainer {
 
     if ($Id) {
         $Container.id = $Id
+    }
+    if ($Hidden) {
+        $Container.isVisible = $false
     }
 
     $ContentResult = Invoke-Command -ScriptBlock $Content
@@ -98,5 +104,8 @@ function New-CardContainer {
         [void]($Container.items.Add($ContentResult))
     }
 
-    Return ($Container)
+    if ( $PSCmdlet.ShouldProcess("Creating Container element with style '$Style'." ) ) {
+        return ($Container)
+    }
+
 }

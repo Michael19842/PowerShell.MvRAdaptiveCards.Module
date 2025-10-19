@@ -34,28 +34,28 @@
         "Start Date" = "2020-01-15"
         "Employee ID" = "EMP001"
     }
-    
+
     Creates a fact set from a hashtable displaying employee information.
 
 .EXAMPLE
     $process = Get-Process -Name "notepad" | Select-Object -First 1
     New-CardFactSet -Object $process -Id "ProcessInfo"
-    
+
     Creates a fact set from a process object, showing its NoteProperties with an assigned ID.
 
 .EXAMPLE
     $fileInfo = Get-Item "C:\temp\file.txt"
     New-CardFactSet -Object $fileInfo -EveryProperty
-    
+
     Creates a fact set from a file object, including all properties (not just NoteProperties).
 
 .EXAMPLE
     New-CardFactSet -Facts @{
-        "Status" = "✅ Online"
+        "Status" = "Online"
         "Last Backup" = (Get-Date).ToString("yyyy-MM-dd HH:mm")
         "Size" = "2.5 GB"
     } -Id "SystemStatus"
-    
+
     Creates a fact set with system status information, including formatted dates and emojis.
 
 .NOTES
@@ -69,6 +69,8 @@
     https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/card-schema#factset
 #>
 function New-CardFactSet {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([hashtable])]
     param (
         [Parameter(Mandatory = $true, ParameterSetName = 'Hashtable')]
         [hashtable]$Facts,
@@ -84,7 +86,7 @@ function New-CardFactSet {
 
 
     $FactSet = @{
-        type = "FactSet"
+        type  = "FactSet"
         facts = @()
     }
     if ($Id) {
@@ -96,12 +98,13 @@ function New-CardFactSet {
         # Convert object properties to hashtable
         $Facts = @{}
         $Object | Get-Member | ForEach-Object {
-            if(($EveryProperty -or ($_.MemberType -eq 'NoteProperty')) -and $null -ne $_.Name  ) {
-                if($null -eq $Object.$($_.Name)) {
+            if (($EveryProperty -or ($_.MemberType -eq 'NoteProperty')) -and $null -ne $_.Name  ) {
+                if ($null -eq $Object.$($_.Name)) {
                     $Facts[$_.Name] = ''
                     return
-                } ELSE {
-                $Facts[$_.Name] = $Object.$($_.Name).ToString()
+                }
+                else {
+                    $Facts[$_.Name] = $Object.$($_.Name).ToString()
                 }
             }
 
@@ -115,5 +118,7 @@ function New-CardFactSet {
         }
     }
 
-    return $FactSet
+    if ($PSCmdlet.ShouldProcess("Creating FactSet element with ID '$Id'.")) {
+        return $FactSet
+    }
 }

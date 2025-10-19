@@ -14,13 +14,14 @@ Creates a new FactSet element for an Adaptive Card to display key-value pairs.
 
 ### Hashtable
 ```
-New-CardFactSet -Facts <Hashtable> [-Id <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+New-CardFactSet -Facts <Hashtable> [-Id <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### Object
 ```
-New-CardFactSet -Object <Object> [-Id <String>] [-EveryProperty] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+New-CardFactSet -Object <Object> [-Id <String>] [-EveryProperty] [-ProgressAction <ActionPreference>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -138,6 +139,36 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

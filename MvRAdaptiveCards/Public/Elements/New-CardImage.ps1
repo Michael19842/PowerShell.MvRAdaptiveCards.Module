@@ -48,22 +48,22 @@
 
 .EXAMPLE
     New-CardImage -Url "https://example.com/logo.png" -AltText "Company Logo"
-    
+
     Creates a basic image element with a URL and alt text.
 
 .EXAMPLE
     New-CardImage -Url "https://example.com/photo.jpg" -AltText "Team Photo" -Size "Large" -FitMode "Cover"
-    
+
     Creates a large image that covers its allocated space, potentially cropping parts of the image.
 
 .EXAMPLE
     New-CardImage -Url "https://example.com/chart.png" -AltText "Sales Chart" -Id "SalesChart" -AllowExpand -Separator
-    
+
     Creates an expandable image with a separator line above it and an ID for reference in actions.
 
 .EXAMPLE
     New-CardImage -Url "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==" -AltText "Red pixel" -Size "Small"
-    
+
     Creates a small image using a data URL (base64 encoded image).
 
 .NOTES
@@ -77,21 +77,23 @@
 .LINK
     https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/card-schema#image
 #>
-Function New-CardImage {
+function New-CardImage {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([hashtable])]
     param(
         [string]$Url,
         [string]$AltText,
-        [ValidateSet("Cover","Contain","Fill")]
+        [ValidateSet("Cover", "Contain", "Fill")]
         [string]$FitMode,
-        [ValidateSet("Auto","Stretch","Small","Medium","Large")]
+        [ValidateSet("Auto", "Stretch", "Small", "Medium", "Large")]
         [string]$Size,
         [string]
         [Parameter(Mandatory = $false)]
         $Id,
-        [switch]$Separator, 
+        [switch]$Separator,
         [switch]$AllowExpand,
         [switch]$AsBase64
-        
+
     )
 
     $Image = @{
@@ -100,7 +102,7 @@ Function New-CardImage {
         altText = $AltText
     }
 
-    if( $AsBase64 ) {
+    if ( $AsBase64 ) {
         #Download the image and convert to base64
         $WebClient = New-Object System.Net.WebClient
         $ImageBytes = $WebClient.DownloadData($Url)
@@ -112,7 +114,7 @@ Function New-CardImage {
     if ($Separator) {
         $Image.separator = $true
     }
-    
+
     if ($FitMode) {
         $Image.fitMode = $FitMode
     }
@@ -120,7 +122,7 @@ Function New-CardImage {
     if ($Id) {
         $Image.id = $Id
     }
-    
+
     if ($Size) {
         $Image.size = $Size
     }
@@ -128,7 +130,8 @@ Function New-CardImage {
     if ($AllowExpand) {
         $Image.allowExpand = $true
     }
-
-    return $Image
+    if ( $PSCmdlet.ShouldProcess("Creating Image element with URL '$Url'." ) ) {
+        return $Image
+    }
 
 }

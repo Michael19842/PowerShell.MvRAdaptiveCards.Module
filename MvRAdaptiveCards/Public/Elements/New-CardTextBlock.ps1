@@ -31,7 +31,7 @@
     The color scheme to apply to the text. Valid values are:
     - Default: Default text color
     - Dark: Dark text color
-    - Light: Light text color  
+    - Light: Light text color
     - Accent: Accent color (typically blue)
     - Good: Success/positive color (typically green)
     - Warning: Warning color (typically orange/yellow)
@@ -52,22 +52,22 @@
 
 .EXAMPLE
     New-CardTextBlock -Text "Welcome to our application!" -Size "Large" -Weight "Bolder"
-    
+
     Creates a large, bold welcome message.
 
 .EXAMPLE
-    New-CardTextBlock -Text "⚠️ This is a warning message" -Color "Warning" -Wrap
-    
+    New-CardTextBlock -Text "This is a warning message" -Color "Warning" -Wrap
+
     Creates a warning-colored text block with wrapping enabled and an emoji icon.
 
 .EXAMPLE
     New-CardTextBlock -Text "Status: System is operational" -Color "Good" -Id "StatusText"
-    
+
     Creates a success-colored status message with an ID for potential reference in actions.
 
 .EXAMPLE
     New-CardTextBlock -Text "This is a very long text that should wrap to multiple lines when displayed" -Wrap
-    
+
     Creates a text block with wrapping enabled for long content.
 
 .NOTES
@@ -81,6 +81,8 @@
     https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/card-schema#textblock
 #>
 function New-CardTextBlock {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([hashtable])]
     param (
         [string]
         $Text,
@@ -95,15 +97,15 @@ function New-CardTextBlock {
         [Parameter(Mandatory = $false)]
         $Id,
         [switch]
-        $Wrap 
+        $Wrap
     )
 
     $TextBlock = @{
-        type = "TextBlock"
-        text = $Text
-        size = $Size
+        type   = "TextBlock"
+        text   = $Text
+        size   = $Size
         weight = $Weight
-        color = $Color
+        color  = $Color
     }
     if ($Id) {
         $TextBlock.id = $Id
@@ -112,5 +114,7 @@ function New-CardTextBlock {
         $TextBlock.wrap = $true
     }
 
-    Return ($TextBlock)
+    if ( $PSCmdlet.ShouldProcess("Creating TextBlock element with text '$Text'." ) ) {
+        return $TextBlock
+    }
 }

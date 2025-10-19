@@ -12,8 +12,8 @@ $publicFolder = "$PSScriptRoot\..\$ModuleName\Public"
 
 # Step 1: Discover all function names in Public folder
 $functionNames = Get-ChildItem -Path $publicFolder -Filter '*.ps1' -Recurse |
-    Where-Object { $_.Name -notlike '*.Tests.ps1' } |
-    ForEach-Object { $_.BaseName } | Sort-Object -Unique
+Where-Object { $_.Name -notlike '*.Tests.ps1' } |
+ForEach-Object { $_.BaseName } | Sort-Object -Unique
 
 # Step 2: Update manifest
 $Manifest = Test-ModuleManifest -Path $manifestPath
@@ -21,11 +21,20 @@ if ($null -eq $Manifest) {
     throw "Module manifest not found or invalid at path: $manifestPath"
 }
 
+Write-Host "Discovered functions to export: $($functionNames -join ', ')"
+
+#Run script analysis to determine if any breaking changes were made
+$AnalysisResults = Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\$ModuleName" -Recurse
+
+#Output the analysis results for debugging
+$AnalysisResults
+
+
 #If the manifest already exports functions, compare and update if necessary
 if (($Manifest.ExportedFunctions.Keys -join '|') -ne ($functionNames -join '|') -or $BumpMajorVersion -or $BumpMinorVersion) {
     #Update version number by incrementing the build number
-    Write-Host "Current module version: $($Manifest.Version.ToString())"
-    
+    Write-Debug "Current module version: $($Manifest.Version.ToString())"
+
     if ($BumpMajorVersion) {
         $NewVersion = [version]::new($Manifest.Version.Major + 1, 0, 0, 0)
     }
@@ -35,26 +44,27 @@ if (($Manifest.ExportedFunctions.Keys -join '|') -ne ($functionNames -join '|') 
     else {
         $NewVersion = [version]::new($Manifest.Version.Major, $Manifest.Version.Minor, $Manifest.Version.Build + 1, 0)
     }
-    Write-Host "Updating module manifest at $manifestPath with functions: $($functionNames -join ', ')"
+    Write-Debug "Updating module manifest at $manifestPath with functions: $($functionNames -join ', ')"
 
-    Write-Host "New module version: $NewVersion"
-    
+    Write-Debug "New module version: $NewVersion"
+
     Update-ModuleManifest -Path $manifestPath -FunctionsToExport $functionNames -ModuleVersion $NewVersion
-} else {
-    Write-Host "Module manifest at $manifestPath is already up to date."
+}
+else {
+    Write-Debug "Module manifest at $manifestPath is already up to date."
 }
 
 #Use PlatyPS to build the documentation
-Import-Module PlatyPS 
+Import-Module PlatyPS
 
-Import-Module "${PSScriptRoot}\..\$ModuleName"
+Import-Module "$PSScriptRoot\..\$ModuleName"
 
 $docsPath = "$PSScriptRoot\..\docs"
 if (Test-Path $docsPath) {
-    Update-MarkdownHelpModule -RefreshModulePage -Path $docsPath -ModulePagePath "$docsPath\$ModuleName.md" 
-    Update-MarkdownHelp -Path $docsPath
+    [void](Update-MarkdownHelpModule -RefreshModulePage -Path $docsPath -ModulePagePath "$docsPath\$ModuleName.md")
+    [void](Update-MarkdownHelp -Path $docsPath)
 }
-Else{
-    New-MarkdownHelp -Module $ModuleName -OutputFolder $docsPath -WithModulePage
+else {
+    [void](New-MarkdownHelp -Module $ModuleName -OutputFolder $docsPath -WithModulePage)
 }
 
