@@ -199,6 +199,13 @@ function New-CardRichTextBlock {
     # $TestText = "{{s}}Dit{{/s}} is een {{b}}test{{/b}}{{large}} van{{/large}} een {{color:Dark}}{{italic}}RichTextBlock{{/italic}} met een actie{{/color}} en zonder."
     # $Text = $TestText
 
+    #Test if the are template tags in the text !{{TagName}}
+    $TemplateTagPattern = '!{{(.*?)}}'
+
+    #replace template tags with placeholder text to avoid interference with parsing
+    $Text = $Text -replace $TemplateTagPattern, '!{{#${1}#}}'
+
+
     $TagPattern = '{{(\/?)([a-zA-Z]+)(?::([^}]+))?}}'
     $TagsMatches = [regex]::Matches($Text, $TagPattern)
 
@@ -218,7 +225,7 @@ function New-CardRichTextBlock {
 
     foreach ($TagMatch in $TagsMatches) {
 
-        $CurrentText = $Text.Substring($CurrentIndex, $TagMatch.Index - $CurrentIndex)
+        $CurrentText = $Text.Substring($CurrentIndex, $TagMatch.Index - $CurrentIndex) -replace '!{{#(.*?)#}}', '!{{$1}}'
 
         Write-Debug "Current text segment: '$CurrentText'"
         Write-Debug "Tag found: $($TagMatch.Value) at index $($TagMatch.Index)"
@@ -472,7 +479,7 @@ function New-CardRichTextBlock {
     }
 
     #Grab any remaining text after the last tag
-    $RemainingText = $Text.Substring($CurrentIndex)
+    $RemainingText = $Text.Substring($CurrentIndex) -replace '!{{#(.*?)#}}', '!{{$1}}'
     if ($RemainingText.Length -gt 0) {
         $TextRun = New-CardTextRun -Text $RemainingText @ActiveStyle
         [void]$Inlines.Add($TextRun)

@@ -23,6 +23,9 @@ Builds a complete Adaptive Card by replacing template tags with actual content.
 ### [New-AdaptiveCard](New-AdaptiveCard.md)
 Creates a new Adaptive Card with the specified content and configuration options.
 
+### [New-CardActionOpenUrl](New-CardActionOpenUrl.md)
+{{ Fill in the Synopsis }}
+
 ### [New-CardActionSet](New-CardActionSet.md)
 Creates a new ActionSet element for an Adaptive Card to group multiple actions together.
 
