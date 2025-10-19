@@ -41,6 +41,9 @@ Creates a new Container element for an Adaptive Card.
 ### [New-CardFactSet](New-CardFactSet.md)
 Creates a new FactSet element for an Adaptive Card to display key-value pairs.
 
+### [New-CardIcon](New-CardIcon.md)
+Creates an Icon element for an Adaptive Card using Fluent UI icons.
+
 ### [New-CardImage](New-CardImage.md)
 Creates a new Image element for an Adaptive Card.
 

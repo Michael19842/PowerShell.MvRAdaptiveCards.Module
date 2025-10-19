@@ -8,10 +8,11 @@ Properties {
     $publicFolder = "$PSScriptRoot\..\$ModuleName\Public"
 
     #Define the variable so that it can be used in the tasks
-    $Manifest = $null
+    $Manifest = Test-ModuleManifest -Path $manifestPath
+
 }
 
-task prepare {
+Task prepare {
     $requiredModules = @('Pester', 'PlatyPS', 'PsScriptAnalyzer', 'PSake')
     #Install the required modules if they are not already installed
     foreach ($module in $requiredModules) {
@@ -21,12 +22,7 @@ task prepare {
     }
 }
 
-task updateManifest -Depends prepare -PreAction {
-    #Grab the current version from the manifest
-    $Manifest = Test-ModuleManifest -Path $manifestPath
-
-    Write-Debug "Current module version: $($Manifest.Version.ToString())"
-} -Action {
+Task updateManifest -RequiredVariables 'Manifest' -Depends prepare -Action {
     # Step 1: Discover all function names in Public folder
     $functionNames = Get-ChildItem -Path $publicFolder -Filter '*.ps1' -Recurse |
     Where-Object { $_.Name -notlike '*.Tests.ps1' } |
@@ -42,11 +38,11 @@ task updateManifest -Depends prepare -PreAction {
     }
 }
 
-task test -Action {
+Task test -Action {
     Invoke-Pester -Path ".\..\tests\"
 }
 
-task analyse -Action {
+Task analyse -Action {
     #Run script analysis to determine if any breaking changes were made
     $AnalysisResults = Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\$ModuleName" -Recurse
 
@@ -67,7 +63,7 @@ task analyse -Action {
 }
 
 
-task buildDocumentation -RequiredVariables 'ModuleName' -PreAction {
+Task buildDocumentation -RequiredVariables 'ModuleName' -PreAction {
     Import-Module "$PSScriptRoot\..\$ModuleName" -Global
     Import-Module PlatyPS
 } -Action {
@@ -83,7 +79,7 @@ task buildDocumentation -RequiredVariables 'ModuleName' -PreAction {
 }
 
 
-task default -Depends prepare, updateManifest, test, analyse, buildDocumentation
+Task default -Depends prepare, updateManifest, test, analyse, buildDocumentation
 
 
 
