@@ -5,7 +5,7 @@ Describe 'New-AdaptiveCard' {
     BeforeAll {
         # Import the module
         $ModulePath = Join-Path -Path $PSScriptRoot -ChildPath '..\MvRAdaptiveCards\MvRAdaptiveCards.psd1'
-        Import-Module $ModulePath -Force -ArgumentList @{$NoBanner = $true }
+        Import-Module $ModulePath -Force -ArgumentList $false, $true
     }
 
     Context 'Basic Functionality' {

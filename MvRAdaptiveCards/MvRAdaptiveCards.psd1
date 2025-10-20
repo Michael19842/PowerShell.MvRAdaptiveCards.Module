@@ -106,7 +106,7 @@
             Tags         = 'AdaptiveCards', 'Cards', 'PowerShell', 'MvRAdaptiveCards', 'MvR', 'MicrosoftTeams', 'Outlook', 'SMTP', 'Email', 'MsTeams', 'Teams'
 
             # A URL to the license for this module.
-            # LicenseUri = ''
+            LicenseUri   = 'https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/LICENSE'
 
             # A URL to the main website for this project.
             ProjectUri   = 'https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module'

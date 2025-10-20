@@ -14,13 +14,17 @@ Creates a new FactSet element for an Adaptive Card to display key-value pairs.
 
 ### Hashtable
 ```
-New-CardFactSet -Facts <Hashtable> [-Id <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+New-CardFactSet [-Facts] <Hashtable> [-Id <String>] [-Language <String>] [-TargetWidth <String>]
+ [-Height <String>] [-Requires <Hashtable>] [-Fallback <ScriptBlock>] [-GridArea <String>] [-Spacing <String>]
+ [-Separator] [-IsSortKey] [-IsHidden] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
 
 ### Object
 ```
-New-CardFactSet -Object <Object> [-Id <String>] [-EveryProperty] [-ProgressAction <ActionPreference>] [-WhatIf]
+New-CardFactSet [-Object] <Object> [-Id <String>] [-Language <String>] [-TargetWidth <String>]
+ [-Height <String>] [-Requires <Hashtable>] [-Fallback <ScriptBlock>] [-GridArea <String>] [-Spacing <String>]
+ [-EveryProperty] [-Separator] [-IsSortKey] [-IsHidden] [-ProgressAction <ActionPreference>] [-WhatIf]
  [-Confirm] [<CommonParameters>]
 ```
 
@@ -85,7 +89,7 @@ Parameter Sets: Hashtable
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -103,7 +107,7 @@ Parameter Sets: Object
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -126,6 +130,126 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Language
+Specifies the language/locale for the FactSet element. Used for proper text rendering
+and accessibility features. Alias: Lang
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: Lang
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TargetWidth
+Specifies the target width for the FactSet in adaptive layouts. Valid values include:
+- VeryNarrow, Narrow, Standard, Wide
+- atLeast:VeryNarrow, atMost:VeryNarrow, etc.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Height
+Controls the height behavior of the FactSet. Valid values are:
+- Auto: Height adjusts automatically to content (default)
+- Stretch: FactSet stretches to fill available vertical space
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Requires
+A hashtable specifying feature requirements for the FactSet. Used to declare dependencies
+on specific Adaptive Card features or host capabilities.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Fallback
+A scriptblock that defines fallback content to display if the FactSet cannot be rendered
+or is not supported by the host. Should return an appropriate Adaptive Card element.
+
+```yaml
+Type: ScriptBlock
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -GridArea
+Specifies the named grid area where the FactSet should be placed when used in a grid layout.
+This corresponds to the CSS grid-area property.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Spacing
+Controls the amount of spacing above the FactSet. Valid values are:
+- None: No spacing
+- Small: Small spacing
+- Default: Default spacing
+- Medium: Medium spacing
+- Large: Large spacing
+- ExtraLarge: Extra large spacing
+- Padding: Adds padding around the element
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -EveryProperty
 A switch parameter available only when using the Object parameter.
 When specified, includes all
@@ -135,6 +259,54 @@ property types from the object (not just NoteProperties) in the fact set.
 Type: SwitchParameter
 Parameter Sets: Object
 Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Separator
+When specified, adds a separator line above the FactSet to visually separate it from
+preceding content.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsSortKey
+When specified, marks this FactSet as a sort key element. Used in scenarios where
+multiple elements need to be sorted or grouped.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsHidden
+When specified, sets the FactSet to be hidden (isVisible = false). The element will
+not be displayed but can be shown programmatically. Alias: Hide
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: Hide
 
 Required: False
 Position: Named
