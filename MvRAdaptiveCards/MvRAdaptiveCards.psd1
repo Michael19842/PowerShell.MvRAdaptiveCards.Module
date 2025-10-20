@@ -12,7 +12,7 @@
     RootModule        = 'MvRAdaptiveCards.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.6.1.1'
+    ModuleVersion     = '0.6.1.2'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -112,7 +112,7 @@
             ProjectUri   = 'https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            IconUri      = 'https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/logo40x57.png'
 
             # ReleaseNotes of this module
             ReleaseNotes = ' Initial release: MvRAdaptiveCards module.
