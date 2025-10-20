@@ -169,7 +169,8 @@ An extensive set of function documentation (*generated using PlatyPS*) is availa
 
 ## Development
 This module is still under active development. There is a long list of planned features and improvements including:
-- Testing framework for automated tests
+- Testing framework for automated tests (using Pester) [partially implemented]
+- Additional example for your reference
 - Input fields
 - More action types
 - Chart support

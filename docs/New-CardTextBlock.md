@@ -13,8 +13,12 @@ Creates a new TextBlock element for an Adaptive Card.
 ## SYNTAX
 
 ```
-New-CardTextBlock [[-Text] <String>] [[-Size] <String>] [[-Weight] <String>] [[-Color] <String>]
- [[-Id] <String>] [-Wrap] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-CardTextBlock [[-Text] <String>] [[-labelFor] <String>] [[-MaximumNumberOfLines] <Int32>]
+ [[-Style] <String>] [[-Height] <String>] [[-HorizontalAlignment] <String>] [[-GridArea] <String>]
+ [[-Weight] <String>] [[-Color] <String>] [[-Id] <String>] [[-FontType] <String>] [[-Fallback] <ScriptBlock>]
+ [[-Requires] <Hashtable>] [[-Language] <String>] [[-Size] <String>] [[-Spacing] <String>] [-Separator] [-Wrap]
+ [-IsSortKey] [-IsSubtle] [-IsHidden] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,15 +75,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Size
-The size of the text.
-Common values include:
-- Default: Standard text size
-- Small: Smaller than default
-- Medium: Medium size text
-- Large: Large text
-- ExtraLarge: Extra large text
-Default value is "Default".
+### -labelFor
+Specifies the ID of another element that this TextBlock serves as a label for.
+This is used for accessibility purposes to associate labels with form elements.
 
 ```yaml
 Type: String
@@ -88,7 +86,92 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: Default
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MaximumNumberOfLines
+The maximum number of lines to display. Text that exceeds this limit will be truncated.
+Alias: MaxLines
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: MaxLines
+
+Required: False
+Position: 3
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Style
+The text style to apply. Valid values are:
+- default: Standard text style
+- columnHeader: Styled as a column header
+- heading: Styled as a heading
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Height
+Controls the height behavior of the TextBlock. Valid values are:
+- auto: Height adjusts automatically to content (default)
+- stretch: TextBlock stretches to fill available vertical space
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HorizontalAlignment
+Controls the horizontal alignment of the text within its container. Valid values are:
+- Left: Aligns text to the left side
+- Center: Centers text horizontally
+- Right: Aligns text to the right side
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -GridArea
+Specifies the named grid area where the TextBlock should be placed when used in a grid layout.
+This corresponds to the CSS grid-area property.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -107,7 +190,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 8
 Default value: Default
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -131,7 +214,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 9
 Default value: Default
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -148,8 +231,133 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 10
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FontType
+The font family to use for the text. Valid values are:
+- Default: Default system font
+- Monospace: Monospace font for code or data display
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Fallback
+A scriptblock that defines fallback content to display if the TextBlock cannot be rendered
+or is not supported by the host. Should return an appropriate Adaptive Card element.
+
+```yaml
+Type: ScriptBlock
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Requires
+A hashtable specifying feature requirements for the TextBlock. Used to declare dependencies
+on specific Adaptive Card features or host capabilities.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Language
+Specifies the language/locale for the TextBlock element. Used for proper text rendering
+and accessibility features. Alias: Lang
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: Lang
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Size
+The size of the text.
+Common values include:
+- Default: Standard text size
+- Small: Smaller than default
+- Medium: Medium size text
+- Large: Large text
+- ExtraLarge: Extra large text
+Default value is "Default".
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
+Default value: Default
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Spacing
+Controls the amount of spacing above the TextBlock. Valid values are:
+- None: No spacing
+- Small: Small spacing
+- Default: Default spacing
+- Medium: Medium spacing
+- Large: Large spacing
+- ExtraLarge: Extra large spacing
+- Padding: Adds padding around the element
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 16
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Separator
+When specified, adds a separator line above the TextBlock to visually separate it from
+preceding content.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -164,6 +372,54 @@ Without this parameter, text may be clipped if it exceeds the available width.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsSortKey
+When specified, marks this TextBlock as a sort key element. Used in scenarios where
+multiple elements need to be sorted or grouped.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsSubtle
+When specified, displays the text in a more subtle/muted appearance, typically with
+reduced opacity or lighter color.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsHidden
+When specified, sets the TextBlock to be hidden (isVisible = false). The element will
+not be displayed but can be shown programmatically. Alias: Hidden
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: Hidden
 
 Required: False
 Position: Named

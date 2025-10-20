@@ -53,6 +53,9 @@ Creates an Icon element for an Adaptive Card using Fluent UI icons.
 ### [New-CardImage](New-CardImage.md)
 Creates a new Image element for an Adaptive Card.
 
+### [New-CardImageSet](New-CardImageSet.md)
+Creates an ImageSet element for an Adaptive Card to display a collection of images.
+
 ### [New-CardRichTextBlock](New-CardRichTextBlock.md)
 Creates a new RichTextBlock element for an Adaptive Card with advanced inline formatting capabilities.
 
