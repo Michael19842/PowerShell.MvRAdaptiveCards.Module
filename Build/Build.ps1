@@ -38,11 +38,17 @@ Task updateManifest -RequiredVariables 'Manifest' -Depends prepare -Action {
         Write-Debug "Updating module manifest at $manifestPath with functions: $($functionNames -join ', ')"
         #Save the updated manifest
         Update-ModuleManifest -Path $manifestPath -FunctionsToExport $functionNames -ModuleVersion $NewVersion
+
+        #Correct the formatting of the manifest file (Update-ModuleManifest messes up the formatting)
+        $manifestContent = Get-Content -Path $manifestPath
+        $formattedContent = $manifestContent -replace '^( {4})(\w+)(\s+=\s+)', '$1$2 = '
+        Set-Content -Path $manifestPath -Value $formattedContent
     }
+
 }
 
 Task test -Action {
-    Invoke-Pester -Path ".\..\tests\"
+    Invoke-Pester -Path ".\..\tests\*.Tests.ps1"
 }
 
 Task analyse -Action {

@@ -32,6 +32,9 @@ Creates a new ActionSet element for an Adaptive Card to group multiple actions t
 ### [New-CardActionShowCard](New-CardActionShowCard.md)
 Creates a new Action.ShowCard element that displays a card when the action is triggered.
 
+### [New-CardActionSubmit](New-CardActionSubmit.md)
+{{ Fill in the Synopsis }}
+
 ### [New-CardActionToggleVisibility](New-CardActionToggleVisibility.md)
 Creates a new Action.ToggleVisibility element that shows or hides targeted card elements.
 

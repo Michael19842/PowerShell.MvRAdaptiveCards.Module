@@ -3,7 +3,8 @@
 
 [CmdletBinding()]
 param (
-    [switch]$ExposePrivateFunctions
+    [switch]$ExposePrivateFunctions,
+    [switch]$NoBanner
 )
 
 #Set the maximum depth for JSON conversion
@@ -42,3 +43,9 @@ if (Test-Path $_SettingsFile) {
 else {
     $_MvRACSettings = $null
 }
+
+
+# Only show when interactive (avoid in CI or non-interactive runs)
+if (-not $Host.UI.RawUI -or $NoBanner) { return }
+Write-Banner
+

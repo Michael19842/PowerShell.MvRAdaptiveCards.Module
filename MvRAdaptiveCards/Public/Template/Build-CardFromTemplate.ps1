@@ -95,9 +95,6 @@ function Build-CardFromTemplate {
     $TemplateTags = Find-CardTemplateTag -Content $Content
     $ContentAsJson = $Content | ConvertTo-Json -Depth $_MaxDepth
 
-    Write-Host $_MaxDepth
-    Write-Host $ContentAsJson
-
     foreach ($Key in $Tags.Keys) {
         if ($TemplateTags -contains $Key) {
             $TagValue = $Tags[$Key]

@@ -298,9 +298,10 @@ function New-AdaptiveCard {
     if ($ContentResult -is [array]) {
         [void]($BaseCard.body.AddRange($ContentResult))
     }
-    else {
+    elseif ($ContentResult -is [hashtable]) {
         [void]($BaseCard.body.Add($ContentResult))
     }
+
 
     if ($Id) {
         $BaseCard.id = $Id
@@ -392,7 +393,7 @@ function New-AdaptiveCard {
         $BaseCard.verticalContentAlignment = $verticalContentAlignment
     }
     #Test if the output conforms to the Adaptive Card schema
-    $Json = $BaseCard | ConvertTo-Json -Depth $_MaxDepth
+    $Json = $BaseCard | ConvertTo-Json -Depth $_MaxDepth -Compress
 
 
     if ($TestSchema) {
