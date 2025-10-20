@@ -1,5 +1,4 @@
-![header](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/logo80x114.png)
-# MvRAdaptiveCards
+# ![header](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/logo80x114.png) MvRAdaptiveCards
 PowerShell Module for creating (and posting) Adaptive Cards in PowerShell.
 
 ![header](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/header.png)
