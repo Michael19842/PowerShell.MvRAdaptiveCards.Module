@@ -68,7 +68,7 @@ Accept wildcard characters: False
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: Default, Dark, Light, Accent, Good, Warning, Attention
+Accepted values: Default, Positive, Destructive
 
 Required: False
 Position: 2

@@ -9,7 +9,7 @@ function New-CardActionOpenUrl {
         [string]$Title,
 
         [Parameter(Mandatory = $false)]
-        [ValidateSet("Default", "Dark", "Light", "Accent", "Good", "Warning", "Attention")]
+        [ValidateSet("Default", "Positive", "Destructive")]
         [string]$Style,
 
         [Parameter(Mandatory = $false)]

@@ -25,7 +25,7 @@ function Send-CardViaClassicOutlook {
         $mail.Subject = $Subject
 
         # Create the HTML body with the Adaptive Card JSON embedded
-        $HtmlTemplate = Get-Content -Path "$PSScriptRoot\HtmlTemplate.html" -Raw
+        $HtmlTemplate = Get-Content -Path "$PSScriptRoot\Templates\HtmlTemplate.html" -Raw
         $HtmlBody = $ExecutionContext.InvokeCommand.ExpandString($HtmlTemplate)
         $mail.HTMLBody = $HtmlBody
 

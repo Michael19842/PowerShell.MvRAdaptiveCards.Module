@@ -12,7 +12,8 @@ $_MaxDepth = 40
 
 # Export-ModuleMember -Variable none
 $ModuleName = 'MvRAdaptiveCards'
-
+#Get the current module version
+$ModuleVersion = (Test-ModuleManifest -Path "$PSScriptRoot\MvRAdaptiveCards.psd1").Version
 
 foreach ($Folder in @('Private', 'Public', 'Collection', 'ArgumentCompleters')) {
     $LogicFiles = Get-ChildItem -Path $PSScriptRoot\$Folder -Filter '*.ps1' -Recurse

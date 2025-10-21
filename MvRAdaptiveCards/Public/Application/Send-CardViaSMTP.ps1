@@ -54,7 +54,7 @@ function Send-CardViaSMTP {
         }
 
         #Get the HTML template
-        $HtmlTemplate = Get-Content -Path "$PSScriptRoot\HtmlTemplate.html" -Raw
+        $HtmlTemplate = Get-Content -Path "$PSScriptRoot\Templates\HtmlTemplate.html" -Raw
 
         $HtmlBody = $ExecutionContext.InvokeCommand.ExpandString($HtmlTemplate)
 

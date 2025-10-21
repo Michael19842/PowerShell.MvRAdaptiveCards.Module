@@ -68,6 +68,9 @@ Creates a template tag placeholder that can be replaced with dynamic content in 
 ### [New-CardTextBlock](New-CardTextBlock.md)
 Creates a new TextBlock element for an Adaptive Card.
 
+### [Out-CardPreview](Out-CardPreview.md)
+Opens an Adaptive Card in the online Adaptive Cards Designer for visualization and testing.
+
 ### [Out-OnlineDesigner](Out-OnlineDesigner.md)
 Opens an Adaptive Card in the online Adaptive Cards Designer for visualization and testing.
 

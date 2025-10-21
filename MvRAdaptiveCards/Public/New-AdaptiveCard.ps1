@@ -308,7 +308,11 @@ function New-AdaptiveCard {
     }
 
     if ($Actions) {
-        $BaseCard.actions = Invoke-Command -ScriptBlock $Actions
+        #force actions to be an array
+        $BaseCard.actions = @()
+        Invoke-Command -ScriptBlock $Actions | ForEach-Object {
+            $BaseCard.actions += $_
+        }
     }
 
     if ($Fallback) {

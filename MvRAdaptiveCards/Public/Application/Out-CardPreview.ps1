@@ -64,7 +64,7 @@
 .LINK
     New-AdaptiveCard
 #>
-function Out-OnlineDesigner {
+function Out-CardPreview {
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
     [OutputType([void])]
     param (
@@ -74,10 +74,9 @@ function Out-OnlineDesigner {
     process {
 
         # Escape JSON for embedding in HTML/JS
-        $Json = $Json -replace '"', '\"' -replace "`n", '' -replace "`r", ''
 
         # Generate HTML with iframe and postMessage handling
-        $html = Get-Content -Path "$PSScriptRoot\Templates\DesignerFrameTemplate.html" -Raw
+        $html = Get-Content -Path "$PSScriptRoot\Templates\PreviewCard.html" -Raw
 
         $html = $ExecutionContext.InvokeCommand.ExpandString($html)
 
