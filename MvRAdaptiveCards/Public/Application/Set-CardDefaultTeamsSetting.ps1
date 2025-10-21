@@ -82,7 +82,7 @@ function Set-CardDefaultTeamsSetting {
     $_CurrentMvRACSettings = Get-Content -Path $_SettingsFile -Raw | ConvertFrom-JsonAsHashtable
 
     # If the settings were not found, initialize them
-    if ($null -eq $script:_MvRACSettings) {
+    if ($null -eq $_MvRACSettings) {
         $_MvRACSettings = @{
             Context = @{
                 User = $env:USERNAME
@@ -92,7 +92,7 @@ function Set-CardDefaultTeamsSetting {
     }
 
     # Validate the context to ensure it matches the current user/machine
-    if ($script:_CurrentMvRACSettings.Context.User -ne $env:USERNAME -or $_CurrentMvRACSettings.Context.Host -ne $env:COMPUTERNAME) {
+    if ($_CurrentMvRACSettings.Context.User -ne $env:USERNAME -or $_CurrentMvRACSettings.Context.Host -ne $env:COMPUTERNAME) {
         Write-Warning "The existing settings file was created for user '$($_CurrentMvRACSettings.Context.User)' on host '$($_CurrentMvRACSettings.Context.Host)'. The current user is '$env:USERNAME' on host '$env:COMPUTERNAME'. Settings will be updated to match the current context. But additional steps may be required to ensure proper operation."
         $_MvRACSettings.Context.User = $env:USERNAME
         $_MvRACSettings.Context.Host = $env:COMPUTERNAME
