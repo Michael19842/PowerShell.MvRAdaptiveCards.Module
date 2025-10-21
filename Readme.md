@@ -64,7 +64,9 @@ New-AdaptiveCard -Content {
         New-CardTextBlock -Text "Welcome to the Adaptive Cards demo!" -Size 'Large' -Weight 'Bolder' -Color 'Good'
         New-CardTextBlock -Text "This is a container inside the adaptive card." -Color 'Dark'
     } -Style 'Good'
-} -Actions { New-CardActionToggleVisibility -Title "Toggle Cat Image" -TargetElements @("CatImage") } | Out-CardPreview
+} -Actions {
+    New-CardActionToggleVisibility -Title "Toggle Cat Image" -TargetElements @("CatImage")
+} | Out-CardPreview
 ```
 ![preview](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/preview.png)
 
