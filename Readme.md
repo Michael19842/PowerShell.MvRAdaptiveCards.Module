@@ -39,6 +39,8 @@ New-CardAdaptiveCard -Content {
 #This will output the JSON structure of the Adaptive Card which you can then use in your applications or post to Microsoft Teams.
 ```
 
+### Previewing cards in the Adaptive Cards Designer
+
 You can also directly open and edit your card in the [Adaptive Cards Online Designer](https://adaptivecards.microsoft.com/designer) using the `Out-OnlineDesigner` cmdlet:
 
 ```powershell
@@ -54,6 +56,7 @@ New-AdaptiveCard -Content {
 
 ![designer](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/example.png)
 
+### Previewing cards locally using the built-in previewer
 
 You can also preview your card directly in a built-in previewer (Using the JavaScript based renderer) using the `Out-CardPreview` cmdlet:
 
@@ -68,7 +71,7 @@ New-AdaptiveCard -Content {
     New-CardActionToggleVisibility -Title "Toggle Cat Image" -TargetElements @("CatImage")
 } | Out-CardPreview
 ```
-![preview](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/preview.png)
+![preview](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/previewsmall.png)
 
 ## Sending Cards using Outlook as client
 You can send Adaptive Cards via Outlook using the `Send-CardViaClassicOutlook` cmdlet. Here's an example:
