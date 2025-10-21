@@ -50,10 +50,23 @@ New-AdaptiveCard -Content {
 } | Out-OnlineDesigner
 
 ```
-
 > This generates the Adaptive Card JSON, creates a temporary file, and opens it in the Adaptive Cards Designer in an iFrame. Then it posts the card to that iFrame on the ready event. It is a bit hacky, but it works great when you want to quickly prototype or edit your cards.
 
 ![designer](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/example.png)
+
+
+You can also preview your card directly in a built-in previewer (Using the JavaScript based renderer) using the `Out-CardPreview` cmdlet:
+
+```powershell
+New-AdaptiveCard -Content {
+    New-CardContainer -Content {
+        New-CardImage -Url "https://adaptivecards.io/content/cats/1.png" -AltText "Example Image" -Id "CatImage"
+        New-CardTextBlock -Text "Welcome to the Adaptive Cards demo!" -Size 'Large' -Weight 'Bolder' -Color 'Good'
+        New-CardTextBlock -Text "This is a container inside the adaptive card." -Color 'Dark'
+    } -Style 'Good'
+} -Actions { New-CardActionToggleVisibility -Title "Toggle Cat Image" -TargetElements @("CatImage") } | Out-CardPreview
+```
+![preview](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/preview.png)
 
 ## Sending Cards using Outlook as client
 You can send Adaptive Cards via Outlook using the `Send-CardViaClassicOutlook` cmdlet. Here's an example:
