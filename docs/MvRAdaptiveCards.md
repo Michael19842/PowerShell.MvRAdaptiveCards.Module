@@ -20,6 +20,9 @@ Builds a complete Adaptive Card by replacing template tags with actual content.
 ### [Build-CardFromTemplate](Build-CardFromTemplate.md)
 Builds a complete Adaptive Card by replacing template tags with actual content.
 
+### [Get-CardResponse](Get-CardResponse.md)
+{{ Fill in the Synopsis }}
+
 ### [New-AdaptiveCard](New-AdaptiveCard.md)
 Creates a new Adaptive Card with the specified content and configuration options.
 
@@ -55,6 +58,9 @@ Creates a new Image element for an Adaptive Card.
 
 ### [New-CardImageSet](New-CardImageSet.md)
 Creates an ImageSet element for an Adaptive Card to display a collection of images.
+
+### [New-CardInputText](New-CardInputText.md)
+{{ Fill in the Synopsis }}
 
 ### [New-CardRichTextBlock](New-CardRichTextBlock.md)
 Creates a new RichTextBlock element for an Adaptive Card with advanced inline formatting capabilities.

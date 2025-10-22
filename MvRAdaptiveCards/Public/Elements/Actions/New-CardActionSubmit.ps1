@@ -16,12 +16,16 @@ function New-CardActionSubmit {
         [scriptblock]
         $Fallback,
 
+        [parameter(Mandatory = $false)]
+        [object]
         $Data
     )
+
     $Action = @{
         type  = "Action.Submit"
         title = $Title
     }
+
     if ($Id) {
         $Action.id = $Id
     }
@@ -29,11 +33,7 @@ function New-CardActionSubmit {
         $Action.style = $Style
     }
 
-    if ($PSCmdlet.ShouldProcess("Creating Action.Submit with title '$Title'")) {
-        return $Action
-    }
-
-    if ($Data) {
+    if ($null -ne $Data) {
         if ( $Data -is [scriptblock] ) {
             $Action.data = Invoke-Command -ScriptBlock $Data
         }

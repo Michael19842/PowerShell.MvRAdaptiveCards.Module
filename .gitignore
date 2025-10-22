@@ -3,3 +3,4 @@ Test-Designer.ps1
 Build/BuildConfig.json
 .vscode/*
 
+Test-Michael.ps1
