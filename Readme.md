@@ -88,7 +88,7 @@ $NewServerFormResponse = New-AdaptiveCard {
         New-CardActionSubmit -Title "Create Server"
     }
 
-} | Get-CardResponse | ConvertFrom-Json
+} | Get-CardResponse
 
 
 Write-Host "Creating a new server with the following details:"

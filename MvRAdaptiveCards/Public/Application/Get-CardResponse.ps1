@@ -112,6 +112,8 @@
             $Runspace.Close()
             $Runspace.Dispose()
         }
-        return $data
+        if ( $null -ne $data ) {
+            return $data | ConvertFrom-Json
+        }
     }
 }
