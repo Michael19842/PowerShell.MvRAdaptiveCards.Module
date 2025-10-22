@@ -12,7 +12,7 @@
     RootModule        = 'MvRAdaptiveCards.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.6.9.0'
+    ModuleVersion     = '0.6.8.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -69,25 +69,25 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = 'Build-CardFromTemplate', 'Find-CardTemplateTag', 'Get-CardResponse', 
-    'New-AdaptveCard', 'ew-CardActonOpenUrl' 'New-CardctionSet', 
-    'New-ardActionSowCard', 'ew-CardActonSubmit', 
-    'New-CardAtionToggleisibility' 'New-CardodeBlock', 
-    'New-CardContainer', 'New-CardFactSet', 'New-CardIon', 'New-ardImage', 
-    'New-CrdImageSet, 'New-CarRichTextblck', 'New-ardTable', 
-                                              'New-CadTemplateTg', 'New-CrdTextBloc', 'Out-CadPreview', 
-                                             'Out-OnineDesigne', 'Send-CrdViaClasscOutlook', 
+    FunctionsToExport = 'Build-CardFromTemplate', 'Find-CardTemplateTag', 'Get-CardResponse',
+    'New-AdaptiveCard', 'New-CardActionOpenUrl', 'New-CardActionSet',
+    'New-CardActionShowCard', 'New-CardActionSubmit',
+    'New-CardActionToggleVisibility', 'New-CardCodeBlock',
+    'New-CardContainer', 'New-CardFactSet', 'New-CardIcon', 'New-CardImage',
+    'New-CardImageSet', 'New-CardInputText', 'New-CardRichTextblock',
+    'New-CardTable', 'New-CardTemplateTag', 'New-CardTextBlock',
+    'Out-CardPreview', 'Out-OnlineDesigner', 'Send-CardViaClassicOutlook',
     'Send-CardViaSMTP', 'Send-CardViaTeams', 'Set-CardDefaultSmtpSetting',
     'Set-CardDefaultTeamsSetting'
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-    CmdletsToExport = @()
+    CmdletsToExport   = @()
 
     # Variables to export from this module
     VariablesToExport = '*'
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-    AliasesToExport = @()
+    AliasesToExport   = @()
 
     # DSC resources to export from this module
     # DscResourcesToExport = @()
@@ -99,7 +99,7 @@
     # FileList = @()
 
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
-    PrivateData = @{
+    PrivateData       = @{
 
         PSData = @{
 
@@ -117,11 +117,11 @@
 
             # ReleaseNotes of this module
             ReleaseNotes = ' Initial release: MvRAdaptiveCards module.
-    -------------------------------------------------------------------------- -
-    - Added functions for creating card elements like text blocks, images, containers, and action sets.
-    - Implemented template tagging and building for dynamic card generation.
-    - Included integration functions for sending cards via Microsoft Teams and SMTP email.
-    - Improved documentation and added examples for all public functions.'
+        ---------------------------------------------------------------------------
+        - Added functions for creating card elements like text blocks, images, containers, and action sets.
+        - Implemented template tagging and building for dynamic card generation.
+        - Included integration functions for sending cards via Microsoft Teams and SMTP email.
+        - Improved documentation and added examples for all public functions.'
 
             # Prerelease string of this module
             # Prerelease = ''
@@ -137,7 +137,7 @@
     } # End of PrivateData hashtable
 
     # HelpInfo URI of this module
-    HelpInfoURI = 'https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module'
+    HelpInfoURI       = 'https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''

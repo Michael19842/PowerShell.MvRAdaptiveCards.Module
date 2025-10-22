@@ -73,6 +73,31 @@ New-AdaptiveCard -Content {
 ```
 ![preview](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/previewsmall.png)
 
+### Use Adaptive Cards as prompt in PowerShell
+You can use Adaptive Cards as interactive prompts in PowerShell using the `Get-CardResponse` cmdlet. Here's an example:
+
+```powershell
+$NewServerFormResponse = New-AdaptiveCard {
+    New-CardContainer -Content {
+        New-CardTextBlock -Text "Create New Server" -Size Large -Weight Bolder -Wrap
+        New-CardTextBlock -Text "Please provide the server details below." -Wrap
+    } -Style 'Emphasis'
+    New-CardInputText -Id "ServerName" -Placeholder "Enter server name" -IsRequired $true -Label "Server Name"
+    New-CardInputText -Id "ServerIP" -Placeholder "Enter server IP address" -IsRequired $true -Label "Server IP"
+    New-CardActionSet -Actions {
+        New-CardActionSubmit -Title "Create Server"
+    }
+
+} | Get-CardResponse | ConvertFrom-Json
+
+
+Write-Host "Creating a new server with the following details:"
+Write-Host "Server Name: $($NewServerFormResponse.ServerName)"
+Write-Host "Server IP: $($NewServerFormResponse.ServerIP)"
+```
+
+
+
 ## Sending Cards using Outlook as client
 You can send Adaptive Cards via Outlook using the `Send-CardViaClassicOutlook` cmdlet. Here's an example:
 
