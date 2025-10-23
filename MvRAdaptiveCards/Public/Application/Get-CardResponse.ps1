@@ -20,10 +20,10 @@
 
 
         if ($IsWindows) {
-            $ServiceUrl = "http://localhost:8080/"
+            $ServiceUrl = "http://localhost:8081/"
         }
         else {
-            $ServiceUrl = "http://+:8080/"
+            $ServiceUrl = "http://+:8081/"
         }
 
         #Read the JSON and only load needed extensions
@@ -86,10 +86,24 @@
                         $data = $reader.ReadToEnd()
                         $reader.Close()
 
-                        $responseString = "<html><body><h3>Thanks! Data received.</h3></body></html>"
+                        $responseString = "Thanks! Data received"
                         $buffer = [System.Text.Encoding]::UTF8.GetBytes($responseString)
+
+                        # Set response headers
+                        $response.ContentLength64 = $buffer.Length
+                        $response.ContentType = "text/plain; charset=utf-8"
+                        $response.StatusCode = 200
+
+                        # Write response
                         $response.OutputStream.Write($buffer, 0, $buffer.Length)
+
+                        # CRITICAL: Flush and close the output stream before breaking
+                        $response.OutputStream.Flush()
+                        $response.OutputStream.Close()
                         $response.Close()
+
+                        # Small delay to ensure response is sent
+                        Start-Sleep -Milliseconds 100
 
                         $data
 

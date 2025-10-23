@@ -228,7 +228,10 @@
                                         window.close();
 
                                         return true;
-                                    })
+                                    }).catch(error => {
+                                        console.error('Error submitting action data:', error);
+
+                                    });
 
                                     console.log('Action executed:', action);
                                 }
