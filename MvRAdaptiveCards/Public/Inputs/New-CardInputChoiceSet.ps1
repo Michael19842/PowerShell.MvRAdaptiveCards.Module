@@ -9,7 +9,7 @@ function New-CardInputChoiceSet {
         [string]$Title,
 
         [Parameter(Mandatory = $false)]
-        [hashtable[]]$Choices,
+        [hashtable]$Choices,
 
         [Parameter(Mandatory = $false)]
         [string]$Value,
@@ -56,7 +56,13 @@ function New-CardInputChoiceSet {
     }
 
     if ($Choices) {
-        $InputChoiceSet.choices = $Choices
+        foreach ($key in $Choices.Keys) {
+            $choiceItem = @{
+                value = $key
+                title = $Choices[$key]
+            }
+            $ChoicesList += $choiceItem
+        }
     }
 
     if ($Value) {

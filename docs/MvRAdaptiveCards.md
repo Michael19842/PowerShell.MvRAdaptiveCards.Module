@@ -74,6 +74,9 @@ Creates an ImageSet element for an Adaptive Card to display a collection of imag
 ### [New-CardInputText](New-CardInputText.md)
 {{ Fill in the Synopsis }}
 
+### [New-CardInputToggle](New-CardInputToggle.md)
+Creates an Input.Toggle element for Adaptive Cards.
+
 ### [New-CardLayoutAreaGrid](New-CardLayoutAreaGrid.md)
 Creates a new AreaGrid layout for an Adaptive Card container.
 

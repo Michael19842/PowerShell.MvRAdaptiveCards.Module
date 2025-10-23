@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-New-CardInputChoiceSet [-Id] <String> [[-Title] <String>] [[-Choices] <Hashtable[]>] [[-Value] <String>]
+New-CardInputChoiceSet [-Id] <String> [[-Title] <String>] [[-Choices] <Hashtable>] [[-Value] <String>]
  [[-IsRequired] <Boolean>] [[-Placeholder] <String>] [[-Label] <String>] [[-Style] <String>]
  [[-Spacing] <String>] [[-TargetWidth] <String>] [[-GridArea] <String>] [-IsHidden] [-isSortKey] [-separator]
  [-isMultiSelect] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
@@ -37,7 +37,7 @@ PS C:\> {{ Add example code here }}
 {{ Fill Choices Description }}
 
 ```yaml
-Type: Hashtable[]
+Type: Hashtable
 Parameter Sets: (All)
 Aliases:
 

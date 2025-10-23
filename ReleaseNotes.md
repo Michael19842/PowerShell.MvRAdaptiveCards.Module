@@ -1,5 +1,19 @@
 # Release Notes
 
+## 0.6.13.0
+- Updated `-Choices` parameter in `New-CardInputChoiceSet` to accept a hashtable for easier choice definition.
+- Added `New-CardInputToggle` function to create toggle input elements in adaptive cards.
+- Added argument completer for the `-icon` parameter in `New-CardBadge` to support icon name completion.
+
+```PowerShell
+New-AdaptiveCard {
+    New-CardInputToggle -Id "AcceptTerms" -Title "I accept the terms and conditions." -Value "true" -ValueOff "false" -IsRequired $true -Label "Terms and Conditions"
+    New-CardActionSet -Actions {
+        New-CardActionSubmit -Title "Submit"
+    }
+} | Get-CardResponse
+```
+
 ## 0.6.12.1
 - Fixed race condition in `Get-CardResponse` when handling responses. This would sometimes cause fetch errors.
 - Switched to port 8081 for local response server in `Get-CardResponse` to avoid conflicts with other services. (i will make this configurable in a future release)
