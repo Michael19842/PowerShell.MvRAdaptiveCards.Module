@@ -8,7 +8,9 @@
         [string]$PromptTitle = "Adaptive Card prompt",
 
         [parameter(Mandatory = $false)]
-        [string]$CardTitle = "Adaptive Card"
+        [string]$CardTitle = "Adaptive Card",
+
+        [switch]$ServeOnly
     )
 
     #Serve the card as a web page to capture response
@@ -17,22 +19,25 @@
         $html = Get-Content -Path "$PSScriptRoot\Templates\PromptCard.html" -Raw
         $html = $ExecutionContext.InvokeCommand.ExpandString($html)
 
+        if ($IsWindows) {
+            $ServiceUrl = "http://localhost:8080/"
+        }
+        else {
+            $ServiceUrl = "http://+:8080/"
+        }
+
         #Create a task to listen for requests
         $Runspace = [runspacefactory]::CreateRunspace()
         $Runspace.Open()
 
         $ScriptBlock = {
-            param ($html)
+            param ($html, $ServiceUrl)
 
             $listener = [System.Net.HttpListener]::new()
             #Test if the host is a windows system to determine the correct prefix
 
-            if ($IsWindows) {
-                $listener.Prefixes.Add("http://localhost:8080/")
-            }
-            else {
-                $listener.Prefixes.Add("http://+:8080/")
-            }
+            $listener.Prefixes.Add($ServiceUrl)
+
             $listener.Start()
             while ($listener.IsListening) {
                 # Wait for request, but handle Ctrl+C safely
@@ -72,7 +77,9 @@
         $asyncResult = $PowerShell.BeginInvoke()
 
         #Open browser to the page
-        Start-Process "http://localhost:8080/"
+        if (!$ServeOnly) {
+            Start-Process $ServiceUrl
+        }
 
         $WaitingPrompt = "{blue}[{white}Waiting for user response{gray}{use Ctrl+C to cancel}{blue}]"
 
@@ -117,7 +124,7 @@
         }
         finally {
             if ($null -eq $data) {
-                try { Invoke-WebRequest -Uri "http://localhost:8080" -Method Post -OperationTimeoutSeconds 1 -ConnectionTimeoutSeconds 1 } catch { [void]$_ }
+                try { Invoke-WebRequest -Uri $ServiceUrl -Method Post -OperationTimeoutSeconds 1 -ConnectionTimeoutSeconds 1 } catch { [void]$_ }
                 [void]($PowerShell.Stop())
             }
             #Force kill the powershell if still running

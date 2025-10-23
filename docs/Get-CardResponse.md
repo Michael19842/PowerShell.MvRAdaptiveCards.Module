@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Get-CardResponse [-Json] <String> [[-PromptTitle] <String>] [[-CardTitle] <String>]
+Get-CardResponse [-Json] <String> [[-PromptTitle] <String>] [[-CardTitle] <String>] [-ServeOnly]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -71,6 +71,21 @@ Aliases:
 
 Required: False
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ServeOnly
+{{ Fill ServeOnly Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
