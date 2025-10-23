@@ -39,10 +39,12 @@ Task updateManifest -RequiredVariables 'Manifest' -Depends prepare -Action {
         #Save the updated manifest
         Update-ModuleManifest -Path $manifestPath -FunctionsToExport $functionNames -ModuleVersion $NewVersion
 
-        #Correct the formatting of the manifest file (Update-ModuleManifest messes up the formatting)
+        #Correct the formatting of the manifest file (Update-ModuleManifest messes up the formatting) "Line has trailing whitespace"
         $manifestContent = Get-Content -Path $manifestPath
-        $formattedContent = $manifestContent -replace '^( {4})(\w+)(\s+=\s+)', '$1$2 = '
-        Set-Content -Path $manifestPath -Value $formattedContent
+        $formattedContent = $manifestContent | ForEach-Object { $_.TrimEnd() }
+        #Correct the spaces as tabindents
+        $formattedContent = $formattedContent -replace '^( {4})', "`t"
+        $formattedContent | Set-Content -Path $manifestPath -Encoding UTF8
     }
 
 }

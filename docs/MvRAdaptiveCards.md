@@ -41,6 +41,9 @@ Creates a new Action.ShowCard element that displays a card when the action is tr
 ### [New-CardActionToggleVisibility](New-CardActionToggleVisibility.md)
 Creates a new Action.ToggleVisibility element that shows or hides targeted card elements.
 
+### [New-CardBadge](New-CardBadge.md)
+{{ Fill in the Synopsis }}
+
 ### [New-CardCodeBlock](New-CardCodeBlock.md)
 Creates a new CodeBlock element for an Adaptive Card to display formatted code snippets.
 
@@ -49,6 +52,9 @@ Creates a new Container element for an Adaptive Card.
 
 ### [New-CardFactSet](New-CardFactSet.md)
 Creates a new FactSet element for an Adaptive Card to display key-value pairs.
+
+### [New-CardGridArea](New-CardGridArea.md)
+Creates a new GridArea definition for use in Layout.AreaGrid layouts.
 
 ### [New-CardIcon](New-CardIcon.md)
 Creates an Icon element for an Adaptive Card using Fluent UI icons.
@@ -66,6 +72,15 @@ Creates an ImageSet element for an Adaptive Card to display a collection of imag
 {{ Fill in the Synopsis }}
 
 ### [New-CardInputText](New-CardInputText.md)
+{{ Fill in the Synopsis }}
+
+### [New-CardLayoutAreaGrid](New-CardLayoutAreaGrid.md)
+Creates a new AreaGrid layout for an Adaptive Card container.
+
+### [New-CardLayoutFlow](New-CardLayoutFlow.md)
+Creates a new Flow layout for an Adaptive Card container.
+
+### [New-CardLayoutStack](New-CardLayoutStack.md)
 {{ Fill in the Synopsis }}
 
 ### [New-CardRichTextBlock](New-CardRichTextBlock.md)

@@ -3,7 +3,7 @@
 .ac-badge {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    /* Remove justify-content: center to prevent full width stretching */
     box-sizing: border-box;
     border: 1px solid transparent;
     font-weight: 500;
@@ -13,12 +13,17 @@
     transition: all 0.2s ease-in-out;
     position: relative;
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Add width constraints */
+    width: fit-content;
+    max-width: max-content;
 }
 
 .ac-badge-content {
     display: flex;
     align-items: center;
     gap: 4px;
+    /* Ensure content doesn't stretch */
+    width: fit-content;
 }
 
 .ac-badge-icon {
@@ -29,12 +34,16 @@
 .ac-badge-text {
     flex-shrink: 0;
     vertical-align: middle;
+    /* Prevent text from stretching */
+    width: auto;
 }
 
 .ac-badge-icon-container {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    /* Only center content within the icon container */
+    width: auto;
 }
 
 /* Size variants */
@@ -122,90 +131,157 @@
     border-radius: 0;
 }
 
-/* Color variants - Default theme */
-.ac-badge-color-default {
+/* Style variants - Default theme */
+.ac-badge-style-default {
     background-color: #f3f2f1;
     color: #323130;
     border-color: #d2d0ce;
 }
 
-.ac-badge-color-accent {
+.ac-badge-style-accent {
     background-color: #0078d4;
     color: white;
     border-color: #106ebe;
 }
 
-.ac-badge-color-good {
+.ac-badge-style-good {
     background-color: #107c10;
     color: white;
     border-color: #0e6d0e;
 }
 
-.ac-badge-color-warning {
+.ac-badge-style-warning {
     background-color: #ffb900;
     color: #323130;
     border-color: #d39300;
 }
 
-.ac-badge-color-attention {
+.ac-badge-style-attention {
     background-color: #d13438;
     color: white;
     border-color: #b52d30;
 }
 
-.ac-badge-color-neutral {
+.ac-badge-style-neutral {
     background-color: #8a8886;
     color: white;
     border-color: #605e5c;
 }
 
-.ac-badge-color-brand {
+.ac-badge-style-brand {
     background-color: #6264a7;
     color: white;
     border-color: #464775;
 }
 
+.ac-badge-style-subtle {
+    background-color: #edebe9;
+    color: #605e5c;
+    border-color: #d2d0ce;
+}
+
+.ac-badge-style-informative {
+    background-color: #0078d4;
+    color: white;
+    border-color: #106ebe;
+}
+
+/* Appearance variants - Filled (default) */
+.ac-badge-appearance-filled.ac-badge-style-default {
+    background-color: #f3f2f1;
+    color: #323130;
+    border-color: #d2d0ce;
+}
+
+.ac-badge-appearance-filled.ac-badge-style-accent {
+    background-color: #0078d4;
+    color: white;
+    border-color: #106ebe;
+}
+
+.ac-badge-appearance-filled.ac-badge-style-good {
+    background-color: #107c10;
+    color: white;
+    border-color: #0e6d0e;
+}
+
+.ac-badge-appearance-filled.ac-badge-style-warning {
+    background-color: #ffb900;
+    color: #323130;
+    border-color: #d39300;
+}
+
+.ac-badge-appearance-filled.ac-badge-style-attention {
+    background-color: #d13438;
+    color: white;
+    border-color: #b52d30;
+}
+
+.ac-badge-appearance-filled.ac-badge-style-subtle {
+    background-color: #edebe9;
+    color: #605e5c;
+    border-color: #d2d0ce;
+}
+
+.ac-badge-appearance-filled.ac-badge-style-informative {
+    background-color: #0078d4;
+    color: white;
+    border-color: #106ebe;
+}
+
 /* Appearance variants - Outline */
-.ac-badge-appearance-outline.ac-badge-color-default {
+.ac-badge-appearance-outline.ac-badge-style-default {
     background-color: transparent;
     color: #323130;
     border-color: #d2d0ce;
 }
 
-.ac-badge-appearance-outline.ac-badge-color-accent {
+.ac-badge-appearance-outline.ac-badge-style-accent {
     background-color: transparent;
     color: #0078d4;
     border-color: #0078d4;
 }
 
-.ac-badge-appearance-outline.ac-badge-color-good {
+.ac-badge-appearance-outline.ac-badge-style-good {
     background-color: transparent;
     color: #107c10;
     border-color: #107c10;
 }
 
-.ac-badge-appearance-outline.ac-badge-color-warning {
+.ac-badge-appearance-outline.ac-badge-style-warning {
     background-color: transparent;
     color: #d39300;
     border-color: #d39300;
 }
 
-.ac-badge-appearance-outline.ac-badge-color-attention {
+.ac-badge-appearance-outline.ac-badge-style-attention {
     background-color: transparent;
     color: #d13438;
     border-color: #d13438;
 }
 
-.ac-badge-appearance-outline.ac-badge-color-neutral {
+.ac-badge-appearance-outline.ac-badge-style-neutral {
     background-color: transparent;
     color: #605e5c;
     border-color: #605e5c;
 }
 
-.ac-badge-appearance-outline.ac-badge-color-brand {
+.ac-badge-appearance-outline.ac-badge-style-brand {
     background-color: transparent;
     color: #6264a7;
     border-color: #6264a7;
+}
+
+.ac-badge-appearance-outline.ac-badge-style-subtle {
+    background-color: transparent;
+    color: #605e5c;
+    border-color: #605e5c;
+}
+
+.ac-badge-appearance-outline.ac-badge-style-informative {
+    background-color: transparent;
+    color: #0078d4;
+    border-color: #0078d4;
 }
 
 /* Appearance variants - Ghost */
@@ -214,74 +290,149 @@
     border-color: transparent;
 }
 
-.ac-badge-appearance-ghost.ac-badge-color-default {
+.ac-badge-appearance-ghost.ac-badge-style-default {
     color: #323130;
 }
 
-.ac-badge-appearance-ghost.ac-badge-color-accent {
+.ac-badge-appearance-ghost.ac-badge-style-accent {
     color: #0078d4;
 }
 
-.ac-badge-appearance-ghost.ac-badge-color-good {
+.ac-badge-appearance-ghost.ac-badge-style-good {
     color: #107c10;
 }
 
-.ac-badge-appearance-ghost.ac-badge-color-warning {
+.ac-badge-appearance-ghost.ac-badge-style-warning {
     color: #d39300;
 }
 
-.ac-badge-appearance-ghost.ac-badge-color-attention {
+.ac-badge-appearance-ghost.ac-badge-style-attention {
     color: #d13438;
 }
 
-.ac-badge-appearance-ghost.ac-badge-color-neutral {
+.ac-badge-appearance-ghost.ac-badge-style-neutral {
     color: #605e5c;
 }
 
-.ac-badge-appearance-ghost.ac-badge-color-brand {
+.ac-badge-appearance-ghost.ac-badge-style-brand {
     color: #6264a7;
 }
 
+.ac-badge-appearance-ghost.ac-badge-style-subtle {
+    color: #605e5c;
+}
+
+.ac-badge-appearance-ghost.ac-badge-style-informative {
+    color: #0078d4;
+}
+
 /* Appearance variants - Subtle */
-.ac-badge-appearance-subtle.ac-badge-color-default {
+.ac-badge-appearance-subtle.ac-badge-style-default {
     background-color: #faf9f8;
     color: #323130;
     border-color: transparent;
 }
 
-.ac-badge-appearance-subtle.ac-badge-color-accent {
+.ac-badge-appearance-subtle.ac-badge-style-accent {
     background-color: #deecf9;
     color: #0078d4;
     border-color: transparent;
 }
 
-.ac-badge-appearance-subtle.ac-badge-color-good {
+.ac-badge-appearance-subtle.ac-badge-style-good {
     background-color: #dff6dd;
     color: #107c10;
     border-color: transparent;
 }
 
-.ac-badge-appearance-subtle.ac-badge-color-warning {
+.ac-badge-appearance-subtle.ac-badge-style-warning {
     background-color: #fff4ce;
     color: #d39300;
     border-color: transparent;
 }
 
-.ac-badge-appearance-subtle.ac-badge-color-attention {
+.ac-badge-appearance-subtle.ac-badge-style-attention {
     background-color: #fde7e9;
     color: #d13438;
     border-color: transparent;
 }
 
-.ac-badge-appearance-subtle.ac-badge-color-neutral {
+.ac-badge-appearance-subtle.ac-badge-style-neutral {
     background-color: #f3f2f1;
     color: #605e5c;
     border-color: transparent;
 }
 
-.ac-badge-appearance-subtle.ac-badge-color-brand {
+.ac-badge-appearance-subtle.ac-badge-style-brand {
     background-color: #e1e2f7;
     color: #6264a7;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-subtle.ac-badge-style-subtle {
+    background-color: #f3f2f1;
+    color: #605e5c;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-subtle.ac-badge-style-informative {
+    background-color: #deecf9;
+    color: #0078d4;
+    border-color: transparent;
+}
+
+/* Appearance variants - Tint */
+.ac-badge-appearance-tint.ac-badge-style-default {
+    background-color: rgba(50, 49, 48, 0.1);
+    color: #323130;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-tint.ac-badge-style-accent {
+    background-color: rgba(0, 120, 212, 0.1);
+    color: #0078d4;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-tint.ac-badge-style-good {
+    background-color: rgba(16, 124, 16, 0.1);
+    color: #107c10;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-tint.ac-badge-style-warning {
+    background-color: rgba(255, 185, 0, 0.1);
+    color: #d39300;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-tint.ac-badge-style-attention {
+    background-color: rgba(209, 52, 56, 0.1);
+    color: #d13438;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-tint.ac-badge-style-neutral {
+    background-color: rgba(138, 136, 134, 0.1);
+    color: #605e5c;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-tint.ac-badge-style-brand {
+    background-color: rgba(98, 100, 167, 0.1);
+    color: #6264a7;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-tint.ac-badge-style-subtle {
+    background-color: rgba(96, 94, 92, 0.1);
+    color: #605e5c;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-tint.ac-badge-style-informative {
+    background-color: rgba(0, 120, 212, 0.1);
+    color: #0078d4;
     border-color: transparent;
 }
 
@@ -376,13 +527,13 @@
 
 /* Dark theme support */
 @media (prefers-color-scheme: dark) {
-    .ac-badge-color-default {
+    .ac-badge-style-default {
         background-color: #3b3a39;
         color: #ffffff;
         border-color: #484644;
     }
 
-    .ac-badge-appearance-subtle.ac-badge-color-default {
+    .ac-badge-appearance-subtle.ac-badge-style-default {
         background-color: #2d2c2b;
         color: #ffffff;
     }

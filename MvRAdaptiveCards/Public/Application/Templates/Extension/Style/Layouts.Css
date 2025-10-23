@@ -1,0 +1,315 @@
+/* ===================================================================
+   Container Layouts Extension - CSS Styles
+   Provides styling for Layout.Flow, Layout.AreaGrid, and Layout.Stack
+   =================================================================== */
+
+/* ===================================================================
+   Layout.Flow - Flexbox-based responsive layout
+   =================================================================== */
+
+.ac-layout-flow {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    box-sizing: border-box;
+}
+
+/* Flow layout - item sizing helpers */
+.ac-layout-flow>* {
+    box-sizing: border-box;
+}
+
+/* Flow layout - prevent item overflow */
+.ac-layout-flow>* {
+    min-width: 0;
+    min-height: 0;
+}
+
+/* Flow layout - item fit variants */
+.ac-layout-flow[data-item-fit="Fill"]>* {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.ac-layout-flow[data-item-fit="Fit"]>* {
+    flex-grow: 0;
+    flex-shrink: 1;
+}
+
+/* ===================================================================
+   Layout.AreaGrid - CSS Grid-based layout
+   =================================================================== */
+
+.ac-layout-areagrid {
+    display: grid !important;
+    box-sizing: border-box;
+}
+
+/* Grid layout - item sizing */
+.ac-layout-areagrid>* {
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 0;
+}
+
+/* Grid layout - auto-flow for items without explicit placement */
+.ac-layout-areagrid {
+    grid-auto-flow: row;
+}
+
+/* ===================================================================
+   Layout.Stack - Vertical stacking layout
+   =================================================================== */
+
+.ac-layout-stack {
+    display: flex !important;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* Stack layout - item sizing */
+.ac-layout-stack>* {
+    box-sizing: border-box;
+}
+
+/* ===================================================================
+   Spacing Utilities - Applied to all layout types
+   =================================================================== */
+
+/* Column spacing */
+.ac-layout-columnspacing-none {
+    column-gap: 0px;
+}
+
+.ac-layout-columnspacing-extrasmall {
+    column-gap: 4px;
+}
+
+.ac-layout-columnspacing-small {
+    column-gap: 8px;
+}
+
+.ac-layout-columnspacing-default {
+    column-gap: 12px;
+}
+
+.ac-layout-columnspacing-medium {
+    column-gap: 16px;
+}
+
+.ac-layout-columnspacing-large {
+    column-gap: 24px;
+}
+
+.ac-layout-columnspacing-extralarge {
+    column-gap: 32px;
+}
+
+.ac-layout-columnspacing-padding {
+    column-gap: 16px;
+}
+
+/* Row spacing */
+.ac-layout-rowspacing-none {
+    row-gap: 0px;
+}
+
+.ac-layout-rowspacing-extrasmall {
+    row-gap: 4px;
+}
+
+.ac-layout-rowspacing-small {
+    row-gap: 8px;
+}
+
+.ac-layout-rowspacing-default {
+    row-gap: 12px;
+}
+
+.ac-layout-rowspacing-medium {
+    row-gap: 16px;
+}
+
+.ac-layout-rowspacing-large {
+    row-gap: 24px;
+}
+
+.ac-layout-rowspacing-extralarge {
+    row-gap: 32px;
+}
+
+.ac-layout-rowspacing-padding {
+    row-gap: 16px;
+}
+
+/* ===================================================================
+   Alignment Utilities - Flow Layout
+   =================================================================== */
+
+/* Horizontal alignment */
+.ac-layout-flow[data-horizontal-align="Left"] {
+    justify-content: flex-start;
+}
+
+.ac-layout-flow[data-horizontal-align="Center"] {
+    justify-content: center;
+}
+
+.ac-layout-flow[data-horizontal-align="Right"] {
+    justify-content: flex-end;
+}
+
+.ac-layout-flow[data-horizontal-align="Stretch"] {
+    justify-content: stretch;
+}
+
+.ac-layout-flow[data-horizontal-align="SpaceBetween"] {
+    justify-content: space-between;
+}
+
+.ac-layout-flow[data-horizontal-align="SpaceAround"] {
+    justify-content: space-around;
+}
+
+.ac-layout-flow[data-horizontal-align="SpaceEvenly"] {
+    justify-content: space-evenly;
+}
+
+/* Vertical alignment */
+.ac-layout-flow[data-vertical-align="Top"] {
+    align-items: flex-start;
+}
+
+.ac-layout-flow[data-vertical-align="Center"] {
+    align-items: center;
+}
+
+.ac-layout-flow[data-vertical-align="Bottom"] {
+    align-items: flex-end;
+}
+
+.ac-layout-flow[data-vertical-align="Stretch"] {
+    align-items: stretch;
+}
+
+/* ===================================================================
+   Responsive Utilities
+   =================================================================== */
+
+/* Target width support - can be extended for responsive layouts */
+@media (max-width: 480px) {
+
+    .ac-layout-flow[data-target-width="VeryNarrow"],
+    .ac-layout-areagrid[data-target-width="VeryNarrow"],
+    .ac-layout-stack[data-target-width="VeryNarrow"] {
+        /* Layouts with targetWidth: VeryNarrow become active */
+    }
+}
+
+@media (max-width: 640px) {
+
+    .ac-layout-flow[data-target-width="Narrow"],
+    .ac-layout-areagrid[data-target-width="Narrow"],
+    .ac-layout-stack[data-target-width="Narrow"] {
+        /* Layouts with targetWidth: Narrow become active */
+    }
+}
+
+@media (max-width: 768px) {
+
+    .ac-layout-flow[data-target-width="Standard"],
+    .ac-layout-areagrid[data-target-width="Standard"],
+    .ac-layout-stack[data-target-width="Standard"] {
+        /* Layouts with targetWidth: Standard become active */
+    }
+}
+
+/* ===================================================================
+   Container Integration
+   =================================================================== */
+
+/* Ensure containers with layouts handle their children properly */
+.ac-container.ac-selectable:has(.ac-layout-flow),
+.ac-container.ac-selectable:has(.ac-layout-areagrid),
+.ac-container.ac-selectable:has(.ac-layout-stack) {
+    overflow: visible;
+}
+
+/* Remove default spacing when using layouts */
+.ac-container:has(> .ac-layout-flow),
+.ac-container:has(> .ac-layout-areagrid),
+.ac-container:has(> .ac-layout-stack) {
+    /* Layout handles spacing */
+}
+
+/* ===================================================================
+   Accessibility
+   =================================================================== */
+
+/* Ensure keyboard navigation works */
+.ac-layout-flow:focus-within,
+.ac-layout-areagrid:focus-within,
+.ac-layout-stack:focus-within {
+    outline: 2px solid transparent;
+}
+
+/* ===================================================================
+   Print Styles
+   =================================================================== */
+
+@media print {
+
+    .ac-layout-flow,
+    .ac-layout-areagrid,
+    .ac-layout-stack {
+        break-inside: avoid;
+    }
+}
+
+/* ===================================================================
+   Dark Theme Support
+   =================================================================== */
+
+@media (prefers-color-scheme: dark) {
+
+    .ac-layout-flow,
+    .ac-layout-areagrid,
+    .ac-layout-stack {
+        /* Layouts inherit theme from parent container */
+    }
+}
+
+/* ===================================================================
+   Performance Optimizations
+   =================================================================== */
+
+.ac-layout-flow,
+.ac-layout-areagrid,
+.ac-layout-stack {
+    contain: layout style;
+    will-change: auto;
+}
+
+/* ===================================================================
+   Debugging Utilities (remove in production)
+   =================================================================== */
+
+/*
+.ac-layout-flow {
+    border: 1px dashed blue;
+}
+
+.ac-layout-areagrid {
+    border: 1px dashed green;
+}
+
+.ac-layout-stack {
+    border: 1px dashed orange;
+}
+
+.ac-layout-flow > *,
+.ac-layout-areagrid > *,
+.ac-layout-stack > * {
+    border: 1px solid rgba(255, 0, 0, 0.2);
+}
+*/

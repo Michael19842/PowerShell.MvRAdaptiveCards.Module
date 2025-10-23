@@ -105,6 +105,33 @@ function Out-CardPreview {
         # Generate HTML with iframe and postMessage handling
         $html = Get-Content -Path "$PSScriptRoot\Templates\PreviewCard.html" -Raw
 
+        #Read the JSON and only load needed extensions
+        $AvailableExtensions = (Get-ChildItem -Path "$PSScriptRoot\Templates\Extension\Script" -Filter *.js | ForEach-Object { $_.BaseName })
+        $ExtensionsToLoad = @()
+
+        foreach ($Extension in $AvailableExtensions) {
+            if ($Json -match $Extension) {
+                $ExtensionsToLoad += $Extension
+            }
+        }
+
+        $ExtensionsJs = ''
+        $ExtensionsCss = ''
+        foreach ($Extension in $ExtensionsToLoad) {
+            #Get the file content
+            $ExtensionPath = "$PSScriptRoot\Templates\Extension\Script\$Extension.js"
+
+
+            if (Test-Path -Path $ExtensionPath) {
+                $ExtensionContent = Get-Content -Path $ExtensionPath -Raw
+                $ExtensionsJs += "`n`n// Extension: $Extension`n" + $ExtensionContent
+            }
+            $ExtensionCssPath = "$PSScriptRoot\Templates\Extension\Style\$Extension.css"
+            if (Test-Path -Path $ExtensionCssPath) {
+                $ExtensionCssContent = Get-Content -Path $ExtensionCssPath -Raw
+                $ExtensionsCss += "`n/* Extension: $Extension */`n" + $ExtensionCssContent
+            }
+        }
         $html = $ExecutionContext.InvokeCommand.ExpandString($html)
 
         $path = "$env:TEMP\AdaptiveCardDesigner.html"

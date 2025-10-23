@@ -70,12 +70,99 @@ function New-CardContainer {
         [scriptblock]$Content,
 
         [string]
-        [ValidateSet("Default", "Emphasis", "Attention", "Good", "Warning")]
+        [ValidateSet("Default", "Emphasis", "Attention", "Good", "Warning", "Accent")]
         $Style = "Default",
+
+        [Parameter(Mandatory = $false)]
+        [object]
+        $BackgroundImage,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $MinHeight,
+
+        [Parameter(Mandatory = $false)]
+        [int]
+        $MaxHeight,
 
         [string]
         [Parameter(Mandatory = $false)]
         $Id,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("Top", "Center", "Bottom")]
+        [string]
+        $VerticalContentAlignment,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Bleed,
+
+        [Parameter(Mandatory = $false)]
+        [scriptblock]
+        $Fallback,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $GridArea,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("auto", "stretch")]
+        [string]
+        $Height = "auto",
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("Left", "Center", "Right")]
+        [string]
+        $HorizontalAlignment,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsSortKey = $false,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $Lang,
+
+        [Parameter(Mandatory = $false)]
+        [scriptblock]
+        $Layouts,
+
+        [Parameter(Mandatory = $false)]
+        [hashtable]
+        $Requires,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $RoundedCorners,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Rtl,
+
+        [Parameter(Mandatory = $false)]
+        [object]
+        $SelectAction,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $Separator,
+
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $ShowBorder,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("None", "ExtraSmall", "Small", "Default", "Medium", "Large", "ExtraLarge", "Padding")]
+        [string]
+        $Spacing = "Default",
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("VeryNarrow", "Narrow", "Standard", "Wide", "atLeast:VeryNarrow", "atMost:VeryNarrow", "atLeast:Narrow", "atMost:Narrow", "atLeast:Standard", "atMost:Standard", "atLeast:Wide", "atMost:Wide")]
+        [string]
+        $TargetWidth,
+
+        [Alias('Hide')]
         [switch]$Hidden
     )
 
@@ -85,14 +172,104 @@ function New-CardContainer {
     }
 
     if ($Style -ne "Default") {
-        $Container.style = $Style
+        $Container.style = $Style.ToLower()
+    }
+
+    if ($BackgroundImage) {
+        $Container.backgroundImage = $BackgroundImage
+    }
+
+    if ($MinHeight) {
+        $Container.minHeight = "${MinHeight}px"
+    }
+
+    if ($MaxHeight) {
+        $Container.maxHeight = "${MaxHeight}px"
     }
 
     if ($Id) {
         $Container.id = $Id
     }
+
+    if ($VerticalContentAlignment) {
+        $Container.verticalContentAlignment = $VerticalContentAlignment
+    }
+
+    if ($Bleed) {
+        $Container.bleed = $true
+    }
+
+    if ($Fallback) {
+        $Container.fallback = Invoke-Command -ScriptBlock $Fallback
+    }
+
+    if ($GridArea) {
+        $Container.'grid.area' = $GridArea
+    }
+
+    if ($Height -and $Height -ne "auto") {
+        $Container.height = $Height
+    }
+
+    if ($HorizontalAlignment) {
+        $Container.horizontalAlignment = $HorizontalAlignment
+    }
+
+    if ($IsSortKey) {
+        $Container.isSortKey = $true
+    }
+
     if ($Hidden) {
         $Container.isVisible = $false
+    }
+
+    if ($Lang) {
+        $Container.lang = $Lang
+    }
+
+    if ($Layouts) {
+        $Container.layouts = [System.Collections.ArrayList]@()
+
+        $LayoutsResult = Invoke-Command -ScriptBlock $Layouts
+
+        if ($LayoutsResult -is [array]) {
+            [void]($Container.layouts.AddRange($LayoutsResult))
+        }
+        else {
+            [void]($Container.layouts.Add($LayoutsResult))
+        }
+    }
+
+    if ($Requires) {
+        $Container.requires = $Requires
+    }
+
+    if ($RoundedCorners) {
+        $Container.roundedCorners = $true
+    }
+
+    if ($Rtl) {
+        $Container.rtl = $true
+    }
+
+    if ($SelectAction) {
+        $Container.selectAction = $SelectAction
+    }
+
+    if ($Separator) {
+        $Container.separator = $true
+    }
+
+    if ($ShowBorder) {
+        $Container.showBorder = $true
+    }
+
+    if ($Spacing -and $Spacing -ne "Default") {
+        $Container.spacing = $Spacing
+    }
+
+    if ($TargetWidth) {
+        $Container.targetWidth = $TargetWidth
     }
 
     $ContentResult = Invoke-Command -ScriptBlock $Content
@@ -109,3 +286,4 @@ function New-CardContainer {
     }
 
 }
+

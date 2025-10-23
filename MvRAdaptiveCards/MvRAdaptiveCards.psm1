@@ -8,7 +8,7 @@ param (
 )
 
 #Set the maximum depth for JSON conversion
-$_MaxDepth = 40
+$_MaxDepth = 50
 
 # Export-ModuleMember -Variable none
 $ModuleName = 'MvRAdaptiveCards'

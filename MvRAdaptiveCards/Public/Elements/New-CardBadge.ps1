@@ -10,6 +10,14 @@ function New-CardBadge {
         [string]$Appearance,
 
         [Parameter(Mandatory = $false)]
+        [ValidateScript( {
+                if ( $_AdaptiveCardIconCollection -contains $_ ) {
+                    return $true
+                }
+                else {
+                    throw "Invalid icon name '$_'. Valid names are: $($_AdaptiveCardIconCollection -join ', ')"
+                }
+            } )]
         [string]$Icon,
 
         [Parameter(Mandatory = $false)]
@@ -73,7 +81,7 @@ function New-CardBadge {
     }
 
     if ($Appearance) {
-        $Badge.appearance = $Appearance
+        $Badge.appearance = $Appearance.ToLower()
     }
     if ($Icon) {
         $Badge.icon = $Icon
@@ -88,7 +96,7 @@ function New-CardBadge {
         $Badge.size = $Size
     }
     if ($Style) {
-        $Badge.style = $Style
+        $Badge.style = $Style.ToLower()
     }
     if ($Tooltip) {
         $Badge.tooltip = $Tooltip

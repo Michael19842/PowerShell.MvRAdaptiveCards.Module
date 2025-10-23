@@ -28,7 +28,8 @@
         parse(source, errors) {
             super.parse(source, errors);
             if (source.text !== undefined) this.text = source.text;
-            if (source.color !== undefined) this.color = source.color;
+            if (source.style !== undefined) this.style = source.style;
+            if (source.color !== undefined) this.style = source.color;
             if (source.iconUrl !== undefined) this.iconUrl = source.iconUrl;
             if (source.size !== undefined) this.size = source.size;
             if (source.appearance !== undefined) this.appearance = source.appearance;
@@ -62,8 +63,8 @@
             wrapper.classList.add(`ac-badge-size-${this.size}`);
 
             // Apply color
-            wrapper.setAttribute("data-ac-badge-color", this.color);
-            wrapper.classList.add(`ac-badge-color-${this.color}`);
+            wrapper.setAttribute("data-ac-badge-color", this.style);
+            wrapper.classList.add(`ac-badge-style-${this.style}`);
 
             // Apply appearance
             wrapper.setAttribute("data-ac-badge-appearance", this.appearance);

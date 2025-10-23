@@ -13,8 +13,13 @@ Creates a new Container element for an Adaptive Card.
 ## SYNTAX
 
 ```
-New-CardContainer [[-Content] <ScriptBlock>] [[-Style] <String>] [[-Id] <String>] [-Hidden]
- [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-CardContainer [[-Content] <ScriptBlock>] [[-Style] <String>] [[-BackgroundImage] <Object>]
+ [[-MinHeight] <Int32>] [[-MaxHeight] <Int32>] [[-Id] <String>] [[-VerticalContentAlignment] <String>] [-Bleed]
+ [[-Fallback] <ScriptBlock>] [[-GridArea] <String>] [[-Height] <String>] [[-HorizontalAlignment] <String>]
+ [[-IsSortKey] <Boolean>] [[-Lang] <String>] [[-Layouts] <ScriptBlock>] [[-Requires] <Hashtable>]
+ [-RoundedCorners] [-Rtl] [[-SelectAction] <Object>] [-Separator] [-ShowBorder] [[-Spacing] <String>]
+ [[-TargetWidth] <String>] [-Hidden] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -96,6 +101,51 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -BackgroundImage
+{{ Fill BackgroundImage Description }}
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MinHeight
+{{ Fill MinHeight Description }}
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MaxHeight
+{{ Fill MaxHeight Description }}
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Id
 An optional unique identifier for the container element.
 Useful for referencing the container
@@ -107,7 +157,262 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -VerticalContentAlignment
+{{ Fill VerticalContentAlignment Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Bleed
+{{ Fill Bleed Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Fallback
+{{ Fill Fallback Description }}
+
+```yaml
+Type: ScriptBlock
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -GridArea
+{{ Fill GridArea Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Height
+{{ Fill Height Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: Auto
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HorizontalAlignment
+{{ Fill HorizontalAlignment Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsSortKey
+{{ Fill IsSortKey Description }}
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Lang
+{{ Fill Lang Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Layouts
+{{ Fill Layouts Description }}
+
+```yaml
+Type: ScriptBlock
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Requires
+{{ Fill Requires Description }}
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RoundedCorners
+{{ Fill RoundedCorners Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Rtl
+{{ Fill Rtl Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SelectAction
+{{ Fill SelectAction Description }}
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 16
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Separator
+{{ Fill Separator Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShowBorder
+{{ Fill ShowBorder Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Spacing
+{{ Fill Spacing Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
+Default value: Default
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TargetWidth
+{{ Fill TargetWidth Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 18
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -119,7 +424,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: Hide
 
 Required: False
 Position: Named

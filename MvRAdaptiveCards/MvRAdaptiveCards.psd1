@@ -12,7 +12,7 @@
 RootModule = 'MvRAdaptiveCards.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.6.11.0'
+ModuleVersion = '0.6.12.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -69,16 +69,17 @@ PowerShellVersion = '5.1'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Build-CardFromTemplate', 'Find-CardTemplateTag', 'Get-CardResponse', 
-               'New-AdaptiveCard', 'New-CardActionOpenUrl', 'New-CardActionSet', 
-               'New-CardActionShowCard', 'New-CardActionSubmit', 
-               'New-CardActionToggleVisibility', 'New-CardBadge', 
-               'New-CardCodeBlock', 'New-CardContainer', 'New-CardFactSet', 
-               'New-CardIcon', 'New-CardImage', 'New-CardImageSet', 
-               'New-CardInputChoiceSet', 'New-CardInputRating', 'New-CardInputText', 
-               'New-CardRichTextblock', 'New-CardTable', 'New-CardTemplateTag', 
-               'New-CardTextBlock', 'Out-CardPreview', 'Out-OnlineDesigner', 
-               'Send-CardViaClassicOutlook', 'Send-CardViaSMTP', 'Send-CardViaTeams', 
+FunctionsToExport = 'Build-CardFromTemplate', 'Find-CardTemplateTag', 'Get-CardResponse',
+               'New-AdaptiveCard', 'New-CardActionOpenUrl', 'New-CardActionSet',
+               'New-CardActionShowCard', 'New-CardActionSubmit',
+               'New-CardActionToggleVisibility', 'New-CardBadge',
+               'New-CardCodeBlock', 'New-CardContainer', 'New-CardFactSet',
+               'New-CardGridArea', 'New-CardIcon', 'New-CardImage', 'New-CardImageSet',
+               'New-CardInputChoiceSet', 'New-CardInputRating', 'New-CardInputText',
+               'New-CardLayoutAreaGrid', 'New-CardLayoutFlow', 'New-CardLayoutStack',
+               'New-CardRichTextblock', 'New-CardTable', 'New-CardTemplateTag',
+               'New-CardTextBlock', 'Out-CardPreview', 'Out-OnlineDesigner',
+               'Send-CardViaClassicOutlook', 'Send-CardViaSMTP', 'Send-CardViaTeams',
                'Set-CardDefaultSmtpSetting', 'Set-CardDefaultTeamsSetting'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
