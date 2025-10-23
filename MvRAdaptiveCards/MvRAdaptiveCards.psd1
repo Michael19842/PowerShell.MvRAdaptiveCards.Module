@@ -12,7 +12,7 @@
     RootModule        = 'MvRAdaptiveCards.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.6.10.0'
+    ModuleVersion     = '0.6.10.1'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()

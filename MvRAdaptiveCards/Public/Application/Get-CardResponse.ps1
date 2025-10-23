@@ -72,7 +72,7 @@
         }
         $PowerShell = [powershell]::Create()
         $PowerShell.Runspace = $Runspace
-        [void]($PowerShell.AddScript($ScriptBlock).AddArgument($html))
+        [void]($PowerShell.AddScript($ScriptBlock).AddArgument($html).AddArgument($ServiceUrl))
 
         $asyncResult = $PowerShell.BeginInvoke()
 
