@@ -1,11 +1,19 @@
 ﻿function Get-CardResponse {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '', Justification = 'Variable used in template')]
     param (
         [parameter(Mandatory = $true, ValueFromPipeline = $true)]
-        [string]$Json
+        [string]$Json,
+
+        [parameter(Mandatory = $false)]
+        [string]$PromptTitle = "Adaptive Card prompt",
+
+        [parameter(Mandatory = $false)]
+        [string]$CardTitle = "Adaptive Card"
     )
 
     #Serve the card as a web page to capture response
     process {
+
         $html = Get-Content -Path "$PSScriptRoot\Templates\PromptCard.html" -Raw
         $html = $ExecutionContext.InvokeCommand.ExpandString($html)
 
@@ -17,7 +25,14 @@
             param ($html)
 
             $listener = [System.Net.HttpListener]::new()
-            $listener.Prefixes.Add("http://localhost:8080/")
+            #Test if the host is a windows system to determine the correct prefix
+
+            if ($IsWindows) {
+                $listener.Prefixes.Add("http://localhost:8080/")
+            }
+            else {
+                $listener.Prefixes.Add("http://+:8080/")
+            }
             $listener.Start()
             while ($listener.IsListening) {
                 # Wait for request, but handle Ctrl+C safely

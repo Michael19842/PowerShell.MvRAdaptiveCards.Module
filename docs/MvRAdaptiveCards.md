@@ -59,6 +59,12 @@ Creates a new Image element for an Adaptive Card.
 ### [New-CardImageSet](New-CardImageSet.md)
 Creates an ImageSet element for an Adaptive Card to display a collection of images.
 
+### [New-CardInputChoiceSet](New-CardInputChoiceSet.md)
+{{ Fill in the Synopsis }}
+
+### [New-CardInputRating](New-CardInputRating.md)
+{{ Fill in the Synopsis }}
+
 ### [New-CardInputText](New-CardInputText.md)
 {{ Fill in the Synopsis }}
 

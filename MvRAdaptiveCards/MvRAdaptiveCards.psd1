@@ -12,7 +12,7 @@
     RootModule        = 'MvRAdaptiveCards.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.6.8.1'
+    ModuleVersion     = '0.6.10.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -74,9 +74,10 @@
     'New-CardActionShowCard', 'New-CardActionSubmit',
     'New-CardActionToggleVisibility', 'New-CardCodeBlock',
     'New-CardContainer', 'New-CardFactSet', 'New-CardIcon', 'New-CardImage',
-    'New-CardImageSet', 'New-CardInputText', 'New-CardRichTextblock',
-    'New-CardTable', 'New-CardTemplateTag', 'New-CardTextBlock',
-    'Out-CardPreview', 'Out-OnlineDesigner', 'Send-CardViaClassicOutlook',
+    'New-CardImageSet', 'New-CardInputChoiceSet', 'New-CardInputRating',
+    'New-CardInputText', 'New-CardRichTextblock', 'New-CardTable',
+    'New-CardTemplateTag', 'New-CardTextBlock', 'Out-CardPreview',
+    'Out-OnlineDesigner', 'Send-CardViaClassicOutlook',
     'Send-CardViaSMTP', 'Send-CardViaTeams', 'Set-CardDefaultSmtpSetting',
     'Set-CardDefaultTeamsSetting'
 
