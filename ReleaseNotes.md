@@ -1,6 +1,6 @@
 # Release Notes
 
-# 0.6.12.1
+## 0.6.12.1
 - Fixed race condition in `Get-CardResponse` when handling responses. This would sometimes cause fetch errors.
 - Switched to port 8081 for local response server in `Get-CardResponse` to avoid conflicts with other services. (i will make this configurable in a future release)
 
