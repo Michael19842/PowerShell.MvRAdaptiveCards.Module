@@ -6,8 +6,6 @@ PowerShell Module for creating (and posting) Adaptive Cards in PowerShell.
 ![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/MvRAdaptiveCards)
 ![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/MvRAdaptiveCards)
 
-
-
 ## Overview
 This module provides a framework of easy-to-use functions for working with Adaptive Cards in PowerShell in a similar fashion as the popular module PSWriteHTML does for HTML generation. Creating Adaptive Cards in PowerShell can be complex due to the JSON structure required by Adaptive Cards. This module simplifies the process by providing cmdlets that allow you to build Adaptive Cards using PowerShell objects (and has built-in support for posting these cards to Microsoft Teams channels).
 
@@ -21,6 +19,9 @@ Install-Module -Name MvRAdaptiveCards
 ```
 
 This module is compatible with PowerShell 5.1 and later versions.
+
+## Release Notes
+See the [Release Notes](ReleaseNotes.md) for detailed information on changes and updates in each version.
 
 ## Example Usage
 You are probably excited to get started! Here is a simple example of how to create an Adaptive Card using MvRAdaptiveCards:
