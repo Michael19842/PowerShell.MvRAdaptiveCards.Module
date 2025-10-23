@@ -217,7 +217,7 @@ This module is still under active development. There is a long list of planned f
 - Input fields [partially implemented]
 - More action types [partially implemented]
 - Chart support
-- Additional arguments for existing functions
+- Additional arguments for existing functions [working on it]
 
 So, do keep an eye out for new releases! More features and improvements are on the way.
 
