@@ -1,6 +1,7 @@
 Test-Module.ps1
 Test-Designer.ps1
 Build/BuildConfig.json
+bagger.js
 .vscode/*
 
 Test-Michael.ps1
