@@ -5,11 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adaptive Card Preview</title>
-    <script src="https://cdn.jsdelivr.net/npm/adaptivecards/dist/adaptivecards.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/adaptivecards/dist/adaptivecards.min.js"></script>-->
+    <script src="https://unpkg.com/adaptivecards/dist/adaptivecards.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/adaptivecards/dist/adaptivecards.min.css" rel="stylesheet">
     <link rel="stylesheet"
         href="https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.0.0/css/fabric.min.css">
     <script type="text/javascript" src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
+    <script>
+        (function () {
+            const AC = AdaptiveCards;
+
+            class Badge extends AC.CardElement {
+                constructor() {
+                    super();
+                    this.text = "";
+                    this.color = "default"; // default|accent|good|warning|attention
+                    this.iconUrl = undefined;
+                    this.size = "small"; // small|large
+                }
+
+                // required: tell the framework this element's JSON type name
+                getJsonTypeName() {
+                    return "Badge";
+                }
+
+                // parse JSON properties (called when card.parse is used)
+                parse(source, errors) {
+                    super.parse(source, errors);
+                    if (source.text !== undefined) this.text = source.text;
+                    if (source.color !== undefined) this.color = source.color;
+                    if (source.iconUrl !== undefined) this.iconUrl = source.iconUrl;
+                    if (source.size !== undefined) this.size = source.size;
+                }
+
+                // called to render the element into a DOM node
+                internalRender() {
+                    const wrapper = document.createElement("span");
+                    wrapper.className = "ac-badge";
+                    wrapper.setAttribute("data-ac-badge-size", this.size);
+                    wrapper.setAttribute("data-ac-badge-color", this.color);
+
+                    if (this.iconUrl) {
+                        const img = document.createElement("img");
+                        img.className = "ac-badge-icon";
+                        img.src = this.iconUrl;
+                        img.alt = "";
+                        wrapper.appendChild(img);
+                    }
+
+                    const txt = document.createElement("span");
+                    txt.className = "ac-badge-text";
+                    txt.innerText = this.text || "";
+                    wrapper.appendChild(txt);
+
+                    return wrapper;
+                }
+            }
+
+            // register the element globally so AdaptiveCards recognizes "Badge" in JSON
+            AC.AdaptiveCard.onProcessMarkdown = AC.AdaptiveCard.onProcessMarkdown || null;
+            AC.GlobalRegistry.elements.register("Badge", Badge);
+
+            // expose for debugging if you want
+            window.ADAPTIVE_BADGE = { Badge: Badge };
+        })();
+    </script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

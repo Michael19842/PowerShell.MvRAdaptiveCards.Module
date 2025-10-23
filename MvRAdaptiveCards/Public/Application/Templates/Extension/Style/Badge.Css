@@ -1,0 +1,393 @@
+/* AdaptiveCards Badge Component Styles */
+
+.ac-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    vertical-align: middle;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.ac-badge-content {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ac-badge-icon {
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+.ac-badge-text {
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+.ac-badge-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Size variants */
+.ac-badge-size-extra-small {
+    padding: 2px 6px;
+    font-size: 10px;
+    min-height: 16px;
+}
+
+.ac-badge-size-extra-small .ac-badge-icon {
+    width: 12px;
+    height: 12px;
+}
+
+.ac-badge-size-small {
+    padding: 4px 8px;
+    font-size: 12px;
+    min-height: 20px;
+}
+
+.ac-badge-size-small .ac-badge-icon {
+    width: 14px;
+    height: 14px;
+}
+
+.ac-badge-size-medium {
+    padding: 6px 12px;
+    font-size: 14px;
+    min-height: 24px;
+}
+
+.ac-badge-size-medium .ac-badge-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.ac-badge-size-large {
+    padding: 8px 16px;
+    font-size: 16px;
+    min-height: 32px;
+}
+
+.ac-badge-size-large .ac-badge-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.ac-badge-size-extra-large {
+    padding: 12px 20px;
+    font-size: 18px;
+    min-height: 40px;
+}
+
+.ac-badge-size-extra-large .ac-badge-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Icon size variants */
+.ac-badge-icon-size-small {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+.ac-badge-icon-size-medium {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.ac-badge-icon-size-large {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Shape variants */
+.ac-badge-shape-rounded {
+    border-radius: 4px;
+}
+
+.ac-badge-shape-circular {
+    border-radius: 50px;
+}
+
+.ac-badge-shape-square {
+    border-radius: 0;
+}
+
+/* Color variants - Default theme */
+.ac-badge-color-default {
+    background-color: #f3f2f1;
+    color: #323130;
+    border-color: #d2d0ce;
+}
+
+.ac-badge-color-accent {
+    background-color: #0078d4;
+    color: white;
+    border-color: #106ebe;
+}
+
+.ac-badge-color-good {
+    background-color: #107c10;
+    color: white;
+    border-color: #0e6d0e;
+}
+
+.ac-badge-color-warning {
+    background-color: #ffb900;
+    color: #323130;
+    border-color: #d39300;
+}
+
+.ac-badge-color-attention {
+    background-color: #d13438;
+    color: white;
+    border-color: #b52d30;
+}
+
+.ac-badge-color-neutral {
+    background-color: #8a8886;
+    color: white;
+    border-color: #605e5c;
+}
+
+.ac-badge-color-brand {
+    background-color: #6264a7;
+    color: white;
+    border-color: #464775;
+}
+
+/* Appearance variants - Outline */
+.ac-badge-appearance-outline.ac-badge-color-default {
+    background-color: transparent;
+    color: #323130;
+    border-color: #d2d0ce;
+}
+
+.ac-badge-appearance-outline.ac-badge-color-accent {
+    background-color: transparent;
+    color: #0078d4;
+    border-color: #0078d4;
+}
+
+.ac-badge-appearance-outline.ac-badge-color-good {
+    background-color: transparent;
+    color: #107c10;
+    border-color: #107c10;
+}
+
+.ac-badge-appearance-outline.ac-badge-color-warning {
+    background-color: transparent;
+    color: #d39300;
+    border-color: #d39300;
+}
+
+.ac-badge-appearance-outline.ac-badge-color-attention {
+    background-color: transparent;
+    color: #d13438;
+    border-color: #d13438;
+}
+
+.ac-badge-appearance-outline.ac-badge-color-neutral {
+    background-color: transparent;
+    color: #605e5c;
+    border-color: #605e5c;
+}
+
+.ac-badge-appearance-outline.ac-badge-color-brand {
+    background-color: transparent;
+    color: #6264a7;
+    border-color: #6264a7;
+}
+
+/* Appearance variants - Ghost */
+.ac-badge-appearance-ghost {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-ghost.ac-badge-color-default {
+    color: #323130;
+}
+
+.ac-badge-appearance-ghost.ac-badge-color-accent {
+    color: #0078d4;
+}
+
+.ac-badge-appearance-ghost.ac-badge-color-good {
+    color: #107c10;
+}
+
+.ac-badge-appearance-ghost.ac-badge-color-warning {
+    color: #d39300;
+}
+
+.ac-badge-appearance-ghost.ac-badge-color-attention {
+    color: #d13438;
+}
+
+.ac-badge-appearance-ghost.ac-badge-color-neutral {
+    color: #605e5c;
+}
+
+.ac-badge-appearance-ghost.ac-badge-color-brand {
+    color: #6264a7;
+}
+
+/* Appearance variants - Subtle */
+.ac-badge-appearance-subtle.ac-badge-color-default {
+    background-color: #faf9f8;
+    color: #323130;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-subtle.ac-badge-color-accent {
+    background-color: #deecf9;
+    color: #0078d4;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-subtle.ac-badge-color-good {
+    background-color: #dff6dd;
+    color: #107c10;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-subtle.ac-badge-color-warning {
+    background-color: #fff4ce;
+    color: #d39300;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-subtle.ac-badge-color-attention {
+    background-color: #fde7e9;
+    color: #d13438;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-subtle.ac-badge-color-neutral {
+    background-color: #f3f2f1;
+    color: #605e5c;
+    border-color: transparent;
+}
+
+.ac-badge-appearance-subtle.ac-badge-color-brand {
+    background-color: #e1e2f7;
+    color: #6264a7;
+    border-color: transparent;
+}
+
+/* Text style variants */
+.ac-badge-text-normal {
+    font-weight: 400;
+}
+
+.ac-badge-text-semibold {
+    font-weight: 600;
+}
+
+.ac-badge-text-bold {
+    font-weight: 700;
+}
+
+/* Interactive states */
+.ac-badge-interactive {
+    cursor: pointer;
+    user-select: none;
+}
+
+.ac-badge-interactive:hover:not(.ac-badge-disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ac-badge-interactive:active:not(.ac-badge-disabled) {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.ac-badge-interactive:focus:not(.ac-badge-disabled) {
+    outline: 2px solid #0078d4;
+    outline-offset: 2px;
+}
+
+/* Disabled state */
+.ac-badge-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Nested badge */
+.ac-badge-nested {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #d13438;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    min-width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .ac-badge {
+        border-width: 2px;
+    }
+
+    .ac-badge-interactive:focus {
+        outline-width: 3px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .ac-badge {
+        transition: none;
+    }
+
+    .ac-badge-interactive:hover {
+        transform: none;
+    }
+
+    .ac-badge-interactive:active {
+        transform: none;
+    }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .ac-badge-color-default {
+        background-color: #3b3a39;
+        color: #ffffff;
+        border-color: #484644;
+    }
+
+    .ac-badge-appearance-subtle.ac-badge-color-default {
+        background-color: #2d2c2b;
+        color: #ffffff;
+    }
+
+    .ac-badge-nested {
+        border-color: #1b1a19;
+    }
+}
