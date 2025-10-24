@@ -1,5 +1,23 @@
 # Release Notes
 
+## 0.7.0.0
+- Added `Set-CardDefaultResponseSetting` function to set default settings for `Get-CardResponse`. This allows users to configure default title, logo text, version display, and port number for the response server.
+- Updated `Get-CardResponse` to support new default settings for title, logo text, version display, and port number.
+- Refactored settings management to ensure that changes made by `Set-CardDefaultResponseSetting` are reflected in `Get-CardResponse` without needing to restart the session.
+- Added `New-CardMedia` function to create media elements in adaptive cards.
+- Added support for audio and video playback in adaptive cards using `New-CardMedia`. With an additional extension for media playback controls.
+
+```PowerShell
+New-AdaptiveCard {
+    New-CardMedia -Sources @(
+        @{ mimeType = "video/mp4"; url = "https://www.example.com/video.mp4" }
+        @{ mimeType = "audio/mpeg"; url = "https://www.example.com/audio.mp3" }
+    ) -AltText "Sample Media"
+} -Actions {
+    New-CardActionSubmit -Title "Close"
+} | Get-CardResponse
+```
+
 ## 0.6.14.0
 - Added support for `New-CardInputRating` to create rating input elements in adaptive cards.
 - Added support for `New-CardCodeBlock` to create code block elements with syntax highlighting using Prism.js.

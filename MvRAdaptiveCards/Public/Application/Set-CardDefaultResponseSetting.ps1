@@ -1,0 +1,35 @@
+function Set-CardDefaultResponseSetting {
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'low')]
+    param(
+        [string]$CardTitle = $_MvRACSettings.'Get-Response'.CardTitle,
+        [string]$LogoUrl = $_MvRACSettings.'Get-Response'.LogoUrl,
+        [string]$LogoHeaderText = $_MvRACSettings.'Get-Response'.LogoHeader,
+        [Bool]$ShowVersion = $_MvRACSettings.'Get-Response'.ShowVersion ,
+        [int]$PortNumber = $_MvRACSettings.'Get-Response'.PortNumber,
+        [switch]$clear
+    )
+    if ($PSCmdlet.ShouldProcess("Set-CardDefaultResponseSetting")) {
+        $CurrentSettings = Get-CardSetting
+
+        $CurrentSettings.'Get-Response'.CardTitle = $CardTitle
+        $CurrentSettings.'Get-Response'.LogoUrl = $LogoUrl
+        $CurrentSettings.'Get-Response'.LogoHeader = $LogoHeaderText
+        $CurrentSettings.'Get-Response'.ShowVersion = $ShowVersion
+        $CurrentSettings.'Get-Response'.PortNumber = $PortNumber
+
+        if ($clear) {
+            $CurrentSettings.'Get-Response' = $null
+        }
+
+        Write-Verbose "Default Get-CardResponse settings updated."
+        Set-CardSetting -Settings $CurrentSettings
+    }
+
+}
+
+<#"PromptTitle": "Adaptive Card prompt",
+        "CardTitle": "Adaptive Card Example",
+        "LogoUrl": "data:image/png;base64,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",
+        "LogoHeader": "MvR Adaptive Cards",
+        "ShowVersion": true,
+        "PortNumber": 8081#>

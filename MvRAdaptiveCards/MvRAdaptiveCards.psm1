@@ -36,14 +36,8 @@ if ($ExposePrivateFunctions) {
 $_AppDataFolder = [System.IO.Path]::Combine($env:APPDATA, "PowerShell.$ModuleName.Module")
 $_SettingsFile = [System.IO.Path]::Combine($_AppDataFolder, 'settings.json')
 
-
-# Load existing settings if the settings file exists
-if (Test-Path $_SettingsFile) {
-    $_MvRACSettings = Get-Content -Path $_SettingsFile -Raw | ConvertFrom-JsonAsHashtable
-}
-else {
-    $_MvRACSettings = $null
-}
+# Grab the settings for the module
+$_MvRACSettings = Get-CardSetting
 
 
 # Only show when interactive (avoid in CI or non-interactive runs)

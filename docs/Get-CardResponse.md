@@ -13,7 +13,8 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Get-CardResponse [-Json] <String> [[-PromptTitle] <String>] [[-CardTitle] <String>] [-ServeOnly]
+Get-CardResponse [-Json] <String> [[-PromptTitle] <String>] [[-CardTitle] <String>] [[-LogoUrl] <String>]
+ [[-LogoHeaderText] <String>] [[-ShowVersion] <Boolean>] [[-PortNumber] <Int32>] [-ServeOnly]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -61,6 +62,51 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -LogoHeaderText
+{{ Fill LogoHeaderText Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LogoUrl
+{{ Fill LogoUrl Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PortNumber
+{{ Fill PortNumber Description }}
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PromptTitle
 {{ Fill PromptTitle Description }}
 
@@ -86,6 +132,21 @@ Aliases:
 
 Required: False
 Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShowVersion
+{{ Fill ShowVersion Description }}
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Set-CardDefaultSmtpSetting
+# Set-CardDefaultResponseSetting
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -13,9 +13,9 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Set-CardDefaultSmtpSetting [[-From] <String>] [[-Server] <String>] [[-Port] <Int32>] [[-Username] <String>]
- [[-Password] <SecureString>] [-ClearSetting] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Set-CardDefaultResponseSetting [[-CardTitle] <String>] [[-LogoUrl] <String>] [[-LogoHeaderText] <String>]
+ [[-ShowVersion] <Boolean>] [[-PortNumber] <Int32>] [-clear] [-ProgressAction <ActionPreference>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -32,16 +32,16 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -ClearSetting
-{{ Fill ClearSetting Description }}
+### -CardTitle
+{{ Fill CardTitle Description }}
 
 ```yaml
-Type: SwitchParameter
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,41 +62,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -From
-{{ Fill From Description }}
+### -LogoHeaderText
+{{ Fill LogoHeaderText Description }}
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Password
-{{ Fill Password Description }}
-
-```yaml
-Type: SecureString
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Port
-{{ Fill Port Description }}
-
-```yaml
-Type: Int32
 Parameter Sets: (All)
 Aliases:
 
@@ -107,8 +77,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Server
-{{ Fill Server Description }}
+### -LogoUrl
+{{ Fill LogoUrl Description }}
 
 ```yaml
 Type: String
@@ -122,11 +92,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Username
-{{ Fill Username Description }}
+### -PortNumber
+{{ Fill PortNumber Description }}
 
 ```yaml
-Type: String
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShowVersion
+{{ Fill ShowVersion Description }}
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
@@ -145,6 +130,21 @@ The cmdlet is not run.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -clear
+{{ Fill clear Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -177,8 +177,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Void
-
+### System.Object
 ## NOTES
 
 ## RELATED LINKS

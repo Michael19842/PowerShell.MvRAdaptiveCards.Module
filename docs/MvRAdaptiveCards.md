@@ -92,6 +92,12 @@ Creates a new Flow layout for an Adaptive Card container.
 ### [New-CardLayoutStack](New-CardLayoutStack.md)
 {{ Fill in the Synopsis }}
 
+### [New-CardMedia](New-CardMedia.md)
+Creates a Media element for Adaptive Cards that can play audio or video content.
+
+### [New-CardMediaCaptionSource](New-CardMediaCaptionSource.md)
+Creates a caption source object for use with Media elements in Adaptive Cards.
+
 ### [New-CardRichTextBlock](New-CardRichTextBlock.md)
 Creates a new RichTextBlock element for an Adaptive Card with advanced inline formatting capabilities.
 
@@ -117,6 +123,9 @@ Opens an Adaptive Card in the online Adaptive Cards Designer for visualization a
 {{ Fill in the Synopsis }}
 
 ### [Send-CardViaTeams](Send-CardViaTeams.md)
+{{ Fill in the Synopsis }}
+
+### [Set-CardDefaultResponseSetting](Set-CardDefaultResponseSetting.md)
 {{ Fill in the Synopsis }}
 
 ### [Set-CardDefaultSmtpSetting](Set-CardDefaultSmtpSetting.md)

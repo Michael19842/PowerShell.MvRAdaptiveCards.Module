@@ -43,64 +43,24 @@ function Set-CardDefaultTeamsSetting {
     [OutputType([void])]
     param (
         [Parameter(Mandatory = $true)]
-        [string]$WebhookUrl
+        [string]$WebhookUrl,
+
+        [Parameter(Mandatory = $false)]
+        [switch]$Clear
     )
 
-    # Initialize global settings if not exist
-    if ($null -eq $script:_MvRACSettings) {
-        $_MvRACSettings = @{}
-    }
-    if ($null -eq $script:_MvRACSettings.Context) {
-        $_MvRACSettings.Context = @{}
-    }
-    if ($null -eq $script:_MvRACSettings.Teams) {
-        $_MvRACSettings.Teams = @{}
+    $Settings = Get-CardSettings
+
+    $Settings.TeamsWebhook = @{
+        WebhookUrl = $WebhookUrl
     }
 
-    # Set Teams settings
-    $_MvRACSettings.Teams.WebhookUrl = $WebhookUrl
-
-
-    # Create settings file if it doesn't exist
-    if (-not (Test-Path $_SettingsFile)) {
-
-        $_MvRACSettings = @{
-            Context = @{
-                User = $env:USERNAME
-                Host = $env:COMPUTERNAME
-            }
-        }
-
-        $_MvRACSettingsJson = $_MvRACSettings | ConvertTo-Json -Depth 5
-
-        if ( $PSCmdlet.ShouldProcess("Creating settings file at '$_SettingsFile' because it does not exist.") ) {
-            $_MvRACSettingsJson | Set-Content -Path $_SettingsFile -Encoding UTF8
-        }
+    if ($Clear) {
+        $Settings.TeamsWebhook = $Null
     }
 
-    # Get the now existing settings file
-    $_CurrentMvRACSettings = Get-Content -Path $_SettingsFile -Raw | ConvertFrom-JsonAsHashtable
-
-    # If the settings were not found, initialize them
-    if ($null -eq $_MvRACSettings) {
-        $_MvRACSettings = @{
-            Context = @{
-                User = $env:USERNAME
-                Host = $env:COMPUTERNAME
-            }
-        }
-    }
-
-    # Validate the context to ensure it matches the current user/machine
-    if ($_CurrentMvRACSettings.Context.User -ne $env:USERNAME -or $_CurrentMvRACSettings.Context.Host -ne $env:COMPUTERNAME) {
-        Write-Warning "The existing settings file was created for user '$($_CurrentMvRACSettings.Context.User)' on host '$($_CurrentMvRACSettings.Context.Host)'. The current user is '$env:USERNAME' on host '$env:COMPUTERNAME'. Settings will be updated to match the current context. But additional steps may be required to ensure proper operation."
-        $_MvRACSettings.Context.User = $env:USERNAME
-        $_MvRACSettings.Context.Host = $env:COMPUTERNAME
-    }
-
-    # Save the updated settings
-    if ( $PSCmdlet.ShouldProcess("Saving updated Teams settings to '$_SettingsFile'.") ) {
-        $_MvRACSettings | ConvertTo-Json -Depth 5 | Set-Content -Path $_SettingsFile -Encoding UTF8 -Force
+    if ($PSCmdlet.ShouldProcess("Setting default Teams webhook URL")) {
+        Set-CardSettings -Settings $Settings
     }
 }
 

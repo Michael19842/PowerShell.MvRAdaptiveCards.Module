@@ -13,8 +13,8 @@ Sets the default Microsoft Teams webhook settings for Adaptive Card delivery.
 ## SYNTAX
 
 ```
-Set-CardDefaultTeamsSetting [-WebhookUrl] <String> [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Set-CardDefaultTeamsSetting [-WebhookUrl] <String> [-Clear] [-ProgressAction <ActionPreference>] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,6 +55,21 @@ Aliases:
 Required: True
 Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Clear
+{{ Fill Clear Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

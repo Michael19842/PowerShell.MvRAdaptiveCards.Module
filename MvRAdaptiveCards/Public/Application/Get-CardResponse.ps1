@@ -1,14 +1,24 @@
 ﻿function Get-CardResponse {
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '', Justification = 'Variable used in template')]
+    [system.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '', Justification = 'Settings variable used in module')]
     param (
         [parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [string]$Json,
 
         [parameter(Mandatory = $false)]
-        [string]$PromptTitle = "Adaptive Card prompt",
+        [string]$PromptTitle = $_MvRACSettings.'Get-Response'.PromptTitle,
 
         [parameter(Mandatory = $false)]
-        [string]$CardTitle = "Adaptive Card",
+        [string]$CardTitle = $_MvRACSettings.'Get-Response'.CardTitle,
+        [parameter(Mandatory = $false)]
+        [string]$LogoUrl = $_MvRACSettings.'Get-Response'.LogoUrl,
+        [parameter(Mandatory = $false)]
+        [string]$LogoHeaderText = $_MvRACSettings.'Get-Response'.LogoHeader,
+
+        [bool]$ShowVersion = $_MvRACSettings.'Get-Response'.ShowVersion,
+
+        [parameter(Mandatory = $false)]
+        [int]$PortNumber = $_MvRACSettings.'Get-Response'.PortNumber,
 
         [switch]$ServeOnly
     )
@@ -20,10 +30,16 @@
 
 
         if ($IsWindows) {
-            $ServiceUrl = "http://localhost:8081/"
+            $ServiceUrl = "http://localhost:$PortNumber/"
         }
         else {
-            $ServiceUrl = "http://+:8081/"
+            $ServiceUrl = "http://+:$PortNumber/"
+        }
+
+        $LogoHeader = $LogoHeaderText
+
+        if ( $ShowVersion ) {
+            $LogoHeader = "$LogoHeaderText <span class='version'>v$ModuleVersion</span>"
         }
 
         #Read the JSON and only load needed extensions
