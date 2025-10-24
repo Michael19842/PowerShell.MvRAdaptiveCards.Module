@@ -55,13 +55,14 @@ function New-CardInputChoiceSet {
         $InputChoiceSet.title = $Title
     }
 
+    $InputChoiceSet.choices = @()
     if ($Choices) {
         foreach ($key in $Choices.Keys) {
             $choiceItem = @{
                 value = $key
                 title = $Choices[$key]
             }
-            $ChoicesList += $choiceItem
+            $InputChoiceSet.choices += $choiceItem
         }
     }
 

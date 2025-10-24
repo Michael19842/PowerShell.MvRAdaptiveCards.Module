@@ -14,9 +14,8 @@ schema: 2.0.0
 
 ```
 New-CardInputText [[-Id] <String>] [[-Placeholder] <String>] [[-Value] <String>] [[-Style] <String>]
- [[-MaxLength] <Int32>] [[-MinLength] <Int32>] [[-IsMultiline] <Boolean>] [[-IsRequired] <Boolean>]
- [[-Regex] <String>] [[-Label] <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [[-MaxLength] <Int32>] [[-MinLength] <Int32>] [-IsMultiline] [[-IsRequired] <Boolean>] [[-Regex] <String>]
+ [[-Label] <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -67,12 +66,12 @@ Accept wildcard characters: False
 {{ Fill IsMultiline Description }}
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -87,7 +86,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -102,7 +101,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -162,7 +161,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

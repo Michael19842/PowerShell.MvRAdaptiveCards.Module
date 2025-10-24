@@ -1,0 +1,219 @@
+/* Carousel Container */
+.ac-carousel-container {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+/* Pages Container */
+.ac-carousel-pages {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Individual Page Wrapper */
+.ac-carousel-page-wrapper {
+    width: 100%;
+    height: 100%;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Individual Page */
+.ac-carousel-page {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Ensure inputs and other elements render properly on carousel pages */
+.ac-carousel-page .ac-input,
+.ac-carousel-page .ac-textInput,
+.ac-carousel-page .ac-input-toggle,
+.ac-carousel-page .ac-input-choiceSet,
+.ac-carousel-page .ac-rating-container {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.ac-carousel-page input[type="text"],
+.ac-carousel-page input[type="number"],
+.ac-carousel-page input[type="email"],
+.ac-carousel-page input[type="tel"],
+.ac-carousel-page textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.ac-carousel-page input[type="text"]:focus,
+.ac-carousel-page input[type="number"]:focus,
+.ac-carousel-page input[type="email"]:focus,
+.ac-carousel-page input[type="tel"]:focus,
+.ac-carousel-page textarea:focus {
+    outline: none;
+    border-color: #0078d4;
+    box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+}
+
+/* Navigation Container */
+.ac-carousel-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 10px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Navigation Buttons */
+.ac-carousel-nav-button {
+    background-color: transparent;
+    border: none;
+    font-size: 32px;
+    color: #333;
+    cursor: pointer;
+    padding: 5px 15px;
+    transition: all 0.2s ease;
+    line-height: 1;
+    user-select: none;
+}
+
+.ac-carousel-nav-button:hover:not(:disabled) {
+    color: #0078d4;
+    transform: scale(1.2);
+}
+
+.ac-carousel-nav-button:active:not(:disabled) {
+    transform: scale(1.1);
+}
+
+.ac-carousel-nav-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+/* Page Indicators */
+.ac-carousel-indicators {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 0 20px;
+}
+
+.ac-carousel-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.ac-carousel-indicator:hover {
+    background-color: #999;
+    transform: scale(1.2);
+}
+
+.ac-carousel-indicator.active {
+    background-color: #0078d4;
+    width: 24px;
+    border-radius: 5px;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .ac-carousel-page {
+        padding: 15px;
+    }
+
+    .ac-carousel-nav-button {
+        font-size: 24px;
+        padding: 5px 10px;
+    }
+
+    .ac-carousel-indicators {
+        margin: 0 10px;
+        gap: 6px;
+    }
+
+    .ac-carousel-indicator {
+        width: 8px;
+        height: 8px;
+    }
+
+    .ac-carousel-indicator.active {
+        width: 20px;
+    }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .ac-carousel-container {
+        background-color: #2d2d2d;
+    }
+
+    .ac-carousel-nav {
+        background-color: rgba(45, 45, 45, 0.95);
+        border-top-color: #444;
+    }
+
+    .ac-carousel-nav-button {
+        color: #e0e0e0;
+    }
+
+    .ac-carousel-nav-button:hover:not(:disabled) {
+        color: #4da6ff;
+    }
+
+    .ac-carousel-indicator {
+        background-color: #666;
+    }
+
+    .ac-carousel-indicator:hover {
+        background-color: #888;
+    }
+
+    .ac-carousel-indicator.active {
+        background-color: #4da6ff;
+    }
+
+    .ac-carousel-page input[type="text"],
+    .ac-carousel-page input[type="number"],
+    .ac-carousel-page input[type="email"],
+    .ac-carousel-page input[type="tel"],
+    .ac-carousel-page textarea {
+        background-color: #3d3d3d;
+        border-color: #555;
+        color: #e0e0e0;
+    }
+
+    .ac-carousel-page input[type="text"]:focus,
+    .ac-carousel-page input[type="number"]:focus,
+    .ac-carousel-page input[type="email"]:focus,
+    .ac-carousel-page input[type="tel"]:focus,
+    .ac-carousel-page textarea:focus {
+        border-color: #4da6ff;
+        box-shadow: 0 0 0 2px rgba(77, 166, 255, 0.2);
+    }
+}

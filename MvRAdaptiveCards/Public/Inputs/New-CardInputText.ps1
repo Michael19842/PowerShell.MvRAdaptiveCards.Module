@@ -22,7 +22,7 @@ function New-CardInputText {
         [int]$MinLength,
 
         [Parameter(Mandatory = $false)]
-        [bool]$IsMultiline,
+        [switch]$IsMultiline,
 
         [Parameter(Mandatory = $false)]
         [bool]$IsRequired,

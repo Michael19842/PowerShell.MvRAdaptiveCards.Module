@@ -44,6 +44,12 @@ Creates a new Action.ToggleVisibility element that shows or hides targeted card 
 ### [New-CardBadge](New-CardBadge.md)
 {{ Fill in the Synopsis }}
 
+### [New-CardCarousel](New-CardCarousel.md)
+Creates a Carousel container for Adaptive Cards.
+
+### [New-CardCarouselPage](New-CardCarouselPage.md)
+Creates a page for a Carousel container.
+
 ### [New-CardCodeBlock](New-CardCodeBlock.md)
 Creates a new CodeBlock element for an Adaptive Card to display formatted code snippets.
 

@@ -4,6 +4,10 @@
 - Added support for `New-CardInputRating` to create rating input elements in adaptive cards.
 - Added support for `New-CardCodeBlock` to create code block elements with syntax highlighting using Prism.js.
 - Added CSS styles for code blocks to improve rendering and appearance. For both preview and prompt scenarios.
+- Added `New-CardCarousel` function to create carousel elements in adaptive cards.
+- Added `New-CardCarouselPage` function to define individual pages within a carousel.
+- Added an extension for carousel in order to render input elements within carousel pages.
+- Bug fix on `New-CardInputChoiceSet` to correctly add choices when using a hashtable for the `-Choices` parameter.
 
 ## 0.6.13.0
 - Updated `-Choices` parameter in `New-CardInputChoiceSet` to accept a hashtable for easier choice definition.
