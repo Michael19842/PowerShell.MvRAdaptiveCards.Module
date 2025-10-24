@@ -1,0 +1,472 @@
+/* ===================================================================
+   CodeBlock Extension - CSS Styles
+   Provides styling for CodeBlock element
+   =================================================================== */
+
+/* ===================================================================
+   CodeBlock Container
+   =================================================================== */
+
+.ac-codeblock-container {
+    margin: 8px 0;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.ac-codeblock-wrapper {
+    position: relative;
+    background: transparent;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* ===================================================================
+   Caption
+   =================================================================== */
+
+.ac-codeblock-caption {
+    font-size: 13px;
+    color: #57606a;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* ===================================================================
+   Copy Button
+   =================================================================== */
+
+.ac-codeblock-copy-button {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 6px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #57606a;
+    z-index: 3;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0.6;
+}
+
+.ac-codeblock-copy-button:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #24292f;
+    opacity: 1;
+}
+
+.ac-codeblock-copy-button:active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.ac-codeblock-copy-button.ac-codeblock-copy-success {
+    background: rgba(46, 160, 67, 0.1);
+    color: #1a7f37;
+    opacity: 1;
+}
+
+.ac-codeblock-copy-button.ac-codeblock-copy-error {
+    background: rgba(207, 34, 46, 0.1);
+    color: #cf222e;
+    opacity: 1;
+}
+
+.ac-codeblock-copy-icon {
+    display: inline-block;
+    font-style: normal;
+}
+
+/* ===================================================================
+   Pre and Code Elements
+   =================================================================== */
+
+.ac-codeblock-pre {
+    margin: 0;
+    padding: 12px;
+    overflow-x: auto;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    tab-size: 4;
+}
+
+.ac-codeblock-code {
+    display: block;
+    color: #24292f;
+    font-family: inherit;
+    font-size: inherit;
+    white-space: pre;
+}
+
+.ac-codeblock-wrapper.ac-codeblock-wrap .ac-codeblock-code {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* ===================================================================
+   Line Numbers
+   =================================================================== */
+
+.ac-codeblock-lines {
+    display: block;
+}
+
+.ac-codeblock-line {
+    display: flex;
+    min-height: 1.5em;
+}
+
+.ac-codeblock-line-number {
+    display: inline-block;
+    width: 40px;
+    padding-right: 16px;
+    color: #8c959f;
+    text-align: right;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.ac-codeblock-line-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ===================================================================
+   Highlighted Lines
+   =================================================================== */
+
+.ac-codeblock-line-highlighted {
+    background: #fff8c5;
+    border-left: 3px solid #ffdf5d;
+    margin-left: -16px;
+    padding-left: 13px;
+}
+
+.ac-codeblock-line-highlighted .ac-codeblock-line-number {
+    padding-left: 13px;
+}
+
+/* ===================================================================
+   Syntax Highlighting - Basic Colors
+   =================================================================== */
+
+/* Keywords */
+.ac-codeblock-code .keyword {
+    color: #cf222e;
+    font-weight: 600;
+}
+
+/* Strings */
+.ac-codeblock-code .string {
+    color: #0a3069;
+}
+
+/* Comments */
+.ac-codeblock-code .comment {
+    color: #116329;
+    font-style: italic;
+}
+
+/* Numbers */
+.ac-codeblock-code .number {
+    color: #0550ae;
+}
+
+/* Functions */
+.ac-codeblock-code .function {
+    color: #8250df;
+}
+
+/* Variables */
+.ac-codeblock-code .variable {
+    color: #953800;
+}
+
+/* Operators */
+.ac-codeblock-code .operator {
+    color: #cf222e;
+}
+
+/* ===================================================================
+   Language-Specific Styling
+   =================================================================== */
+
+/* PowerShell */
+.ac-codeblock-code.language-powershell,
+.ac-codeblock-code.language-pwsh {
+    color: #012456;
+}
+
+/* JavaScript/TypeScript */
+.ac-codeblock-code.language-javascript,
+.ac-codeblock-code.language-typescript,
+.ac-codeblock-code.language-js,
+.ac-codeblock-code.language-ts {
+    color: #24292f;
+}
+
+/* Python */
+.ac-codeblock-code.language-python {
+    color: #24292f;
+}
+
+/* JSON */
+.ac-codeblock-code.language-json {
+    color: #0550ae;
+}
+
+/* XML/HTML */
+.ac-codeblock-code.language-xml,
+.ac-codeblock-code.language-html {
+    color: #116329;
+}
+
+/* CSS */
+.ac-codeblock-code.language-css {
+    color: #6639ba;
+}
+
+/* SQL */
+.ac-codeblock-code.language-sql {
+    color: #cf222e;
+}
+
+/* Bash/Shell */
+.ac-codeblock-code.language-bash,
+.ac-codeblock-code.language-shell,
+.ac-codeblock-code.language-sh {
+    color: #24292f;
+}
+
+/* ===================================================================
+   Dark Theme Support
+   =================================================================== */
+
+@media (prefers-color-scheme: dark) {
+    .ac-codeblock-wrapper {
+        background: #161b22;
+        border-color: #30363d;
+    }
+
+    .ac-codeblock-caption {
+        color: #8b949e;
+    }
+
+    .ac-codeblock-language-badge {
+        background: #1f6feb;
+    }
+
+    .ac-codeblock-copy-button {
+        background: #21262d;
+        border-color: #30363d;
+        color: #c9d1d9;
+    }
+
+    .ac-codeblock-copy-button:hover {
+        background: #30363d;
+        border-color: #8b949e;
+    }
+
+    .ac-codeblock-copy-button:active {
+        background: #161b22;
+    }
+
+    .ac-codeblock-copy-button.ac-codeblock-copy-success {
+        background: #0d1117;
+        border-color: #238636;
+        color: #3fb950;
+    }
+
+    .ac-codeblock-copy-button.ac-codeblock-copy-error {
+        background: #0d1117;
+        border-color: #da3633;
+        color: #f85149;
+    }
+
+    .ac-codeblock-code {
+        color: #c9d1d9;
+    }
+
+    .ac-codeblock-line-number {
+        color: #6e7681;
+    }
+
+    .ac-codeblock-line-highlighted {
+        background: #3d2b00;
+        border-left-color: #d29922;
+    }
+
+    /* Dark theme syntax colors */
+    .ac-codeblock-code .keyword {
+        color: #ff7b72;
+    }
+
+    .ac-codeblock-code .string {
+        color: #a5d6ff;
+    }
+
+    .ac-codeblock-code .comment {
+        color: #8b949e;
+    }
+
+    .ac-codeblock-code .number {
+        color: #79c0ff;
+    }
+
+    .ac-codeblock-code .function {
+        color: #d2a8ff;
+    }
+
+    .ac-codeblock-code .variable {
+        color: #ffa657;
+    }
+
+    .ac-codeblock-code .operator {
+        color: #ff7b72;
+    }
+}
+
+/* ===================================================================
+   Scrollbar Styling
+   =================================================================== */
+
+.ac-codeblock-pre::-webkit-scrollbar {
+    height: 8px;
+}
+
+.ac-codeblock-pre::-webkit-scrollbar-track {
+    background: #f6f8fa;
+    border-radius: 4px;
+}
+
+.ac-codeblock-pre::-webkit-scrollbar-thumb {
+    background: #d0d7de;
+    border-radius: 4px;
+}
+
+.ac-codeblock-pre::-webkit-scrollbar-thumb:hover {
+    background: #8c959f;
+}
+
+@media (prefers-color-scheme: dark) {
+    .ac-codeblock-pre::-webkit-scrollbar-track {
+        background: #161b22;
+    }
+
+    .ac-codeblock-pre::-webkit-scrollbar-thumb {
+        background: #30363d;
+    }
+
+    .ac-codeblock-pre::-webkit-scrollbar-thumb:hover {
+        background: #484f58;
+    }
+}
+
+/* ===================================================================
+   Accessibility - High Contrast Mode
+   =================================================================== */
+
+@media (prefers-contrast: high) {
+    .ac-codeblock-wrapper {
+        border: 2px solid currentColor;
+    }
+
+    .ac-codeblock-copy-button {
+        border: 2px solid currentColor;
+    }
+
+    .ac-codeblock-copy-button:focus {
+        outline: 3px solid Highlight;
+        outline-offset: 2px;
+    }
+}
+
+/* ===================================================================
+   Print Styles
+   =================================================================== */
+
+@media print {
+    .ac-codeblock-container {
+        break-inside: avoid;
+    }
+
+    .ac-codeblock-copy-button {
+        display: none;
+    }
+
+    .ac-codeblock-language-badge {
+        display: none;
+    }
+
+    .ac-codeblock-wrapper {
+        border: 1px solid #000;
+    }
+
+    .ac-codeblock-line-highlighted {
+        background: #f0f0f0;
+        border-left-color: #000;
+    }
+}
+
+/* ===================================================================
+   Responsive Design
+   =================================================================== */
+
+@media (max-width: 640px) {
+    .ac-codeblock-pre {
+        padding: 12px;
+        font-size: 12px;
+    }
+
+    .ac-codeblock-copy-button {
+        padding: 4px 8px;
+        font-size: 12px;
+        top: 6px;
+        right: 6px;
+    }
+
+    .ac-codeblock-language-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+        top: 6px;
+        right: 60px;
+    }
+
+    .ac-codeblock-line-number {
+        width: 30px;
+        padding-right: 12px;
+    }
+}
+
+/* ===================================================================
+   Focus States
+   =================================================================== */
+
+.ac-codeblock-copy-button:focus {
+    outline: 2px solid #0969da;
+    outline-offset: 2px;
+}
+
+.ac-codeblock-copy-button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* ===================================================================
+   Performance Optimizations
+   =================================================================== */
+
+.ac-codeblock-container {
+    contain: layout style;
+}
+
+.ac-codeblock-wrapper {
+    contain: layout style paint;
+}

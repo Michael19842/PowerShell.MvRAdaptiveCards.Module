@@ -1,5 +1,10 @@
 # Release Notes
 
+## 0.6.14.0
+- Added support for `New-CardInputRating` to create rating input elements in adaptive cards.
+- Added support for `New-CardCodeBlock` to create code block elements with syntax highlighting using Prism.js.
+- Added CSS styles for code blocks to improve rendering and appearance. For both preview and prompt scenarios.
+
 ## 0.6.13.0
 - Updated `-Choices` parameter in `New-CardInputChoiceSet` to accept a hashtable for easier choice definition.
 - Added `New-CardInputToggle` function to create toggle input elements in adaptive cards.

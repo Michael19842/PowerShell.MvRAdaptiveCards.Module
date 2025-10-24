@@ -108,7 +108,7 @@ function New-CardCodeBlock {
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
     [OutputType([hashtable])]
     param (
-        [Alias('Text')][string]$CodeSnippet,
+        [Alias('Text', 'Code')][string]$CodeSnippet,
         [ValidateSet("plaintext", "csharp", "cpp", "css", "dockerfile", "fsharp", "go", "html", "ini",
             "java", "javascript", "json", "kotlin", "less", "lua", "markdown", "objectivec",
             "perl", "php", "powershell", "python", "r", "ruby", "rust", "scss", "shell",

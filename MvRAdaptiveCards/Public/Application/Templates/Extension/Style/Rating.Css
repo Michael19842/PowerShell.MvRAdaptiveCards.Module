@@ -1,0 +1,335 @@
+/* ===================================================================
+   Rating Input Extension - CSS Styles
+   Provides styling for Input.Rating element
+   =================================================================== */
+
+/* ===================================================================
+   Rating Container
+   =================================================================== */
+
+.ac-rating-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 0;
+    user-select: none;
+}
+
+/* ===================================================================
+   Rating Items (Individual stars/hearts/thumbs)
+   =================================================================== */
+
+.ac-rating-item {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    position: relative;
+}
+
+.ac-rating-item:hover {
+    transform: scale(1.15);
+}
+
+.ac-rating-item:active {
+    transform: scale(0.95);
+}
+
+.ac-rating-item:focus {
+    outline: 2px solid #0078d4;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* ===================================================================
+   Rating Icons
+   =================================================================== */
+
+.ac-rating-icon {
+    display: inline-block;
+    line-height: 1;
+    color: #d1d1d1;
+    transition: color 0.15s ease;
+}
+
+/* Icon sets */
+.ac-rating-icon[data-icon="star"] {
+    font-size: inherit;
+}
+
+.ac-rating-icon[data-icon="heart"] {
+    font-size: inherit;
+}
+
+.ac-rating-icon[data-icon="thumb"] {
+    font-size: inherit;
+    filter: grayscale(100%);
+}
+
+/* ===================================================================
+   Rating States - Selected
+   =================================================================== */
+
+.ac-rating-item.ac-rating-selected .ac-rating-icon {
+    color: #ffc107;
+}
+
+.ac-rating-item.ac-rating-selected .ac-rating-icon[data-icon="heart"] {
+    color: #e91e63;
+}
+
+.ac-rating-item.ac-rating-selected .ac-rating-icon[data-icon="thumb"] {
+    filter: grayscale(0%);
+}
+
+/* ===================================================================
+   Rating States - Hover
+   =================================================================== */
+
+.ac-rating-item.ac-rating-hover .ac-rating-icon {
+    color: #ffcd38;
+}
+
+.ac-rating-item.ac-rating-hover .ac-rating-icon[data-icon="heart"] {
+    color: #f06292;
+}
+
+.ac-rating-item.ac-rating-hover .ac-rating-icon[data-icon="thumb"] {
+    filter: grayscale(0%);
+    opacity: 0.8;
+}
+
+/* ===================================================================
+   Rating Sizes
+   =================================================================== */
+
+.ac-rating-container[data-size="small"] .ac-rating-icon {
+    font-size: 16px;
+}
+
+.ac-rating-container[data-size="small"] .ac-rating-item {
+    padding: 2px;
+}
+
+.ac-rating-container[data-size="medium"] .ac-rating-icon {
+    font-size: 24px;
+}
+
+.ac-rating-container[data-size="medium"] .ac-rating-item {
+    padding: 4px;
+}
+
+.ac-rating-container[data-size="large"] .ac-rating-icon {
+    font-size: 32px;
+}
+
+.ac-rating-container[data-size="large"] .ac-rating-item {
+    padding: 6px;
+}
+
+.ac-rating-container[data-size="extra-large"] .ac-rating-icon {
+    font-size: 40px;
+}
+
+.ac-rating-container[data-size="extra-large"] .ac-rating-item {
+    padding: 8px;
+}
+
+/* ===================================================================
+   Rating Colors
+   =================================================================== */
+
+/* Neutral (default yellow/gold) */
+.ac-rating-container[data-color="neutral"] .ac-rating-item.ac-rating-selected .ac-rating-icon,
+.ac-rating-container[data-color="neutral"] .ac-rating-item.ac-rating-hover .ac-rating-icon {
+    color: #ffc107;
+}
+
+/* Brand/Accent */
+.ac-rating-container[data-color="accent"] .ac-rating-item.ac-rating-selected .ac-rating-icon,
+.ac-rating-container[data-color="accent"] .ac-rating-item.ac-rating-hover .ac-rating-icon {
+    color: #0078d4;
+}
+
+/* Good/Success */
+.ac-rating-container[data-color="good"] .ac-rating-item.ac-rating-selected .ac-rating-icon,
+.ac-rating-container[data-color="good"] .ac-rating-item.ac-rating-hover .ac-rating-icon {
+    color: #107c10;
+}
+
+/* Warning */
+.ac-rating-container[data-color="warning"] .ac-rating-item.ac-rating-selected .ac-rating-icon,
+.ac-rating-container[data-color="warning"] .ac-rating-item.ac-rating-hover .ac-rating-icon {
+    color: #ff8c00;
+}
+
+/* Attention/Error */
+.ac-rating-container[data-color="attention"] .ac-rating-item.ac-rating-selected .ac-rating-icon,
+.ac-rating-container[data-color="attention"] .ac-rating-item.ac-rating-hover .ac-rating-icon {
+    color: #d13438;
+}
+
+/* Heart icon always uses pink/red regardless of color setting */
+.ac-rating-container .ac-rating-item.ac-rating-selected .ac-rating-icon[data-icon="heart"],
+.ac-rating-container .ac-rating-item.ac-rating-hover .ac-rating-icon[data-icon="heart"] {
+    color: #e91e63;
+}
+
+/* ===================================================================
+   Rating Count Label
+   =================================================================== */
+
+.ac-rating-count {
+    margin-left: 8px;
+    font-size: 14px;
+    color: #605e5c;
+    font-weight: normal;
+}
+
+.ac-rating-container[data-size="small"] .ac-rating-count {
+    font-size: 12px;
+    margin-left: 6px;
+}
+
+.ac-rating-container[data-size="large"] .ac-rating-count {
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.ac-rating-container[data-size="extra-large"] .ac-rating-count {
+    font-size: 18px;
+    margin-left: 12px;
+}
+
+/* ===================================================================
+   Disabled State
+   =================================================================== */
+
+.ac-rating-container[disabled] .ac-rating-item {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.ac-rating-container[disabled] .ac-rating-item:hover {
+    transform: none;
+}
+
+/* ===================================================================
+   Read-only State
+   =================================================================== */
+
+.ac-rating-container[readonly] .ac-rating-item {
+    cursor: default;
+    pointer-events: none;
+}
+
+/* ===================================================================
+   Dark Theme Support
+   =================================================================== */
+
+@media (prefers-color-scheme: dark) {
+    .ac-rating-icon {
+        color: #484644;
+    }
+
+    .ac-rating-count {
+        color: #c8c6c4;
+    }
+}
+
+/* ===================================================================
+   Accessibility - High Contrast Mode
+   =================================================================== */
+
+@media (prefers-contrast: high) {
+    .ac-rating-item:focus {
+        outline: 3px solid currentColor;
+        outline-offset: 3px;
+    }
+
+    .ac-rating-icon {
+        color: ButtonText;
+    }
+
+    .ac-rating-item.ac-rating-selected .ac-rating-icon {
+        color: Highlight;
+    }
+}
+
+/* ===================================================================
+   Animation for Rating Selection
+   =================================================================== */
+
+@keyframes rating-pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.ac-rating-item.ac-rating-selected {
+    animation: rating-pulse 0.3s ease;
+}
+
+/* ===================================================================
+   Mobile/Touch Optimization
+   =================================================================== */
+
+@media (pointer: coarse) {
+    .ac-rating-item {
+        padding: 8px;
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .ac-rating-container {
+        gap: 2px;
+    }
+}
+
+/* ===================================================================
+   Print Styles
+   =================================================================== */
+
+@media print {
+    .ac-rating-container {
+        break-inside: avoid;
+    }
+
+    .ac-rating-item:not(.ac-rating-selected) {
+        opacity: 0.3;
+    }
+}
+
+/* ===================================================================
+   RTL Support
+   =================================================================== */
+
+[dir="rtl"] .ac-rating-count {
+    margin-left: 0;
+    margin-right: 8px;
+}
+
+/* ===================================================================
+   Performance Optimizations
+   =================================================================== */
+
+.ac-rating-container {
+    contain: layout style;
+}
+
+.ac-rating-item {
+    contain: layout style paint;
+}
