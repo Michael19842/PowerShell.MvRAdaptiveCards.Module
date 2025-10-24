@@ -73,7 +73,7 @@ This parameter has an alias 'Text' for convenience.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: Text
+Aliases: Text, Code
 
 Required: False
 Position: 1
