@@ -1,7 +1,7 @@
 BeforeAll {
     # Import the module
     $ModulePath = Join-Path -Path $PSScriptRoot -ChildPath '..\MvRAdaptiveCards\MvRAdaptiveCards.psd1'
-    Import-Module $ModulePath -Force -ArgumentList $false, $True
+    Import-Module $ModulePath -Force -ArgumentList $True, $true
 }
 
 Describe 'New-CardImageSet' {

@@ -50,7 +50,16 @@ Task updateManifest -RequiredVariables 'Manifest' -Depends prepare -Action {
 }
 
 Task test -Action {
-    Invoke-Pester -Path ".\..\tests\*.Tests.ps1"
+    #Configure Pester settings
+    $config = New-PesterConfiguration
+    $config.CodeCoverage.Enabled = $true
+
+    $config.Run.Path = ".\..\Tests"
+    $config.CodeCoverage.Path = ".\..\$ModuleName"
+    $config.CodeCoverage.RecursePaths = $true
+
+
+    Invoke-Pester -Configuration $config
 }
 
 Task analyse -Action {

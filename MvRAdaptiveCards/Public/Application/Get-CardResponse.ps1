@@ -20,6 +20,11 @@
         [parameter(Mandatory = $false)]
         [int]$PortNumber = $_MvRACSettings.'Get-Response'.PortNumber,
 
+        [parameter(Mandatory = $false)]
+        [string]$HeaderBackgroundStart = $_MvRACSettings.'Get-Response'.HeaderBackgroundStart,
+        [parameter(Mandatory = $false)]
+        [string]$HeaderBackgroundEnd = $_MvRACSettings.'Get-Response'.HeaderBackgroundEnd,
+
         [switch]$ServeOnly
     )
 

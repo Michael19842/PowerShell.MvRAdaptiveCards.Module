@@ -3,7 +3,7 @@
 
 [CmdletBinding()]
 param (
-    [switch]$ExposePrivateFunctions,
+    [switch]$ExposePrivateReferences,
     [switch]$NoBanner
 )
 
@@ -27,8 +27,15 @@ foreach ($Folder in @('Private', 'Public', 'Collection', 'ArgumentCompleters')) 
 Write-Verbose "Functions defined: $(Get-Command -Module $MyInvocation.MyCommand.Module | Select-Object -ExpandProperty Name | Where-Object {$_ -like '*-MvR*'} )"
 
 Export-ModuleMember -Function (Get-ChildItem -Path "$PSScriptRoot\Public\*.ps1" -Recurse).BaseName
+Export-ModuleMember -Alias (Get-ChildItem -Path "$PSScriptRoot\Public\*.ps1" -Recurse | ForEach-Object {
+        $Content = Get-Content -Path $_.FullName -Raw
+        $AliasMatches = [regex]::Matches($Content, 'Set-Alias\s+-Name\s+(\S+)\s+-Value\s+(\S+)', 'IgnoreCase')
+        foreach ($Match in $AliasMatches) {
+            $Match.Groups[1].Value
+        }
+    })
 
-if ($ExposePrivateFunctions) {
+if ($ExposePrivateReferences) {
     Export-ModuleMember -Function (Get-ChildItem -Path "$PSScriptRoot\Private\*.ps1" -Recurse).BaseName
 }
 

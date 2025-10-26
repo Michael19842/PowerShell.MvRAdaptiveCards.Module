@@ -61,11 +61,13 @@
     Build-CardFromTemplate
 #>
 function Find-CardTemplateTag {
+    [CmdletBinding()]
+    [OutputType([string[]])]
     param (
         [hashtable]$Content
     )
 
-    $TemplateAsJson = $Content | ConvertTo-Json -Depth 10
+    $TemplateAsJson = $Content | ConvertTo-Json -Depth 100
     $TagPattern = '!{{(.*?)}}'
     $TagMatches = [regex]::Matches($TemplateAsJson, $TagPattern)
 
@@ -73,8 +75,9 @@ function Find-CardTemplateTag {
         return @()
     }
 
-    return $TagMatches | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique
+    $UniqueTags = $TagMatches | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique
+    return @($UniqueTags)
 }
 
 #Alias for function name for reverse compatibility
-Set-Alias -Name Find-CardTemplateTags -Value Find-CardTemplateTag -Force
+Set-Alias -Name Find-CardTemplateTags -Value Find-CardTemplateTag -Scope Global

@@ -13,8 +13,12 @@
     <script>$ExtensionsJs</script>
     $ExtensionsCss
     <style type="text/css">
-        /*PoweShell variable*/
-        /*General Styles*/
+        /*Create variables for colors and fonts*/
+        :root {
+            --header-background-start: #$HeaderBackgroundStart;
+            --header-background-end: #$HeaderBackgroundEnd;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -24,7 +28,8 @@
         }
 
         .module-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: linear-gradient(135deg, var(--header-background-start) 0%, var(--header-background-end) 100%);
             color: white;
             padding: 15px 20px;
             text-align: center;

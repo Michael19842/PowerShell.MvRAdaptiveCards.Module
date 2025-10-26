@@ -13,7 +13,7 @@ Creates a new RichTextBlock element for an Adaptive Card with advanced inline fo
 ## SYNTAX
 
 ```
-New-CardRichTextBlock [-Text] <String> [[-Id] <String>] [[-HorizontalAlignment] <String>]
+New-CardRichTextBlock [[-Text] <String>] [[-Id] <String>] [[-HorizontalAlignment] <String>]
  [[-FontType] <String>] [[-Size] <String>] [[-Weight] <String>] [[-NamedSelectActions] <Hashtable>]
  [-Separator] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
@@ -131,7 +131,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False

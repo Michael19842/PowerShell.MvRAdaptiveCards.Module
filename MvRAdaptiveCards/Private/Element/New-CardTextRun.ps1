@@ -24,7 +24,8 @@ function New-CardTextRun {
         [ValidateSet("Lighter", "Default", "Bolder", $null)]
         [string]$Weight,
 
-        [switch]$IsVisible,
+        [Parameter(Mandatory = $false)]
+        [bool]$IsVisible = $true,
         [switch]$IsSubtle,
         [switch]$Highlight,
         [switch]$Italic,
@@ -54,8 +55,8 @@ function New-CardTextRun {
         $TextRun.isSubtle = $true
     }
 
-    if ($IsVisible) {
-        $TextRun.isVisible = $true
+    if ($null -ne $IsVisible) {
+        $TextRun.isVisible = $IsVisible
     }
 
     if ($Lang) {

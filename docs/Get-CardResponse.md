@@ -14,7 +14,8 @@ schema: 2.0.0
 
 ```
 Get-CardResponse [-Json] <String> [[-PromptTitle] <String>] [[-CardTitle] <String>] [[-LogoUrl] <String>]
- [[-LogoHeaderText] <String>] [[-ShowVersion] <Boolean>] [[-PortNumber] <Int32>] [-ServeOnly]
+ [[-LogoHeaderText] <String>] [[-ShowVersion] <Boolean>] [[-PortNumber] <Int32>]
+ [[-HeaderBackgroundStart] <String>] [[-HeaderBackgroundEnd] <String>] [-ServeOnly]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -42,6 +43,36 @@ Aliases:
 
 Required: False
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HeaderBackgroundEnd
+{{ Fill HeaderBackgroundEnd Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HeaderBackgroundStart
+{{ Fill HeaderBackgroundStart Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

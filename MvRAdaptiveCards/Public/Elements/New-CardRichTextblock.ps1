@@ -162,9 +162,9 @@ function New-CardRichTextBlock {
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
     [OutputType([hashtable])]
     param (
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [string]
-        $Text,
+        $Text = "",
         [string]
         [Parameter(Mandatory = $false)]
         $Id,
@@ -206,7 +206,7 @@ function New-CardRichTextBlock {
     $Text = $Text -replace $TemplateTagPattern, '!{{#${1}#}}'
 
 
-    $TagPattern = '{{(\/?)([a-zA-Z]+)(?::([^}]+))?}}'
+    $TagPattern = '{{(\/?)([a-zA-Z]+)(?::([a-zA-Z0-9._-]+))?}}'
     $TagsMatches = [regex]::Matches($Text, $TagPattern)
 
     #Variables to track current position
@@ -292,7 +292,7 @@ function New-CardRichTextBlock {
             }
 
             #Bunch of aliases for bold
-            { "bold", "bolder", "strong", "b" -eq $_ } {
+            { "bold", "bolder", "strong", "b" -contains $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Weight"] = "Bolder"
                 }
@@ -324,7 +324,7 @@ function New-CardRichTextBlock {
             }
 
             #Bunch of aliases for italic
-            { "italic", "em", "i" -eq $_ } {
+            { "italic", "em", "i" -contains $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Italic"] = $true
                 }
@@ -333,7 +333,7 @@ function New-CardRichTextBlock {
                 }
             }
 
-            { "strikethrough", "strike", "s" -eq $_ } {
+            { "strikethrough", "strike", "s" -contains $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Strikethrough"] = $true
                 }
@@ -342,7 +342,7 @@ function New-CardRichTextBlock {
                 }
             }
 
-            { "underline", "u" -eq $_ } {
+            { "underline", "u" -contains $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Underline"] = $true
                 }
@@ -351,7 +351,7 @@ function New-CardRichTextBlock {
                 }
             }
 
-            { "highlight", "mark" -eq $_ } {
+            { "highlight", "mark" -contains $_ } {
 
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Highlight"] = $true
@@ -361,12 +361,12 @@ function New-CardRichTextBlock {
                 }
             }
 
-            { "hidden", "invisible" -eq $_ } {
+            { "hidden", "invisible" -contains $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["IsVisible"] = $false
                 }
                 else {
-                    $ActiveStyle["IsVisible"] = $null
+                    $ActiveStyle["IsVisible"] = $true
                 }
             }
 
@@ -379,7 +379,7 @@ function New-CardRichTextBlock {
                 }
             }
 
-            { "monospace", "mono", "code" -eq $_ } {
+            { "monospace", "mono", "code" -contains $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["FontType"] = "Monospace"
                 }
@@ -401,7 +401,7 @@ function New-CardRichTextBlock {
                 }
             }
 
-            { "lang", "language" -eq $_ } {
+            { "lang", "language" -contains $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Lang"] = $Tag.Value
                 }
@@ -410,7 +410,7 @@ function New-CardRichTextBlock {
                 }
             }
 
-            { "large", "medium", "small" -eq $_ } {
+            { "large", "medium", "small" -contains $_ } {
                 if (-not $Tag.IsClosing) {
                     $ActiveStyle["Size"] = ([System.Globalization.CultureInfo]::InvariantCulture.TextInfo).ToTitleCase($Tag.TagName)
                 }
@@ -485,6 +485,12 @@ function New-CardRichTextBlock {
         [void]$Inlines.Add($TextRun)
     }
 
+    # If there are any unclosed tags, throw an error
+    if ($OpenTags.Count -gt 0) {
+        $UnclosedTags = $OpenTags | ForEach-Object { $_.TagName } | Sort-Object -Unique
+        throw "The following tags were not closed: $($UnclosedTags -join ', ')"
+    }
+
 
 
 
@@ -494,7 +500,12 @@ function New-CardRichTextBlock {
     }
 
     if ($Inlines.Count -gt 0) {
-        $RichTextBlock.inlines = $Inlines
+        $RichTextBlock.inlines = [array]$Inlines
+    }
+
+    #Ensure inlines is always an array
+    if ($RichTextBlock.inlines -is [hashtable]) {
+        $RichTextBlock.inlines = @($RichTextBlock.inlines)
     }
 
     if ($Id) {
