@@ -16,5 +16,6 @@
     },
     "TeamsWebhook": {
         "WebhookUrl": ""
-    }
+    },
+    "General": {}
 }

@@ -69,6 +69,9 @@
                 $ExtensionsCss += "`n/* Extension: $Extension */`n" + $ExtensionCssContent
             }
         }
+
+        $ExtensionsCss = "<style type='text/css'>$ExtensionsCss</style>"
+
         $html = $ExecutionContext.InvokeCommand.ExpandString($html)
 
 

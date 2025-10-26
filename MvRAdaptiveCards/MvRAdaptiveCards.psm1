@@ -41,6 +41,12 @@ $_MvRACSettings = Get-CardSetting
 
 
 # Only show when interactive (avoid in CI or non-interactive runs)
-if (-not $Host.UI.RawUI -or $NoBanner) { return }
+
+
+$script:LoadedViaAutoLoad = -not (
+    $MyInvocation.Line -match 'Import-Module'
+)
+#Only show the banner if import module is run in an interactive session an it is not auto-loaded
+if (-not $Host.UI.RawUI -or $NoBanner -or $Host.UI.SupportsVirtualTerminal -eq $false -or $script:LoadedViaAutoLoad) { return }
 Write-Banner
 

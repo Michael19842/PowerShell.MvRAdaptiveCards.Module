@@ -125,6 +125,9 @@ Opens an Adaptive Card in the online Adaptive Cards Designer for visualization a
 ### [Send-CardViaTeams](Send-CardViaTeams.md)
 {{ Fill in the Synopsis }}
 
+### [Set-CardDefaultFallback](Set-CardDefaultFallback.md)
+{{ Fill in the Synopsis }}
+
 ### [Set-CardDefaultResponseSetting](Set-CardDefaultResponseSetting.md)
 {{ Fill in the Synopsis }}
 

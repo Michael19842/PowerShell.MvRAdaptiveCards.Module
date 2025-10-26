@@ -21,9 +21,8 @@
         parse(source, context) {
             super.parse(source, context);
 
-            if (source.max !== undefined) {
-                this.max = source.max;
-            }
+            if (source.max !== undefined) this.max = source.max;
+            if (source.maxValue !== undefined) this.max = source.maxValue; // Support PowerShell naming
             if (source.value !== undefined) {
                 this.value = source.value;
             }

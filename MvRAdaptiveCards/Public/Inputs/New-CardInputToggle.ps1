@@ -159,7 +159,7 @@ function New-CardInputToggle {
         $InputToggle.title = $Title
     }
 
-    if ($PSBoundParameters.ContainsKey('Value')) {
+    if ($Value) {
         $InputToggle.value = $Value
     }
 

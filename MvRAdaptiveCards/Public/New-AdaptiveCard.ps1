@@ -282,6 +282,11 @@ function New-AdaptiveCard {
         version   = "1.5"
     }
 
+    # Apply default fallback from settings if none provided and default is set
+    if ($Null -eq $Fallback -and $_MvRACSettings.General.DefaultFallback) {
+        $Fallback = [scriptblock]::Create($_MvRACSettings.General.DefaultFallback)
+    }
+
     if ($ForceVersion) {
         Write-Verbose "Forcing Adaptive Card version to '$ForceVersion'."
         $BaseCard.version = $ForceVersion

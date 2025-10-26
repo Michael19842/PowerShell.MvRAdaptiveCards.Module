@@ -1,5 +1,11 @@
 # Release Notes
 
+## 0.7.1.0
+- Fixed the issue where VSCode kept treating variables as errors in CSS blocks.
+- Fixed `New-CardInputRating` to correctly handle the `-Max` parameter for setting the maximum rating value.
+- Added a default fallback to the settings file to create a fallback for each element if no settings are found.
+- Updated the loading of the module to detect if it was auto-loaded or explicitly imported. The banner will only show when explicitly imported in an interactive session. (Its a nice banner, but can negatively impact the user experience if it shows up all the time when auto-loaded). You can still suppress it with the `-NoBanner` parameter. If you want to see the banner, import the module with using `Import-Module MvRAdaptiveCards -NoBanner:$false`.
+
 ## 0.7.0.0
 - Added `Set-CardDefaultResponseSetting` function to set default settings for `Get-CardResponse`. This allows users to configure default title, logo text, version display, and port number for the response server.
 - Updated `Get-CardResponse` to support new default settings for title, logo text, version display, and port number.
@@ -44,6 +50,7 @@ New-AdaptiveCard {
 ## 0.6.12.1
 - Fixed race condition in `Get-CardResponse` when handling responses. This would sometimes cause fetch errors.
 - Switched to port 8081 for local response server in `Get-CardResponse` to avoid conflicts with other services. (i will make this configurable in a future release)
+- Added default fallback support in `New-AdaptiveCard` to use a default fallback defined in settings if no fallback is provided for elements.
 
 ## 0.6.12.0
 - Started with release notes!
