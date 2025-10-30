@@ -1,4 +1,21 @@
 # Release Notes
+## 0.7.2.0
+- Added addition tests for diverse functions to improve code coverage and ensure stability.
+- Added `New-CardChartDonut` function to create donut chart elements in adaptive cards.
+- Added `Chart.Donut` extension to support rendering of donut charts using `Chart.js` within adaptive cards.
+
+```PowerShell
+New-AdaptiveCard {
+    New-CardChartDonut -Data @(
+        @{ label = "Product A"; value = 40; color = "#4CAF50" }
+        @{ label = "Product B"; value = 30; color = "#FF9800" }
+        @{ label = "Product C"; value = 20; color = "#F44336" }
+        @{ label = "Product D"; value = 10; color = "#2196F3" }
+    ) -Title "Sales Distribution"
+} -Actions {
+    New-CardActionSubmit -Title "Close"
+} | Get-CardResponse
+```
 
 ## 0.7.1.0
 - Fixed the issue where VSCode kept treating variables as errors in CSS blocks.

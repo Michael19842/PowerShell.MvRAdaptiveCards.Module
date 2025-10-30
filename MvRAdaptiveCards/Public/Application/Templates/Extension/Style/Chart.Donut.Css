@@ -1,0 +1,109 @@
+/* ChartDonut.css - Styles for Chart.Donut Adaptive Card element */
+
+.ac-chart-donut-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 12px 0;
+}
+
+.ac-chart-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 12px;
+    text-align: center;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.ac-chart-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.ac-chart-canvas {
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 400px;
+}
+
+.ac-chart-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background-color: #FFF4CE;
+    border: 1px solid #FFB900;
+    border-radius: 4px;
+    color: #8A6116;
+    font-size: 14px;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    min-height: 60px;
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ac-chart-canvas-wrapper {
+        max-width: 100%;
+    }
+
+    .ac-chart-title {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .ac-chart-donut-container {
+        padding: 8px 0;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .ac-chart-title {
+        color: #FFFFFF;
+    }
+
+    .ac-chart-error {
+        background-color: #4A3600;
+        border-color: #FFB900;
+        color: #FFD666;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .ac-chart-title {
+        font-weight: 700;
+    }
+
+    .ac-chart-error {
+        border-width: 2px;
+    }
+}
+
+/* Accessibility - Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    /* Chart.js animations will be handled by the JS configuration */
+    .ac-chart-canvas {
+        transition: none;
+    }
+}
+
+/* Print styles */
+@media print {
+    .ac-chart-donut-container {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .ac-chart-canvas-wrapper {
+        max-width: 500px;
+    }
+}

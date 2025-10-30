@@ -93,7 +93,7 @@ function Build-CardFromTemplate {
     )
 
     $TemplateTags = Find-CardTemplateTag -Content $Content
-    $ContentAsJson = $Content | ConvertTo-Json -Depth $_MaxDepth
+    $ContentAsJson = $Content | ConvertTo-Json -Depth $_MaxDepth -Compress
 
     foreach ($Key in $Tags.Keys) {
         if ($TemplateTags -contains $Key) {
@@ -104,18 +104,27 @@ function Build-CardFromTemplate {
             else {
                 $ResolvedValue = $TagValue
             }
-            $ResolvedValueIsString = $ResolvedValue -is [string] -or $ResolvedValue -is [int] -or $ResolvedValue -is [double] -or $ResolvedValue -is [bool]
 
-            if ($ResolvedValueIsString) {
-                $ReplaceValue = ($ResolvedValue | ConvertTo-Json -Depth $_MaxDepth -Compress).Trim('"')
+            # Strings are replaced inline (quotes removed), primitives/objects keep JSON structure
+            if ($ResolvedValue -is [string]) {
+                $jsonValue = $ResolvedValue | ConvertTo-Json -Depth $_MaxDepth -Compress
+                # Remove exactly one quote from each end (strings are quoted in JSON)
+                $ReplaceValue = $jsonValue.Substring(1, $jsonValue.Length - 2)
+                $TagPlaceholder = New-CardTemplateTag -TagName $Key
+            }
+            elseif ($ResolvedValue -is [int] -or $ResolvedValue -is [double] -or $ResolvedValue -is [bool]) {
+                # Numbers and booleans: convert to JSON but keep as-is (no quotes to remove)
+                $ReplaceValue = ($ResolvedValue | ConvertTo-Json -Depth $_MaxDepth -Compress).ToLower()
                 $TagPlaceholder = New-CardTemplateTag -TagName $Key
             }
             else {
+                # Complex objects/arrays: replace the placeholder including its quotes
                 $ReplaceValue = $ResolvedValue | ConvertTo-Json -Depth $_MaxDepth -Compress
                 $TagPlaceholder = New-CardTemplateTag -TagName $Key | ConvertTo-Json -Depth $_MaxDepth -Compress
             }
 
-            $ContentAsJson = $ContentAsJson -replace [regex]::Escape($TagPlaceholder), $ReplaceValue
+            # Use literal string replacement - ConvertTo-Json already handles all JSON escaping
+            $ContentAsJson = $ContentAsJson.Replace($TagPlaceholder, $ReplaceValue)
         }
         else {
             Write-Warning "Tag '$Key' not found in template."

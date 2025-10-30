@@ -50,6 +50,9 @@ Creates a Carousel container for Adaptive Cards.
 ### [New-CardCarouselPage](New-CardCarouselPage.md)
 Creates a page for a Carousel container.
 
+### [New-CardChartDonut](New-CardChartDonut.md)
+Creates a new Donut Chart element for an Adaptive Card.
+
 ### [New-CardCodeBlock](New-CardCodeBlock.md)
 Creates a new CodeBlock element for an Adaptive Card to display formatted code snippets.
 

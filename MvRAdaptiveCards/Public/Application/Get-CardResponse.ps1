@@ -52,7 +52,7 @@
         $ExtensionsToLoad = @()
 
         foreach ($Extension in $AvailableExtensions) {
-            if ($Json -match $Extension) {
+            if ($Json -match [regex]::escape($Extension)) {
                 $ExtensionsToLoad += $Extension
             }
         }
