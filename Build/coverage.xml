@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.1//EN" "report.dtd"[]>
-<report name="Pester (10/30/2025 21:21:09)">
-  <sessioninfo id="this" start="1761859261724" dump="1761859269766" />
+<report name="Pester (10/30/2025 23:29:27)">
+  <sessioninfo id="this" start="1761866958824" dump="1761866967164" />
   <package name="MvRAdaptiveCards">
     <class name="MvRAdaptiveCards/MvRAdaptiveCards" sourcefilename="MvRAdaptiveCards.psm1">
       <method name="&lt;script&gt;" desc="()" line="11">
-        <counter type="INSTRUCTION" missed="0" covered="36" />
-        <counter type="LINE" missed="0" covered="23" />
+        <counter type="INSTRUCTION" missed="0" covered="40" />
+        <counter type="LINE" missed="0" covered="25" />
         <counter type="METHOD" missed="0" covered="1" />
       </method>
-      <counter type="INSTRUCTION" missed="0" covered="36" />
-      <counter type="LINE" missed="0" covered="23" />
+      <counter type="INSTRUCTION" missed="0" covered="40" />
+      <counter type="LINE" missed="0" covered="25" />
       <counter type="METHOD" missed="0" covered="1" />
       <counter type="CLASS" missed="0" covered="1" />
     </class>
@@ -23,28 +23,30 @@
       <line nr="22" mi="0" ci="4" mb="0" cb="0" />
       <line nr="23" mi="0" ci="1" mb="0" cb="0" />
       <line nr="27" mi="0" ci="5" mb="0" cb="0" />
-      <line nr="29" mi="0" ci="2" mb="0" cb="0" />
-      <line nr="30" mi="0" ci="3" mb="0" cb="0" />
-      <line nr="31" mi="0" ci="1" mb="0" cb="0" />
-      <line nr="32" mi="0" ci="1" mb="0" cb="0" />
-      <line nr="33" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="30" mi="0" ci="2" mb="0" cb="0" />
+      <line nr="33" mi="0" ci="3" mb="0" cb="0" />
       <line nr="34" mi="0" ci="1" mb="0" cb="0" />
-      <line nr="38" mi="0" ci="1" mb="0" cb="0" />
-      <line nr="39" mi="0" ci="2" mb="0" cb="0" />
-      <line nr="43" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="35" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="36" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="37" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="42" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="43" mi="0" ci="3" mb="0" cb="0" />
       <line nr="44" mi="0" ci="1" mb="0" cb="0" />
-      <line nr="47" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="45" mi="0" ci="2" mb="0" cb="0" />
+      <line nr="49" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="50" mi="0" ci="1" mb="0" cb="0" />
       <line nr="53" mi="0" ci="1" mb="0" cb="0" />
-      <line nr="54" mi="0" ci="1" mb="0" cb="0" />
-      <line nr="57" mi="0" ci="1" mb="0" cb="0" />
-      <line nr="58" mi="0" ci="1" mb="0" cb="0" />
-      <counter type="INSTRUCTION" missed="0" covered="36" />
-      <counter type="LINE" missed="0" covered="23" />
+      <line nr="59" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="60" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="63" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="64" mi="0" ci="1" mb="0" cb="0" />
+      <counter type="INSTRUCTION" missed="0" covered="40" />
+      <counter type="LINE" missed="0" covered="25" />
       <counter type="METHOD" missed="0" covered="1" />
       <counter type="CLASS" missed="0" covered="1" />
     </sourcefile>
-    <counter type="INSTRUCTION" missed="0" covered="36" />
-    <counter type="LINE" missed="0" covered="23" />
+    <counter type="INSTRUCTION" missed="0" covered="40" />
+    <counter type="LINE" missed="0" covered="25" />
     <counter type="METHOD" missed="0" covered="1" />
     <counter type="CLASS" missed="0" covered="1" />
   </package>
@@ -234,14 +236,14 @@
     </class>
     <class name="MvRAdaptiveCards/Private/Helper/IIF" sourcefilename="Private/Helper/IIF.ps1">
       <method name="IIF" desc="()" line="8">
-        <counter type="INSTRUCTION" missed="3" covered="0" />
-        <counter type="LINE" missed="3" covered="0" />
-        <counter type="METHOD" missed="1" covered="0" />
+        <counter type="INSTRUCTION" missed="0" covered="3" />
+        <counter type="LINE" missed="0" covered="3" />
+        <counter type="METHOD" missed="0" covered="1" />
       </method>
-      <counter type="INSTRUCTION" missed="3" covered="0" />
-      <counter type="LINE" missed="3" covered="0" />
-      <counter type="METHOD" missed="1" covered="0" />
-      <counter type="CLASS" missed="1" covered="0" />
+      <counter type="INSTRUCTION" missed="0" covered="3" />
+      <counter type="LINE" missed="0" covered="3" />
+      <counter type="METHOD" missed="0" covered="1" />
+      <counter type="CLASS" missed="0" covered="1" />
     </class>
     <class name="MvRAdaptiveCards/Private/Helper/Write-Banner" sourcefilename="Private/Helper/Write-Banner.ps1">
       <method name="Write-Banner" desc="()" line="8">
@@ -293,13 +295,13 @@
       <counter type="CLASS" missed="0" covered="1" />
     </sourcefile>
     <sourcefile name="Private/Helper/IIF.ps1">
-      <line nr="8" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="9" mi="1" ci="0" mb="0" cb="0" />
-      <line nr="12" mi="1" ci="0" mb="0" cb="0" />
-      <counter type="INSTRUCTION" missed="3" covered="0" />
-      <counter type="LINE" missed="3" covered="0" />
-      <counter type="METHOD" missed="1" covered="0" />
-      <counter type="CLASS" missed="1" covered="0" />
+      <line nr="8" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="9" mi="0" ci="1" mb="0" cb="0" />
+      <line nr="12" mi="0" ci="1" mb="0" cb="0" />
+      <counter type="INSTRUCTION" missed="0" covered="3" />
+      <counter type="LINE" missed="0" covered="3" />
+      <counter type="METHOD" missed="0" covered="1" />
+      <counter type="CLASS" missed="0" covered="1" />
     </sourcefile>
     <sourcefile name="Private/Helper/Write-Banner.ps1">
       <line nr="8" mi="0" ci="2" mb="0" cb="0" />
@@ -333,10 +335,10 @@
       <counter type="METHOD" missed="0" covered="1" />
       <counter type="CLASS" missed="0" covered="1" />
     </sourcefile>
-    <counter type="INSTRUCTION" missed="19" covered="25" />
-    <counter type="LINE" missed="17" covered="21" />
-    <counter type="METHOD" missed="2" covered="3" />
-    <counter type="CLASS" missed="2" covered="3" />
+    <counter type="INSTRUCTION" missed="16" covered="28" />
+    <counter type="LINE" missed="14" covered="24" />
+    <counter type="METHOD" missed="1" covered="4" />
+    <counter type="CLASS" missed="1" covered="4" />
   </package>
   <package name="MvRAdaptiveCards/Private/Schema">
     <class name="MvRAdaptiveCards/Private/Schema/Test-CardSchema" sourcefilename="Private/Schema/Test-CardSchema.ps1">
@@ -2468,8 +2470,8 @@
     <counter type="METHOD" missed="0" covered="4" />
     <counter type="CLASS" missed="0" covered="3" />
   </package>
-  <counter type="INSTRUCTION" missed="754" covered="775" />
-  <counter type="LINE" missed="680" covered="700" />
-  <counter type="METHOD" missed="29" covered="31" />
-  <counter type="CLASS" missed="29" covered="28" />
+  <counter type="INSTRUCTION" missed="751" covered="782" />
+  <counter type="LINE" missed="677" covered="705" />
+  <counter type="METHOD" missed="28" covered="32" />
+  <counter type="CLASS" missed="28" covered="29" />
 </report>

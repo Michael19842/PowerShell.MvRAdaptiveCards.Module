@@ -57,6 +57,7 @@ Task test -Action {
     $config.Run.Path = ".\..\Tests"
     $config.CodeCoverage.Path = ".\..\$ModuleName"
     $config.CodeCoverage.RecursePaths = $true
+    $config.Run.ExcludePath = @("..\$ModuleName\Public\Application\Get-CardResponse.ps1", "..\$ModuleName\Public\Application\Out-CardPreview.ps1")
 
 
     Invoke-Pester -Configuration $config

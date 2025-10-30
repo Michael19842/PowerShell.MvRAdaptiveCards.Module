@@ -26,7 +26,10 @@ foreach ($Folder in @('Private', 'Public', 'Collection', 'ArgumentCompleters')) 
 
 Write-Verbose "Functions defined: $(Get-Command -Module $MyInvocation.MyCommand.Module | Select-Object -ExpandProperty Name | Where-Object {$_ -like '*-MvR*'} )"
 
+# Export public functions
 Export-ModuleMember -Function (Get-ChildItem -Path "$PSScriptRoot\Public\*.ps1" -Recurse).BaseName
+
+# Export public aliases
 Export-ModuleMember -Alias (Get-ChildItem -Path "$PSScriptRoot\Public\*.ps1" -Recurse | ForEach-Object {
         $Content = Get-Content -Path $_.FullName -Raw
         $AliasMatches = [regex]::Matches($Content, 'Set-Alias\s+-Name\s+(\S+)\s+-Value\s+(\S+)', 'IgnoreCase')
@@ -35,8 +38,11 @@ Export-ModuleMember -Alias (Get-ChildItem -Path "$PSScriptRoot\Public\*.ps1" -Re
         }
     })
 
+# Export private functions when explicitly requested (for testing purposes)
 if ($ExposePrivateReferences) {
-    Export-ModuleMember -Function (Get-ChildItem -Path "$PSScriptRoot\Private\*.ps1" -Recurse).BaseName
+    $PrivateFunctions = Get-ChildItem -Path "$PSScriptRoot\Private\*.ps1" -Recurse | Where-Object { $_.Name -notlike '*.Tests.ps1' }
+    Export-ModuleMember -Function $PrivateFunctions.BaseName
+    Write-Verbose "Exposing $($PrivateFunctions.Count) private functions for testing"
 }
 
 ##Collect the stored settings for the module from the appdata folder
