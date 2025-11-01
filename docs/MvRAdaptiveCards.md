@@ -56,6 +56,12 @@ Creates a new Donut Chart element for an Adaptive Card.
 ### [New-CardCodeBlock](New-CardCodeBlock.md)
 Creates a new CodeBlock element for an Adaptive Card to display formatted code snippets.
 
+### [New-CardColumn](New-CardColumn.md)
+Creates a new Column element for use within a ColumnSet.
+
+### [New-CardColumnSet](New-CardColumnSet.md)
+Creates a new ColumnSet element for an Adaptive Card.
+
 ### [New-CardContainer](New-CardContainer.md)
 Creates a new Container element for an Adaptive Card.
 
@@ -100,6 +106,9 @@ Creates a Media element for Adaptive Cards that can play audio or video content.
 
 ### [New-CardMediaCaptionSource](New-CardMediaCaptionSource.md)
 Creates a caption source object for use with Media elements in Adaptive Cards.
+
+### [New-CardProgressBar](New-CardProgressBar.md)
+Creates a new ProgressBar element for an Adaptive Card.
 
 ### [New-CardRichTextBlock](New-CardRichTextBlock.md)
 Creates a new RichTextBlock element for an Adaptive Card with advanced inline formatting capabilities.

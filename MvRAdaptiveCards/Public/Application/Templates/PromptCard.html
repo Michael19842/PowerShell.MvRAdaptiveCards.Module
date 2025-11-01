@@ -215,29 +215,46 @@
 
                             adaptiveCard.onExecuteAction = function (action) {
                                 if (action.getJsonTypeName() === "Action.Submit") {
-                                    // If you copy this code sample, remove the alert statement
-                                    // and provide your own custom handling code
-                                    // post the form data to your service
-                                    const data = {};
+                                    console.log('Submit action triggered:', action.data);
+
+                                    // Post the form data to your service
                                     fetch('$ServiceUrl', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
                                         },
                                         body: JSON.stringify(action.data)
-                                    }).then(response => {
-                                        if (!response.ok) {
-                                            throw new Error('Network response was not ok');
-                                        }
-                                        window.close();
+                                    })
+                                        .then(response => {
+                                            console.log('Fetch response received:', response.status);
+                                            if (!response.ok) {
+                                                throw new Error('Network response was not ok');
+                                            }
+                                            return response;
+                                        })
+                                        .then(() => {
+                                            console.log('About to close window...');
 
-                                        return true;
-                                    }).catch(error => {
-                                        console.error('Error submitting action data:', error);
+                                            // Close window - works for both browser and WebView2
+                                            if (window.chrome && window.chrome.webview) {
+                                                // WebView2 close method
+                                                console.log('Detected WebView2, sending close message');
+                                                window.chrome.webview.postMessage(JSON.stringify({ action: 'close' }));
 
-                                    });
-
-                                    console.log('Action executed:', action);
+                                                // Fallback: try closing after short delay
+                                                setTimeout(() => {
+                                                    console.log('Attempting fallback window.close()');
+                                                    window.close();
+                                                }, 500);
+                                            } else {
+                                                // Browser close method
+                                                console.log('Regular browser, calling window.close()');
+                                                window.close();
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error('Error submitting action data:', error);
+                                        });
                                 }
                             }
 

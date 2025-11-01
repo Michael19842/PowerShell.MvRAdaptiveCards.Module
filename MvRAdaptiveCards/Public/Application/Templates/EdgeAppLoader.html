@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>$CardTitle</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        iframe {
+            border: none;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+    <script>
+        // Resize window immediately
+        window.resizeTo($WindowWidth, $WindowHeight);
+
+        // Load the actual card in iframe or redirect
+        setTimeout(function () {
+            window.location.href = '$ServiceUrl';
+        }, 100);
+    </script>
+</head>
+
+<body>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Segoe UI';">
+        <p>Loading Adaptive Card...</p>
+    </div>
+</body>
+
+</html>

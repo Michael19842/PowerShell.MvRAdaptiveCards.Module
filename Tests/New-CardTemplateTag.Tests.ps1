@@ -193,8 +193,10 @@ Describe "New-CardTemplateTag" {
                 Email = $userEmailTag
             }
 
-            $factSet.facts[0].value | Should -Be "!{{UserName}}"
-            $factSet.facts[1].value | Should -Be "!{{UserEmail}}"
+            # Check that both tags are present (order not guaranteed with hashtables)
+            $factValues = $factSet.facts | ForEach-Object { $_.value }
+            $factValues | Should -Contain "!{{UserName}}"
+            $factValues | Should -Contain "!{{UserEmail}}"
         }
 
         It "Should work with New-CardInputText placeholder" {

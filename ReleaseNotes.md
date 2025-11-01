@@ -1,5 +1,32 @@
+
+
+
 # Release Notes
-## 0.7.2.0
+## 0.8.0.0
+- Added `New-CardProgressBar` function to create progress bar elements in adaptive cards.
+- Added `Progress.Bar` extension to support rendering of progress bars within adaptive cards.
+
+```PowerShell
+New-AdaptiveCard {
+    New-CardProgressBar -Value 70 -Max 100 -Title "Task Progress" -Color "Accent"
+} -Actions {
+    New-CardActionSubmit -Title "Close"
+} | Get-CardResponse
+```
+
+- Added `-ViewMethod` parameter to `Get-CardResponse` to allow users to specify how the response card is displayed. Options include "Browser", "EdgeApp". The edge app provides a more integrated experience on Windows systems.
+```PowerShell
+New-AdaptiveCard {
+    New-CardTextBlock -Text "Hello, World!" -Size "Large"
+} | Get-CardResponse -ViewMethod EdgeApp
+```
+
+- Added `New-CardColumnSet` function to create column set elements in adaptive cards.
+- Added `New-CardColumn` function to define individual columns within a column set.
+- Added diverse tests raising code coverage to 55%. (I will keep working on this in future releases)
+
+
+## 0.7.3.0
 - Added addition tests for diverse functions to improve code coverage and ensure stability.
 - Added `New-CardChartDonut` function to create donut chart elements in adaptive cards.
 - Added `Chart.Donut` extension to support rendering of donut charts using `Chart.js` within adaptive cards.

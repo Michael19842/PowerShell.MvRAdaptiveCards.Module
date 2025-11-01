@@ -1,0 +1,185 @@
+/* AdaptiveCards ProgressBar Component Styles */
+
+/* Progress Bar Container */
+.ac-progressbar-container {
+    width: 100%;
+    margin: 8px 0;
+}
+
+.ac-progressbar-wrapper {
+    width: 100%;
+}
+
+/* Flex layout for end label */
+.ac-progressbar-flex {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ac-progressbar-label-end .ac-progressbar-track {
+    flex: 1;
+}
+
+.ac-progressbar-label-top,
+.ac-progressbar-label-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Progress Track */
+.ac-progressbar-track {
+    position: relative;
+    width: 100%;
+    background-color: #e0e0e0;
+    overflow: hidden;
+}
+
+/* Thickness variants */
+.ac-progressbar-thickness-thin {
+    height: 4px;
+}
+
+.ac-progressbar-thickness-medium {
+    height: 8px;
+}
+
+.ac-progressbar-thickness-thick {
+    height: 12px;
+}
+
+/* Border radius variants */
+.ac-progressbar-radius-square {
+    border-radius: 0;
+}
+
+.ac-progressbar-radius-rounded {
+    border-radius: 4px;
+}
+
+.ac-progressbar-radius-pill {
+    border-radius: 100px;
+}
+
+/* Progress Fill */
+.ac-progressbar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+/* Color variants */
+.ac-progressbar-fill-accent {
+    background-color: #0078d4;
+}
+
+.ac-progressbar-fill-good {
+    background-color: #107c10;
+}
+
+.ac-progressbar-fill-warning {
+    background-color: #ff8c00;
+}
+
+.ac-progressbar-fill-attention {
+    background-color: #d13438;
+}
+
+/* Striped appearance */
+.ac-progressbar-striped {
+    background-image: linear-gradient(45deg,
+            rgba(255, 255, 255, 0.15) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.15) 50%,
+            rgba(255, 255, 255, 0.15) 75%,
+            transparent 75%,
+            transparent);
+    background-size: 20px 20px;
+}
+
+/* Animated progress */
+.ac-progressbar-animated {
+    animation: ac-progress-animation 2s linear infinite;
+}
+
+.ac-progressbar-striped.ac-progressbar-animated {
+    animation: ac-progress-stripes 1s linear infinite;
+}
+
+/* Indeterminate animation */
+.ac-progressbar-indeterminate {
+    animation: ac-progress-indeterminate 1.5s ease-in-out infinite;
+    width: 100% !important;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            currentColor 50%,
+            transparent 100%);
+    background-size: 50% 100%;
+}
+
+@keyframes ac-progress-animation {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes ac-progress-stripes {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 20px 0;
+    }
+}
+
+@keyframes ac-progress-indeterminate {
+    0% {
+        background-position: -50% 0;
+    }
+
+    100% {
+        background-position: 150% 0;
+    }
+}
+
+/* Label styling */
+.ac-progressbar-label {
+    font-size: 12px;
+    color: #333;
+    white-space: nowrap;
+    min-width: 40px;
+    text-align: right;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .ac-progressbar-track {
+        background-color: #3a3a3a;
+    }
+
+    .ac-progressbar-label {
+        color: #e0e0e0;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .ac-progressbar-track {
+        border: 1px solid currentColor;
+    }
+
+    .ac-progressbar-fill {
+        border: 1px solid currentColor;
+    }
+}
