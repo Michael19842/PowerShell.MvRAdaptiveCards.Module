@@ -1,7 +1,7 @@
-
-
-
 # Release Notes
+## 0.8.0.1
+- Fixed issue with `Get-CardResponse` not closing the response window in certain scenarios. The window will now attempt to close itself after submission, and if embedded in an iframe, it will notify the parent window to close it.
+
 ## 0.8.0.0
 - Added `New-CardProgressBar` function to create progress bar elements in adaptive cards.
 - Added `Progress.Bar` extension to support rendering of progress bars within adaptive cards.

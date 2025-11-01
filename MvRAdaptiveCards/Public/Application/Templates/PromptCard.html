@@ -233,24 +233,15 @@
                                             return response;
                                         })
                                         .then(() => {
-                                            console.log('About to close window...');
+                                            console.log('Closing window...');
 
-                                            // Close window - works for both browser and WebView2
-                                            if (window.chrome && window.chrome.webview) {
-                                                // WebView2 close method
-                                                console.log('Detected WebView2, sending close message');
-                                                window.chrome.webview.postMessage(JSON.stringify({ action: 'close' }));
-
-                                                // Fallback: try closing after short delay
-                                                setTimeout(() => {
-                                                    console.log('Attempting fallback window.close()');
-                                                    window.close();
-                                                }, 500);
-                                            } else {
-                                                // Browser close method
-                                                console.log('Regular browser, calling window.close()');
-                                                window.close();
+                                            // If in an iframe, send message to parent
+                                            if (window.parent !== window) {
+                                                window.parent.postMessage('close', '*');
                                             }
+
+                                            // Try to close the window directly
+                                            window.close();
                                         })
                                         .catch(error => {
                                             console.error('Error submitting action data:', error);

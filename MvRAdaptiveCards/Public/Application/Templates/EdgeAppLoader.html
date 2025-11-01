@@ -1,35 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%; margin: 0; padding: 0;">
 
 <head>
     <meta charset="utf-8">
     <title>$CardTitle</title>
     <style>
+        html,
         body {
             margin: 0;
             padding: 0;
+            height: 100%;
+            width: 100%;
             overflow: hidden;
         }
 
         iframe {
             border: none;
-            width: 100vw;
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
+            font-family: 'Segoe UI';
         }
     </style>
     <script>
         // Resize window immediately
         window.resizeTo($WindowWidth, $WindowHeight);
 
-        // Load the actual card in iframe or redirect
+        // Load the actual card in an iframe to preserve window.close() ability
         setTimeout(function () {
-            window.location.href = '$ServiceUrl';
+            const iframe = document.createElement('iframe');
+            iframe.src = '$ServiceUrl';
+            iframe.style.cssText = 'border: none; width: 100%; height: 100%; display: block; position: absolute; top: 0; left: 0;';
+            document.body.innerHTML = '';
+            document.body.appendChild(iframe);
+
+            // Listen for close message from iframe
+            window.addEventListener('message', function (event) {
+                if (event.data === 'close' || (event.data && event.data.action === 'close')) {
+                    window.close();
+                }
+            });
         }, 100);
     </script>
 </head>
 
 <body>
-    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Segoe UI';">
+    <div id="loader">
         <p>Loading Adaptive Card...</p>
     </div>
 </body>
