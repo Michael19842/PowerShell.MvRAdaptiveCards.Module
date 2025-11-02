@@ -1,5 +1,11 @@
 # Release Notes
-## 0.8.0.1
+
+## 0.8.2
+- Moved to a 3 digit versioning scheme to align with industry standards. The version number now follows the Major.Minor.Patch format. (Build numbers will no longer be used because they were usually 0 and did not add any value).
+- Added `FileList` and `CompatiblePSEditions` to the module manifest for better compatibility and module management.
+- Fixed existing tests to not show a banner when running.
+
+## 0.8.1.0
 - Fixed issue with `Get-CardResponse` not closing the response window in certain scenarios. The window will now attempt to close itself after submission, and if embedded in an iframe, it will notify the parent window to close it.
 
 ## 0.8.0.0

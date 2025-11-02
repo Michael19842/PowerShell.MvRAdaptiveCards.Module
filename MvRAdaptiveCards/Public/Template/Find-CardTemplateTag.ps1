@@ -62,7 +62,7 @@
 #>
 function Find-CardTemplateTag {
     [CmdletBinding()]
-    [OutputType([string[]])]
+    [OutputType([object[]])]
     param (
         [hashtable]$Content
     )

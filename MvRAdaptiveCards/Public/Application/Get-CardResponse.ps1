@@ -1,90 +1,7 @@
 ﻿function Get-CardResponse {
-    <#
-    .SYNOPSIS
-    Serves an Adaptive Card as a web page and captures user responses.
-
-    .DESCRIPTION
-    The Get-CardResponse function creates a local HTTP server to serve an Adaptive Card,
-    displays it in a browser or Edge app window, and waits for user input. When the user
-    submits the card, the function returns the submitted data as a PowerShell object.
-
-    .PARAMETER Json
-    The JSON string representing the Adaptive Card to display. Accepts pipeline input.
-
-    .PARAMETER PromptTitle
-    The title for the prompt window. Uses module default if not specified.
-
-    .PARAMETER CardTitle
-    The title displayed at the top of the card. Uses module default if not specified.
-
-    .PARAMETER LogoUrl
-    The URL of the logo image to display in the header. Uses module default if not specified.
-
-    .PARAMETER LogoHeaderText
-    The text to display next to the logo in the header. Uses module default if not specified.
-
-    .PARAMETER ShowVersion
-    Whether to show the module version in the header. Uses module default if not specified.
-
-    .PARAMETER PortNumber
-    The port number for the local HTTP server. Uses module default if not specified.
-
-    .PARAMETER HeaderBackgroundStart
-    The starting color (hex) for the header gradient background. Uses module default if not specified.
-
-    .PARAMETER HeaderBackgroundEnd
-    The ending color (hex) for the header gradient background. Uses module default if not specified.
-
-    .PARAMETER ViewMethod
-    Specifies how to display the card. Valid values:
-    - Browser: Opens in default browser
-    - WindowsForms: Opens in a Windows Forms window (Windows only)
-    - EdgeApp: Opens in Microsoft Edge app mode with custom window size
-
-    .PARAMETER WindowWidth
-    The width of the window in pixels when using EdgeApp view method. Default: 400
-
-    .PARAMETER WindowHeight
-    The height of the window in pixels when using EdgeApp view method. Default: 600
-
-    .PARAMETER ServeOnly
-    If specified, only starts the HTTP server without opening a browser window.
-
-    .EXAMPLE
-    New-AdaptiveCard {
-        New-CardTextBlock -Text "Hello World"
-    } | Get-CardResponse
-
-    Creates a simple card and displays it in the default view method.
-
-    .EXAMPLE
-    $response = New-AdaptiveCard {
-        New-CardInputText -Id "Name" -Label "Your Name"
-        New-CardActionSet -Actions {
-            New-CardActionSubmit -Title "Submit"
-        }
-    } | Get-CardResponse -ViewMethod EdgeApp -WindowWidth 800 -WindowHeight 600
-
-    Creates an input card, displays it in Edge app mode with custom window size, and captures the response.
-
-    .EXAMPLE
-    New-AdaptiveCard {
-        New-CardProgressBar -Value 75 -Max 100 -Color "Good"
-    } | Get-CardResponse -ViewMethod Browser
-
-    Displays a progress bar card in the default browser.
-
-    .OUTPUTS
-    System.Management.Automation.PSCustomObject
-    Returns the submitted form data as a PowerShell object with properties matching the input IDs.
-
-    .NOTES
-    - Requires an available port (default: 8080)
-    - EdgeApp mode requires Microsoft Edge to be installed
-    - The function blocks until the user submits the form or cancels with Ctrl+C
-    #>
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '', Justification = 'Variable used in template')]
     [system.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '', Justification = 'Settings variable used in module')]
+    [system.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseUsingScopeModifierInNewRunspaces', '', Justification = 'Variable used in runspace via parameter')]
     param (
         [parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [string]$Json,
@@ -245,7 +162,7 @@
                 "EdgeApp" {
                     try {
                         # Use Edge in app mode for clean WebView2 experience
-                        Write-Host "Opening in Edge (WebView2 browser mode)..."
+                        Write-Information "Opening in Edge (WebView2 browser mode)..."
 
                         # Create a wrapper HTML that resizes window and redirects
                         $wrapperHtml = $ExecutionContext.InvokeCommand.ExpandString((Get-Content -Path "$PSScriptRoot\Templates\EdgeAppLoader.html" -Raw))
@@ -268,7 +185,7 @@
                     }
                     catch {
                         Write-Warning "Failed to launch Edge: $($_.Exception.Message)"
-                        Write-Host "Falling back to default browser..."
+                        Write-Warning "Falling back to default browser..."
                         Start-Process $ServiceUrl
                     }
                 }

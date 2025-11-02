@@ -1,7 +1,7 @@
 BeforeAll {
     # Import the module
     $ModulePath = Join-Path -Path $PSScriptRoot -ChildPath '..\MvRAdaptiveCards\MvRAdaptiveCards.psd1'
-    Import-Module $ModulePath -Force -ArgumentList $True, $true
+    Import-Module $ModulePath -Force -ArgumentList $false, $true
 }
 
 Describe "New-CardChartDonut" {
@@ -36,7 +36,7 @@ Describe "New-CardChartDonut" {
         }
 
         It "Should throw error when Data parameter is missing" {
-            { New-CardChartDonut -data $null } | Should -Throw
+            { New-CardChartDonut -Data $null } | Should -Throw
         }
     }
 

@@ -34,36 +34,6 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Json
-{{ Fill Json Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -PromptTitle
-{{ Fill PromptTitle Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -CardTitle
 {{ Fill CardTitle Description }}
 
@@ -73,82 +43,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -LogoUrl
-{{ Fill LogoUrl Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -LogoHeaderText
-{{ Fill LogoHeaderText Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ShowVersion
-{{ Fill ShowVersion Description }}
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PortNumber
-{{ Fill PortNumber Description }}
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -HeaderBackgroundStart
-{{ Fill HeaderBackgroundStart Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -163,14 +58,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ViewMethod
-{{ Fill ViewMethod Description }}
+### -HeaderBackgroundStart
+{{ Fill HeaderBackgroundStart Description }}
 
 ```yaml
 Type: String
@@ -178,29 +73,59 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WindowWidth
-The width of the window in pixels when using EdgeApp view method. Default: 400
+### -Json
+{{ Fill Json Description }}
 
 ```yaml
-Type: Int32
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -LogoHeaderText
+{{ Fill LogoHeaderText Description }}
+
+```yaml
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
-Default value: 400
+Position: 4
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WindowHeight
-The height of the window in pixels when using EdgeApp view method. Default: 600
+### -LogoUrl
+{{ Fill LogoUrl Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PortNumber
+{{ Fill PortNumber Description }}
 
 ```yaml
 Type: Int32
@@ -208,8 +133,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 12
-Default value: 600
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PromptTitle
+{{ Fill PromptTitle Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -225,6 +165,67 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShowVersion
+{{ Fill ShowVersion Description }}
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ViewMethod
+{{ Fill ViewMethod Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: Browser, WindowsForms, EdgeApp
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WindowHeight
+The height of the window in pixels when using EdgeApp view method. Default: 600
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: 600
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WindowWidth
+The width of the window in pixels when using EdgeApp view method. Default: 400
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: 400
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

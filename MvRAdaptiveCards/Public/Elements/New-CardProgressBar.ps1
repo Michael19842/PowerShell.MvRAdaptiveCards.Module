@@ -121,6 +121,7 @@
 #>
 function New-CardProgressBar {
     [CmdletBinding(SupportsShouldProcess)]
+    [OutputType([hashtable])]
     param (
         [Parameter(Mandatory = $false)]
         [ValidateRange(0, [double]::MaxValue)]

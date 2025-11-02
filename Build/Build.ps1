@@ -33,11 +33,26 @@ Task updateManifest -RequiredVariables 'Manifest' -Depends prepare -Action {
 
     if (($Manifest.ExportedFunctions.Keys -join '|') -ne ($functionNames -join '|') -or $BumpMajorVersion -or $BumpMinorVersion) {
         #Update version number by incrementing the build number
-        $NewVersion = [version]::new($Manifest.Version.Major, $Manifest.Version.Minor, $Manifest.Version.Build + 1, 0)
+        $NewVersion = [version]::new($Manifest.Version.Major, $Manifest.Version.Minor, $Manifest.Version.Build + 1)
 
         Write-Debug "Updating module manifest at $manifestPath with functions: $($functionNames -join ', ')"
         #Save the updated manifest
-        Update-ModuleManifest -Path $manifestPath -FunctionsToExport $functionNames -ModuleVersion $NewVersion
+        #Update the modules filelist variable
+        $moduleRoot = Resolve-Path "$PSScriptRoot\..\$ModuleName"
+        $script:ModuleFileList = Get-ChildItem -Path $moduleRoot -Recurse -File | ForEach-Object {
+            # Get the path relative to the module root
+            $fullPath = $_.FullName
+            if ($fullPath.StartsWith($moduleRoot.Path)) {
+                $relativePath = $fullPath.Substring($moduleRoot.Path.Length).TrimStart('\', '/')
+                $relativePath -replace '\\', '/'
+            }
+        } | Where-Object { $_ } # Filter out nulls
+
+        # Update manifest
+        Update-ModuleManifest -Path $manifestPath -FunctionsToExport $functionNames -ModuleVersion $NewVersion -FileList $script:ModuleFileList
+
+
+        Update-ModuleManifest -Path $manifestPath -FunctionsToExport $functionNames -ModuleVersion $NewVersion -FileList $script:ModuleFileList
 
         #Correct the formatting of the manifest file (Update-ModuleManifest messes up the formatting) "Line has trailing whitespace"
         $manifestContent = Get-Content -Path $manifestPath
@@ -46,6 +61,8 @@ Task updateManifest -RequiredVariables 'Manifest' -Depends prepare -Action {
         $formattedContent = $formattedContent -replace '^( {4})', "`t"
         $formattedContent | Set-Content -Path $manifestPath -Encoding UTF8
     }
+
+
 
 }
 
