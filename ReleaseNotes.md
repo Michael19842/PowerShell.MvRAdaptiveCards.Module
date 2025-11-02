@@ -4,6 +4,10 @@
 - Bugfix in `Get-CardResponse` to properly release and close the TCP listener after handling a response. This prevents port conflicts on subsequent calls to the function.
 - Improved Edge app window detection by implementing a polling mechanism to reliably find the correct Edge window associated with the adaptive card. This enhances the user experience when using the Edge app view method.
 - Added check in `Get-CardResponse` to monitor the Edge app process status. If the Edge app window is closed by the user, the function will now gracefully handle the closure and terminate the waiting for a response.
+- Added Autosize support form `Get-CardResponse` to allow the response window to automatically adjust its size based on the content of the adaptive card. This improves the visual presentation and usability of the response card.
+    > Note: This feature is currently supported only in the Edge app view method.
+    > Note: autosize uses JavaScript to dynamically adjust the window size which can result in slight delays when resizing the window initially. if you want to avoid this, you can set a fixed width and height using the `-Width` and `-Height` parameters.
+
 
 ## 0.8.2
 - Moved to a 3 digit versioning scheme to align with industry standards. The version number now follows the Major.Minor.Patch format. (Build numbers will no longer be used because they were usually 0 and did not add any value).
