@@ -114,6 +114,7 @@
             // Sample Adaptive Card JSON
             const cardJson = $Json;
             var adaptiveCard;
+            var responseGuid = '$ResponseGuid';
             // Default host config for better styling
             const defaultHostConfig = {
                 "fontFamily": "Segoe UI, sans-serif",
@@ -205,13 +206,25 @@
 
                     function renderCardWithConfig() {
                         try {
-
-
-                            adaptiveCard.render();
-
                             // Clear loading messages
                             cardContainer.innerHTML = '';
                             cardContainer.appendChild(adaptiveCard.render());
+                            const body = document.body;
+
+                            // send the resize message if AutoSize is enabled
+                            if ('$AutoSize' === 'True') {
+                                const height = Math.max(
+                                    document.body.scrollHeight,
+                                    document.documentElement.scrollHeight
+                                );
+                                const cardWidth = body.scrollWidth;
+                                const cardHeight = height;
+                                window.parent.postMessage({
+                                    type: 'resize',
+                                    width: cardWidth + 40, // adding some padding
+                                    height: cardHeight + 70  // adding some padding
+                                }, '*');
+                            }
 
                             adaptiveCard.onExecuteAction = function (action) {
                                 if (action.getJsonTypeName() === "Action.Submit") {
@@ -261,7 +274,50 @@
             }
 
             // Start rendering when the page loads
-            document.addEventListener('DOMContentLoaded', renderCard);
+            document.addEventListener('DOMContentLoaded', function () {
+                renderCard();
+
+                // If AutoSize is enabled, send resize message to parent
+                if ('$AutoSize' === 'True' && window.parent !== window) {
+                    // Wait for card to fully render
+                    setTimeout(function () {
+                        // Calculate the required size based on content
+                        const body = document.body;
+                        const html = document.documentElement;
+
+                        // Get the full content height including all elements
+                        const contentHeight = Math.max(
+                            body.scrollHeight,
+                            body.offsetHeight//,
+                            // html.clientHeight,
+                            // html.scrollHeight,
+                            // html.offsetHeight
+                        );
+
+                        // Get the full content width
+                        const contentWidth = Math.max(
+                            body.scrollWidth,
+                            body.offsetWidth,
+                            html.clientWidth,
+                            html.scrollWidth,
+                            html.offsetWidth
+                        );
+
+                        // Add some padding for scrollbars and borders
+                        const paddedWidth = Math.min(contentWidth + 40, 1200); // Max 1200px wide
+                        const paddedHeight = Math.min(contentHeight + 40, 900); // Max 900px tall
+
+                        console.log('AutoSize: Sending resize request:', paddedWidth, 'x', paddedHeight);
+
+                        // Send resize message to parent window
+                        window.parent.postMessage({
+                            type: 'resize',
+                            width: paddedWidth,
+                            height: paddedHeight
+                        }, '*');
+                    }, 100); // Wait 200ms for rendering and animations
+                }
+            });
         </script>
     </div>
 </body>

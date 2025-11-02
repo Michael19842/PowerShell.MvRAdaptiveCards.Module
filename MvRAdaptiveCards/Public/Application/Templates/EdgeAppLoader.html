@@ -36,6 +36,15 @@
         // Resize window immediately
         window.resizeTo($WindowWidth, $WindowHeight);
 
+        // If AutoSize is enabled, listen for iframe ready event to resize window
+        if ('$AutoSize' === 'True') {
+            window.addEventListener('message', function (event) {
+                if (event.data && event.data.type === 'resize') {
+                    window.resizeTo(event.data.width, event.data.height);
+                }
+            });
+        }
+
         // Load the actual card in an iframe to preserve window.close() ability
         setTimeout(function () {
             const iframe = document.createElement('iframe');

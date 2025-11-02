@@ -36,20 +36,61 @@
         [parameter(Mandatory = $false)]
         [int]$WindowHeight = 600,
 
-        [switch]$ServeOnly
+        [switch]$ServeOnly,
+
+        [switch]$AutoSize
     )
 
     #Serve the card as a web page to capture response
     process {
-
         $html = Get-Content -Path "$PSScriptRoot\Templates\PromptCard.html" -Raw
 
+        # Find an available port if the default is in use
+        $MaxPortRetries = 10
+        $CurrentPort = $PortNumber
+        $PortFound = $false
+
+        for ($i = 0; $i -lt $MaxPortRetries; $i++) {
+            $TestPort = $CurrentPort + $i
+
+            # Test if port is available
+            try {
+                $TestListener = [System.Net.HttpListener]::new()
+                if ($IsWindows) {
+                    $TestListener.Prefixes.Add("http://localhost:$TestPort/")
+                }
+                else {
+                    $TestListener.Prefixes.Add("http://+:$TestPort/")
+                }
+                $TestListener.Start()
+                $TestListener.Stop()
+                $TestListener.Close()
+
+                # Port is available
+                $CurrentPort = $TestPort
+                $PortFound = $true
+                if ($i -gt 0) {
+                    Write-Verbose "Port $PortNumber was in use, using port $CurrentPort instead"
+                }
+                break
+            }
+            catch {
+                # Port is in use, try next one
+                Write-Verbose "Port $TestPort is in use, trying next port..."
+                continue
+            }
+        }
+
+        if (-not $PortFound) {
+            Write-Error "Could not find an available port after $MaxPortRetries attempts starting from $PortNumber"
+            return
+        }
 
         if ($IsWindows) {
-            $ServiceUrl = "http://localhost:$PortNumber/"
+            $ServiceUrl = "http://localhost:$CurrentPort/"
         }
         else {
-            $ServiceUrl = "http://+:$PortNumber/"
+            $ServiceUrl = "http://+:$CurrentPort/"
         }
 
         $LogoHeader = $LogoHeaderText
@@ -88,15 +129,15 @@
 
         $ExtensionsCss = "<style type='text/css'>$ExtensionsCss</style>"
 
+        $ResponseGuid = [guid]::NewGuid().ToString()
         $html = $ExecutionContext.InvokeCommand.ExpandString($html)
-
 
         #Create a task to listen for requests
         $Runspace = [runspacefactory]::CreateRunspace()
         $Runspace.Open()
 
         $ScriptBlock = {
-            param ($html, $ServiceUrl)
+            param ($html, $ServiceUrl, $ResponseGuid)
 
             $listener = [System.Net.HttpListener]::new()
             #Test if the host is a windows system to determine the correct prefix
@@ -140,14 +181,18 @@
                         # Small delay to ensure response is sent
                         Start-Sleep -Milliseconds 100
 
-                        $data
+                        #Test to see the response GUID matches
+                        $jsonData = $data | ConvertFrom-Json
+                        if ($jsonData.ResponseGuid -eq $ResponseGuid) {
+                            $data
+                            break
+                        }
 
-                        break
                     }
                 }
             }
-
             $listener.Stop()
+            $listener.Close()
         }
         $PowerShell = [powershell]::Create()
         $PowerShell.Runspace = $Runspace
@@ -157,6 +202,8 @@
 
         #Open browser to the page
         if (!$ServeOnly) {
+            # Initialize EdgeAppProcess variable for window close detection
+            $EdgeAppProcess = $null
 
             switch ($ViewMethod) {
                 "EdgeApp" {
@@ -170,8 +217,27 @@
                         $tempFile = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), "AdaptiveCard_$(Get-Random).html")
                         [System.IO.File]::WriteAllText($tempFile, $wrapperHtml, [System.Text.Encoding]::UTF8)
 
-                        # Open with Edge app mode
-                        Start-Process "msedge" -ArgumentList "--app=file:///$($tempFile.Replace('\','/'))"
+                        # Open with Edge app mode and capture the process
+                        $ParentEdgeProcess = Start-Process "msedge" -ArgumentList "--app=file:///$($tempFile.Replace('\','/'))" -PassThru
+
+                        # Wait for Edge to create the app window
+                        Start-Sleep -Milliseconds 100
+
+                        #loop to find the correct Edge window
+                        $MaxPollTries = 50
+                        do {
+                            Start-Sleep -Milliseconds 100
+                            $EdgeAppProcess = Get-Process -Name "msedge" -ErrorAction SilentlyContinue |
+                            Where-Object { $_.MainWindowTitle -eq $CardTitle -and $_.HasExited -eq $false -and $_.MainWindowHandle -ne 0 }
+
+                        } while (-not $EdgeAppProcess -and $MaxPollTries--)
+
+                        if ($EdgeAppProcess) {
+                            Write-Verbose "Found Edge app process: ID=$($EdgeAppProcess.Id), Title='$($EdgeAppProcess.MainWindowTitle)'"
+                        }
+                        else {
+                            Write-Warning "Could not find Edge app window. Window close detection will not work."
+                        }
 
                         # Clean up temp file after a delay
                         Start-Job -ScriptBlock {
@@ -190,6 +256,14 @@
                     }
                 }
                 "Browser" {
+
+                    #Test for parameters that are not compatible with browser view
+                    if ( $AutoSize ) {
+                        Write-Warning "AutoSize parameter is not supported in Browser view. Ignoring."
+                    }
+                    if ( $WindowWidth -ne 400 -or $WindowHeight -ne 600 ) {
+                        Write-Warning "Custom window size parameters are not supported in Browser view. Ignoring."
+                    }
                     Start-Process $ServiceUrl
                 }
                 default {}
@@ -202,6 +276,16 @@
 
             Write-ColoredHost $WaitingPrompt -NoNewLine
             [console]::CursorVisible = $false
+
+            #Test to see if $asyncResult halted abnormally
+            if ($asyncResult.IsCompleted -eq $True ) {
+                Write-Warning "Async operation did not complete as expected."
+
+                #Grab the log stream from the runspace
+                $logStream = $PowerShell.Streams.Error
+
+                $logStream | ForEach-Object { Write-Verbose "Error: $_" }
+            }
 
             try {
                 while ($asyncResult.IsCompleted -eq $false) {
@@ -219,12 +303,17 @@
                     $Host.UI.RawUI.CursorPosition = @{X = 0; Y = $Host.UI.RawUI.CursorPosition.Y }
 
                     #Hide the cursor while waiting
-
                     Write-ColoredHost ("`r" + $PromptToShow) -NoNewLine
 
 
-
-
+                    #If the the viewMode is EdgeApp and the window is no longer open, cancel waiting
+                    if ( $ViewMethod -eq "EdgeApp") {
+                        # Check if the Edge process is still running
+                        if ($EdgeAppProcess -and $EdgeAppProcess.HasExited -and $asyncResult.IsCompleted -eq $false) {
+                            Write-Verbose "EdgeApp window was closed by user"
+                            throw "WindowClosed"
+                        }
+                    }
                 }
                 Write-ColoredHost "{Green}[V]"
                 #Show the cursor again
@@ -238,12 +327,18 @@
             }
             finally {
                 if ($null -eq $data) {
-                    try { Invoke-WebRequest -Uri $ServiceUrl -Method Post -OperationTimeoutSeconds 1 -ConnectionTimeoutSeconds 1 } catch { [void]$_ }
+                    try { [void](Invoke-WebRequest -Uri $ServiceUrl -Method Post -OperationTimeoutSeconds 1 -ConnectionTimeoutSeconds 1 -Body @{responseGuid = $ResponseGuid }) } catch { [void]$_ }
                     [void]($PowerShell.Stop())
                 }
-                #Force kill the powershell if still running
 
+                #Kill the Edge app process if still running
+                # if ($EdgeAppProcess) {
+                #     # Stop-Process -Id $EdgeAppProcess.Id -Force -ErrorAction SilentlyContinue
+                # }
+                #Force kill the powershell if still running
                 [void]($PowerShell.Dispose())
+
+
                 #Close the runspace
                 $Runspace.Close()
                 $Runspace.Dispose()
