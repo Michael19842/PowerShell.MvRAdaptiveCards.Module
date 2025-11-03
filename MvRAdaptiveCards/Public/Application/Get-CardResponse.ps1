@@ -27,7 +27,7 @@
         [string]$HeaderBackgroundEnd = $_MvRACSettings.'Get-Response'.HeaderBackgroundEnd,
 
         [parameter(Mandatory = $false)]
-        [ValidateSet("Browser", "WindowsForms", "EdgeApp")]
+        [ValidateSet("Browser", "EdgeApp")]
         [string]$ViewMethod = $_MvRACSettings.'Get-Response'.ViewMethod,
 
         [parameter(Mandatory = $false)]
@@ -35,6 +35,8 @@
 
         [parameter(Mandatory = $false)]
         [int]$WindowHeight = 600,
+
+        [switch]$HideHeader,
 
         [switch]$ServeOnly,
 
@@ -86,6 +88,7 @@
             return
         }
 
+        # Set the service URL based on OS
         if ($IsWindows) {
             $ServiceUrl = "http://localhost:$CurrentPort/"
         }
@@ -99,106 +102,50 @@
             $LogoHeader = "$LogoHeaderText <span class='version'>v$ModuleVersion</span>"
         }
 
-        #Read the JSON and only load needed extensions
-        $AvailableExtensions = (Get-ChildItem -Path "$PSScriptRoot\Templates\Extension\Script" -Filter *.js | ForEach-Object { $_.BaseName })
-        $ExtensionsToLoad = @()
+        # Build the extensions payload using the provided JSON
+        $ExtensionsPayload = Build-ExtensionsPayload -Json $Json -ScriptsPath "$PSScriptRoot\Templates\Extension\Script" -StylesPath "$PSScriptRoot\Templates\Extension\Style" -EncapsulateStyles
 
-        foreach ($Extension in $AvailableExtensions) {
-            if ($Json -match [regex]::escape($Extension)) {
-                $ExtensionsToLoad += $Extension
-            }
+        if ($ExtensionsPayload) {
+            $ExtensionsJs = $ExtensionsPayload.Scripts
+            $ExtensionsCss = $ExtensionsPayload.Styles
+        }
+        else {
+            $ExtensionsJs = ''
+            $ExtensionsCss = ''
         }
 
-        $ExtensionsJs = ''
-        $ExtensionsCss = ''
-        foreach ($Extension in $ExtensionsToLoad) {
-            #Get the file content
-            $ExtensionPath = "$PSScriptRoot\Templates\Extension\Script\$Extension.js"
-
-
-            if (Test-Path -Path $ExtensionPath) {
-                $ExtensionContent = Get-Content -Path $ExtensionPath -Raw
-                $ExtensionsJs += "`n`n// Extension: $Extension`n" + $ExtensionContent
-            }
-            $ExtensionCssPath = "$PSScriptRoot\Templates\Extension\Style\$Extension.css"
-            if (Test-Path -Path $ExtensionCssPath) {
-                $ExtensionCssContent = Get-Content -Path $ExtensionCssPath -Raw
-                $ExtensionsCss += "`n/* Extension: $Extension */`n" + $ExtensionCssContent
-            }
-        }
-
-        $ExtensionsCss = "<style type='text/css'>$ExtensionsCss</style>"
-
+        # Generate a unique response GUID to track the response of the card
         $ResponseGuid = [guid]::NewGuid().ToString()
+
+
+        #Hide header class
+        if ( $HideHeader ) {
+            $HideHeaderClass = "hide-header"
+        }
+        else {
+            $HideHeaderClass = ""
+        }
+
+        # Set max width and height for autosize
+        if ( $AutoSize ) {
+            Add-Type -AssemblyName System.Windows.Forms
+            $Screen = [System.Windows.Forms.Screen]::PrimaryScreen
+            $MaxWidth = [math]::Min(1200, $Screen.WorkingArea.Width - 100)
+            $MaxHeight = [math]::Min(900, $Screen.WorkingArea.Height - 100)
+        }
+        else {
+            $MaxWidth = 1200
+            $MaxHeight = 900
+        }
+
+        # Expand any variables in the HTML template (ResponseGuid, ServiceUrl, CardTitle, LogoUrl, etc)
         $html = $ExecutionContext.InvokeCommand.ExpandString($html)
 
-        #Create a task to listen for requests
-        $Runspace = [runspacefactory]::CreateRunspace()
-        $Runspace.Open()
+        #Start the local web server to serve the card and listen for response
+        $WSSession = New-LocalCardWebserver -Html $html -ServiceUrl $ServiceUrl -ResponseGuid $ResponseGuid
 
-        $ScriptBlock = {
-            param ($html, $ServiceUrl, $ResponseGuid)
-
-            $listener = [System.Net.HttpListener]::new()
-            #Test if the host is a windows system to determine the correct prefix
-
-            $listener.Prefixes.Add($ServiceUrl)
-
-            $listener.Start()
-            while ($listener.IsListening) {
-                # Wait for request, but handle Ctrl+C safely
-                if ($listener.IsListening) {
-                    $context = $listener.GetContext()
-                    $request = $context.Request
-                    $response = $context.Response
-
-                    if ($request.HttpMethod -eq "GET") {
-                        $buffer = [System.Text.Encoding]::UTF8.GetBytes($html)
-                        $response.OutputStream.Write($buffer, 0, $buffer.Length)
-                        $response.Close()
-                    }
-                    elseif ($request.HttpMethod -eq "POST") {
-                        $reader = New-Object IO.StreamReader($request.InputStream)
-                        $data = $reader.ReadToEnd()
-                        $reader.Close()
-
-                        $responseString = "Thanks! Data received"
-                        $buffer = [System.Text.Encoding]::UTF8.GetBytes($responseString)
-
-                        # Set response headers
-                        $response.ContentLength64 = $buffer.Length
-                        $response.ContentType = "text/plain; charset=utf-8"
-                        $response.StatusCode = 200
-
-                        # Write response
-                        $response.OutputStream.Write($buffer, 0, $buffer.Length)
-
-                        # CRITICAL: Flush and close the output stream before breaking
-                        $response.OutputStream.Flush()
-                        $response.OutputStream.Close()
-                        $response.Close()
-
-                        # Small delay to ensure response is sent
-                        Start-Sleep -Milliseconds 100
-
-                        #Test to see the response GUID matches
-                        $jsonData = $data | ConvertFrom-Json
-                        if ($jsonData.ResponseGuid -eq $ResponseGuid) {
-                            $data
-                            break
-                        }
-
-                    }
-                }
-            }
-            $listener.Stop()
-            $listener.Close()
-        }
-        $PowerShell = [powershell]::Create()
-        $PowerShell.Runspace = $Runspace
-        [void]($PowerShell.AddScript($ScriptBlock).AddArgument($html).AddArgument($ServiceUrl))
-
-        $asyncResult = $PowerShell.BeginInvoke()
+        #Start the listener
+        $asyncResult = $WSSession.PowerShell.BeginInvoke()
 
         #Open browser to the page
         if (!$ServeOnly) {
@@ -318,7 +265,7 @@
                 Write-ColoredHost "{Green}[V]"
                 #Show the cursor again
                 [console]::CursorVisible = $true
-                $data = $PowerShell.EndInvoke($asyncResult)
+                $data = $WSSession.PowerShell.EndInvoke($asyncResult)
             }
 
 
@@ -328,7 +275,7 @@
             finally {
                 if ($null -eq $data) {
                     try { [void](Invoke-WebRequest -Uri $ServiceUrl -Method Post -OperationTimeoutSeconds 1 -ConnectionTimeoutSeconds 1 -Body @{responseGuid = $ResponseGuid }) } catch { [void]$_ }
-                    [void]($PowerShell.Stop())
+                    [void]($WSSession.PowerShell.Stop())
                 }
 
                 #Kill the Edge app process if still running
@@ -336,15 +283,15 @@
                 #     # Stop-Process -Id $EdgeAppProcess.Id -Force -ErrorAction SilentlyContinue
                 # }
                 #Force kill the powershell if still running
-                [void]($PowerShell.Dispose())
+                [void]($WSSession.PowerShell.Dispose())
 
 
                 #Close the runspace
-                $Runspace.Close()
-                $Runspace.Dispose()
+                $WSSession.Runspace.Close()
+                $WSSession.Runspace.Dispose()
             }
-            if ( $null -ne $data ) {
-                return $data | ConvertFrom-Json
+            if ( ![string]::IsNullOrWhiteSpace($data) ) {
+                return $data | ConvertFrom-Json | Select-Object -ExcludeProperty ResponseGuid
             }
         }
     }

@@ -1,5 +1,40 @@
 # Release Notes
 
+## 0.8.6
+- Added `New-CardCompoundButton` function to create compound button elements in adaptive cards.
+- Added `CompoundButton` extension to support rendering of compound buttons within adaptive cards.
+```PowerShell
+New-AdaptiveCard {
+    New-CardCompoundButton -Id "CompoundButton1" -Title "Compound Button" -Icon CallInbound -Description "This is a description for the compound button." -SelectAction { New-CardActionSubmit -Title "Confirm" } -Fallback {
+        New-CardTextBlock -Text "Compound button not supported." -Size Medium -Weight Bolder -Wrap
+    }
+    New-CardActionSet -Actions {
+        New-CardActionSubmit -Title "Submit"
+    }
+}  | Get-CardResponse -ViewMethod EdgeApp -AutoSize
+```
+- Removed Windows Forms view method from `Get-CardResponse` to streamline the module and focus on more modern rendering options. Users are encouraged to use the Browser or EdgeApp view methods for better compatibility and user experience. It was not implemented yet and it was not adding any value.
+- Added `New-CardInputTime` function to create time input elements in adaptive cards.
+- Added `New-CardInputNumber` function to create number input elements in adaptive cards.
+- Added `New-CardInputDate` function to create date input elements in adaptive cards.
+- Bugfix in `Get-CardResponse` to remove the `ResponseGuid` property from the returned response object. This property was intended for internal tracking and is not relevant to the end user.
+- Added `-HideHeader` parameter to `Get-CardResponse` to allow users to hide the header section of the response window. This provides a cleaner look for certain use cases where the header is not needed.
+
+```PowerShell
+New-AdaptiveCard {
+    New-CardTextBlock -Text "Hello, World!" -Size "Large"
+} | Get-CardResponse -ViewMethod EdgeApp -AutoSize -HideHeader
+```
+
+## 0.8.5
+- Improved the AutoSize functionality in `Get-CardResponse` to better handle dynamic content changes. The response window will now adjust its size more accurately when the content of the adaptive card changes after initial rendering.
+- Refactored the `Get-CardResponse` function to enhance code readability and maintainability. This includes breaking down complex logic into smaller, more manageable functions and improving variable naming for clarity.
+
+## 0.8.4
+- Added a check in `Get-CardResponse` to ensure that the specified port is available before starting the local server. If the port is already in use, the function will now provide a clear error message and suggest using a different port.
+- Added a mechanism in `Get-CardResponse` to test if the caller is the local machine. If the caller is not local, the function will respond with an error message indicating invalid request.
+- Added logic to ignore any POST requests that do not contain valid JSON payloads in `Get-CardResponse`. This assures that only the intended requests are processed, enhancing security and stability.
+
 ## 0.8.3
 - Bugfix in `Get-CardResponse` to properly release and close the TCP listener after handling a response. This prevents port conflicts on subsequent calls to the function.
 - Improved Edge app window detection by implementing a polling mechanism to reliably find the correct Edge window associated with the adaptive card. This enhances the user experience when using the Edge app view method.

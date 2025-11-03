@@ -16,8 +16,8 @@ schema: 2.0.0
 Get-CardResponse [-Json] <String> [[-PromptTitle] <String>] [[-CardTitle] <String>] [[-LogoUrl] <String>]
  [[-LogoHeaderText] <String>] [[-ShowVersion] <Boolean>] [[-PortNumber] <Int32>]
  [[-HeaderBackgroundStart] <String>] [[-HeaderBackgroundEnd] <String>] [[-ViewMethod] <String>]
- [[-WindowWidth] <Int32>] [[-WindowHeight] <Int32>] [-ServeOnly] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+ [[-WindowWidth] <Int32>] [[-WindowHeight] <Int32>] [-HideHeader] [-ServeOnly] [-AutoSize]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -33,6 +33,21 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
+
+### -AutoSize
+{{ Fill AutoSize Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -CardTitle
 {{ Fill CardTitle Description }}
@@ -74,6 +89,21 @@ Aliases:
 
 Required: False
 Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HideHeader
+{{ Fill HideHeader Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -191,7 +221,7 @@ Accept wildcard characters: False
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: Browser, WindowsForms, EdgeApp
+Accepted values: Browser, EdgeApp
 
 Required: False
 Position: 9

@@ -53,6 +53,9 @@ Creates a page for a Carousel container.
 ### [New-CardChartDonut](New-CardChartDonut.md)
 Creates a new Donut Chart element for an Adaptive Card.
 
+### [New-CardChartGauge](New-CardChartGauge.md)
+Creates a Chart.Gauge element for an Adaptive Card.
+
 ### [New-CardCodeBlock](New-CardCodeBlock.md)
 Creates a new CodeBlock element for an Adaptive Card to display formatted code snippets.
 
@@ -61,6 +64,9 @@ Creates a new Column element for use within a ColumnSet.
 
 ### [New-CardColumnSet](New-CardColumnSet.md)
 Creates a new ColumnSet element for an Adaptive Card.
+
+### [New-CardCompoundButton](New-CardCompoundButton.md)
+Creates a CompoundButton element for an Adaptive Card.
 
 ### [New-CardContainer](New-CardContainer.md)
 Creates a new Container element for an Adaptive Card.
@@ -83,11 +89,20 @@ Creates an ImageSet element for an Adaptive Card to display a collection of imag
 ### [New-CardInputChoiceSet](New-CardInputChoiceSet.md)
 {{ Fill in the Synopsis }}
 
+### [New-CardInputDate](New-CardInputDate.md)
+Creates an Input.Date element for date selection in an Adaptive Card.
+
+### [New-CardInputNumber](New-CardInputNumber.md)
+Creates an Input.Number element for numeric input in an Adaptive Card.
+
 ### [New-CardInputRating](New-CardInputRating.md)
 {{ Fill in the Synopsis }}
 
 ### [New-CardInputText](New-CardInputText.md)
 {{ Fill in the Synopsis }}
+
+### [New-CardInputTime](New-CardInputTime.md)
+Creates an Input.Time element for time selection in an Adaptive Card.
 
 ### [New-CardInputToggle](New-CardInputToggle.md)
 Creates an Input.Toggle element for Adaptive Cards.

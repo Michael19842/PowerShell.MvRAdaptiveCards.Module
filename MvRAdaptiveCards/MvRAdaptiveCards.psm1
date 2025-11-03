@@ -32,9 +32,11 @@ Export-ModuleMember -Function (Get-ChildItem -Path "$PSScriptRoot\Public\*.ps1" 
 # Export public aliases
 Export-ModuleMember -Alias (Get-ChildItem -Path "$PSScriptRoot\Public\*.ps1" -Recurse | ForEach-Object {
         $Content = Get-Content -Path $_.FullName -Raw
-        $AliasMatches = [regex]::Matches($Content, 'Set-Alias\s+-Name\s+(\S+)\s+-Value\s+(\S+)', 'IgnoreCase')
-        foreach ($Match in $AliasMatches) {
-            $Match.Groups[1].Value
+        if ($Content) {
+            $AliasMatches = [regex]::Matches($Content, 'Set-Alias\s+-Name\s+(\S+)\s+-Value\s+(\S+)', 'IgnoreCase')
+            foreach ($Match in $AliasMatches) {
+                $Match.Groups[1].Value
+            }
         }
     })
 

@@ -116,8 +116,53 @@ Task buildDocumentation -RequiredVariables 'ModuleName' -PreAction {
     }
 }
 
+Task displayCodeCoverage -Action {
 
-Task default -Depends prepare, updateManifest, test, analyse, buildDocumentation
+    # Load XML
+    [xml]$Doc = Get-Content -Path "$PSScriptRoot\coverage.xml" -Raw
+
+    # Find all class counters
+    $classNodes = $doc.SelectNodes("//class")
+
+    if (-not $classNodes) {
+        Write-Error "No <class> nodes found — is the file JaCoCo format?"
+        exit 1
+    }
+
+    $results = foreach ($class in $classNodes) {
+
+        # filename from sourcefilename=""
+        $file = $class.sourcefilename
+        if (-not $file) { continue }
+
+        # find LINE-type counter
+        $lineCounter = $class.counter | Where-Object { $_.type -eq "LINE" }
+
+        if (-not $lineCounter) { continue }
+
+        $missed = [int]$lineCounter.missed
+        $covered = [int]$lineCounter.covered
+        $total = $missed + $covered
+
+        if ($total -eq 0) { continue }
+
+        $pct = [math]::Round(($covered / $total) * 100, 2)
+
+        [pscustomobject]@{
+            File     = $file
+            Lines    = $total
+            Covered  = $covered
+            Missed   = $missed
+            Coverage = (“{0:N2}%%” -f $pct)
+        }
+    }
+
+    $results | Sort-Object { [double]($_.Coverage -replace '%', '') } -Descending |
+    Format-Table -AutoSize
+
+}
+
+Task default -Depends prepare, updateManifest, test, displayCodeCoverage, analyse, buildDocumentation
 
 
 

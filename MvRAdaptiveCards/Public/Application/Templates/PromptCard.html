@@ -94,11 +94,15 @@
             color: #666;
             padding: 20px;
         }
+
+        .hide-header {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-    <div class="module-header">
+    <div class="module-header $HideHeaderClass ">
         <img src="$LogoUrl" alt="MvRAdaptiveCards Logo" class="logo" width="88" height="60">
         <h1>$LogoHeader</h1>
     </div>
@@ -230,6 +234,13 @@
                                 if (action.getJsonTypeName() === "Action.Submit") {
                                     console.log('Submit action triggered:', action.data);
 
+                                    // Add the response GUID to the action data
+                                    if (!action.data) {
+                                        action.data = {};
+                                    }
+
+                                    action.data.ResponseGuid = responseGuid;
+
                                     // Post the form data to your service
                                     fetch('$ServiceUrl', {
                                         method: 'POST',
@@ -288,10 +299,10 @@
                         // Get the full content height including all elements
                         const contentHeight = Math.max(
                             body.scrollHeight,
-                            body.offsetHeight//,
+                            body.offsetHeight,
                             // html.clientHeight,
-                            // html.scrollHeight,
-                            // html.offsetHeight
+                            //html.scrollHeight,
+                            html.offsetHeight
                         );
 
                         // Get the full content width
@@ -304,8 +315,8 @@
                         );
 
                         // Add some padding for scrollbars and borders
-                        const paddedWidth = Math.min(contentWidth + 40, 1200); // Max 1200px wide
-                        const paddedHeight = Math.min(contentHeight + 40, 900); // Max 900px tall
+                        const paddedWidth = Math.min(contentWidth + 40, $MaxWidth); // Max depending on screen size
+                        const paddedHeight = Math.min(contentHeight + 40, $MaxHeight); // Max 900px tall
 
                         console.log('AutoSize: Sending resize request:', paddedWidth, 'x', paddedHeight);
 
@@ -315,7 +326,7 @@
                             width: paddedWidth,
                             height: paddedHeight
                         }, '*');
-                    }, 100); // Wait 200ms for rendering and animations
+                    }, 500); // Wait 200ms for rendering and animations
                 }
             });
         </script>
