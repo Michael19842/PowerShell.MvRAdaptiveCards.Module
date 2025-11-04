@@ -130,8 +130,8 @@
         if ( $AutoSize ) {
             Add-Type -AssemblyName System.Windows.Forms
             $Screen = [System.Windows.Forms.Screen]::PrimaryScreen
-            $MaxWidth = [math]::Min(1200, $Screen.WorkingArea.Width - 100)
-            $MaxHeight = [math]::Min(900, $Screen.WorkingArea.Height - 100)
+            $MaxWidth = [math]::Max(1200, $Screen.WorkingArea.Width - 100)
+            $MaxHeight = [math]::Max(900, $Screen.WorkingArea.Height - 100)
         }
         else {
             $MaxWidth = 1200

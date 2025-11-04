@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.1//EN" "report.dtd"[]>
-<report name="Pester (11/03/2025 22:41:52)">
-  <sessioninfo id="this" start="1762209693143" dump="1762209712899" />
+<report name="Pester (11/04/2025 19:10:25)">
+  <sessioninfo id="this" start="1762283410758" dump="1762283425139" />
   <package name="MvRAdaptiveCards">
     <class name="MvRAdaptiveCards/MvRAdaptiveCards" sourcefilename="MvRAdaptiveCards.psm1">
       <method name="&lt;script&gt;" desc="()" line="11">
@@ -1259,6 +1259,36 @@
     <counter type="METHOD" missed="1" covered="1" />
     <counter type="CLASS" missed="1" covered="1" />
   </package>
+  <package name="MvRAdaptiveCards/Public/Charts/Helper">
+    <class name="MvRAdaptiveCards/Public/Charts/Helper/New-CardGaugeChartLegend" sourcefilename="Public/Charts/Helper/New-CardGaugeChartLegend.ps1">
+      <method name="New-CardGaugeChartLegend" desc="()" line="49">
+        <counter type="INSTRUCTION" missed="7" covered="0" />
+        <counter type="LINE" missed="7" covered="0" />
+        <counter type="METHOD" missed="1" covered="0" />
+      </method>
+      <counter type="INSTRUCTION" missed="7" covered="0" />
+      <counter type="LINE" missed="7" covered="0" />
+      <counter type="METHOD" missed="1" covered="0" />
+      <counter type="CLASS" missed="1" covered="0" />
+    </class>
+    <sourcefile name="Public/Charts/Helper/New-CardGaugeChartLegend.ps1">
+      <line nr="49" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="50" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="51" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="53" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="54" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="56" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="57" mi="1" ci="0" mb="0" cb="0" />
+      <counter type="INSTRUCTION" missed="7" covered="0" />
+      <counter type="LINE" missed="7" covered="0" />
+      <counter type="METHOD" missed="1" covered="0" />
+      <counter type="CLASS" missed="1" covered="0" />
+    </sourcefile>
+    <counter type="INSTRUCTION" missed="7" covered="0" />
+    <counter type="LINE" missed="7" covered="0" />
+    <counter type="METHOD" missed="1" covered="0" />
+    <counter type="CLASS" missed="1" covered="0" />
+  </package>
   <package name="MvRAdaptiveCards/Public/Containers">
     <class name="MvRAdaptiveCards/Public/Containers/New-CardCarousel" sourcefilename="Public/Containers/New-CardCarousel.ps1">
       <method name="New-CardCarousel" desc="()" line="125">
@@ -1727,6 +1757,28 @@
     <counter type="CLASS" missed="3" covered="5" />
   </package>
   <package name="MvRAdaptiveCards/Public/Containers/Layout">
+    <class name="MvRAdaptiveCards/Public/Containers/Layout/New-CardBackgroundImage" sourcefilename="Public/Containers/Layout/New-CardBackgroundImage.ps1">
+      <method name="New-CardBackgroundImage" desc="()" line="88">
+        <counter type="INSTRUCTION" missed="20" covered="0" />
+        <counter type="LINE" missed="19" covered="0" />
+        <counter type="METHOD" missed="1" covered="0" />
+      </method>
+      <counter type="INSTRUCTION" missed="20" covered="0" />
+      <counter type="LINE" missed="19" covered="0" />
+      <counter type="METHOD" missed="1" covered="0" />
+      <counter type="CLASS" missed="1" covered="0" />
+    </class>
+    <class name="MvRAdaptiveCards/Public/Containers/Layout/New-CardBackgroundImageThemedUrl" sourcefilename="Public/Containers/Layout/New-CardBackgroundImageThemedUrl.ps1">
+      <method name="New-CardBackgroundImageThemedUrl" desc="()" line="45">
+        <counter type="INSTRUCTION" missed="5" covered="0" />
+        <counter type="LINE" missed="5" covered="0" />
+        <counter type="METHOD" missed="1" covered="0" />
+      </method>
+      <counter type="INSTRUCTION" missed="5" covered="0" />
+      <counter type="LINE" missed="5" covered="0" />
+      <counter type="METHOD" missed="1" covered="0" />
+      <counter type="CLASS" missed="1" covered="0" />
+    </class>
     <class name="MvRAdaptiveCards/Public/Containers/Layout/New-CardGridArea" sourcefilename="Public/Containers/Layout/New-CardGridArea.ps1">
       <method name="New-CardGridArea" desc="()" line="98">
         <counter type="INSTRUCTION" missed="12" covered="0" />
@@ -1771,6 +1823,42 @@
       <counter type="METHOD" missed="1" covered="0" />
       <counter type="CLASS" missed="1" covered="0" />
     </class>
+    <sourcefile name="Public/Containers/Layout/New-CardBackgroundImage.ps1">
+      <line nr="88" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="89" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="92" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="93" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="96" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="97" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="100" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="101" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="104" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="105" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="107" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="109" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="110" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="111" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="114" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="118" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="119" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="123" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="124" mi="1" ci="0" mb="0" cb="0" />
+      <counter type="INSTRUCTION" missed="20" covered="0" />
+      <counter type="LINE" missed="19" covered="0" />
+      <counter type="METHOD" missed="1" covered="0" />
+      <counter type="CLASS" missed="1" covered="0" />
+    </sourcefile>
+    <sourcefile name="Public/Containers/Layout/New-CardBackgroundImageThemedUrl.ps1">
+      <line nr="45" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="46" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="47" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="50" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="51" mi="1" ci="0" mb="0" cb="0" />
+      <counter type="INSTRUCTION" missed="5" covered="0" />
+      <counter type="LINE" missed="5" covered="0" />
+      <counter type="METHOD" missed="1" covered="0" />
+      <counter type="CLASS" missed="1" covered="0" />
+    </sourcefile>
     <sourcefile name="Public/Containers/Layout/New-CardGridArea.ps1">
       <line nr="98" mi="1" ci="0" mb="0" cb="0" />
       <line nr="99" mi="1" ci="0" mb="0" cb="0" />
@@ -1859,10 +1947,10 @@
       <counter type="METHOD" missed="1" covered="0" />
       <counter type="CLASS" missed="1" covered="0" />
     </sourcefile>
-    <counter type="INSTRUCTION" missed="65" covered="0" />
-    <counter type="LINE" missed="64" covered="0" />
-    <counter type="METHOD" missed="4" covered="0" />
-    <counter type="CLASS" missed="4" covered="0" />
+    <counter type="INSTRUCTION" missed="90" covered="0" />
+    <counter type="LINE" missed="88" covered="0" />
+    <counter type="METHOD" missed="6" covered="0" />
+    <counter type="CLASS" missed="6" covered="0" />
   </package>
   <package name="MvRAdaptiveCards/Public/Elements">
     <class name="MvRAdaptiveCards/Public/Elements/New-CardBadge" sourcefilename="Public/Elements/New-CardBadge.ps1">
@@ -3103,8 +3191,8 @@
     <counter type="METHOD" missed="0" covered="4" />
     <counter type="CLASS" missed="0" covered="3" />
   </package>
-  <counter type="INSTRUCTION" missed="968" covered="1025" />
-  <counter type="LINE" missed="869" covered="942" />
-  <counter type="METHOD" missed="34" covered="38" />
-  <counter type="CLASS" missed="34" covered="35" />
+  <counter type="INSTRUCTION" missed="1000" covered="1025" />
+  <counter type="LINE" missed="900" covered="942" />
+  <counter type="METHOD" missed="37" covered="38" />
+  <counter type="CLASS" missed="37" covered="35" />
 </report>

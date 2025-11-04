@@ -24,6 +24,23 @@ function Build-ExtensionsPayload {
         Styles  = ''
     }
 
+    #Load all the mandatory extensions
+
+    #Get all the mandatory js files
+    $MandatoryScripts = (Get-ChildItem -Path "$ScriptsPath\.." -Filter "*.mandatory.js" -Recurse)
+    foreach ($Script in $MandatoryScripts) {
+        Write-Verbose "Loading mandatory extension script: $($Script.FullName)"
+        $ScriptContent = Get-Content -Path $Script.FullName -Raw
+        $ReturnPayload.Scripts += "`n`n// Mandatory Extension: $($Script.BaseName)`n" + $ScriptContent
+    }
+    #Get all the mandatory css files
+    $MandatoryStyles = (Get-ChildItem -Path "$StylesPath\.." -Filter "*.mandatory.css")
+    foreach ($Style in $MandatoryStyles) {
+        $StyleContent = Get-Content -Path $Style.FullName -Raw
+        $ReturnPayload.Styles += "`n/* Mandatory Extension: $($Style.BaseName) */`n" + $StyleContent
+    }
+
+
     foreach ($Extension in $ExtensionsToLoad) {
         #Get the file content
         $ExtensionPath = "$ScriptsPath\$Extension.js"

@@ -1,5 +1,10 @@
 # Release Notes
 
+## 0.8.7
+- Added `New-CardChartGauge` function to create gauge chart elements in adaptive cards.
+- Added `Chart.Gauge` extension to support rendering of gauge charts using `Chart.js` within adaptive cards.
+
+```PowerShell
 ## 0.8.6
 - Added `New-CardCompoundButton` function to create compound button elements in adaptive cards.
 - Added `CompoundButton` extension to support rendering of compound buttons within adaptive cards.

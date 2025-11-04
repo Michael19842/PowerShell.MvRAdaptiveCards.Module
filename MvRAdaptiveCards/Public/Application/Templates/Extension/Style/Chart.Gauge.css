@@ -1,0 +1,150 @@
+/* Chart.Gauge Styles */
+
+.ac-chart-gauge-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Title */
+.ac-chart-gauge-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* Canvas wrapper with relative positioning for overlays */
+.ac-chart-gauge-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Canvas */
+.ac-chart-gauge-canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Value display (positioned on gauge arc by JavaScript) */
+.ac-chart-gauge-value {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    font-weight: 700;
+    color: #0078D4;
+    text-align: center;
+    pointer-events: none;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+/* SubLabel (below gauge) */
+.ac-chart-gauge-sublabel {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: 12px;
+    color: #666666;
+    text-align: center;
+    pointer-events: none;
+}
+
+/* Min/Max labels */
+.ac-chart-gauge-minmax {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 8px;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.ac-chart-gauge-min,
+.ac-chart-gauge-max {
+    font-size: 12px;
+    color: #666666;
+    font-weight: 500;
+}
+
+/* Legend */
+.ac-chart-gauge-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+    width: 100%;
+}
+
+.ac-chart-gauge-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ac-chart-gauge-legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.ac-chart-gauge-legend-label {
+    font-size: 12px;
+    color: #666666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .ac-chart-gauge-container {
+        padding: 12px;
+    }
+
+    .ac-chart-gauge-title {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .ac-chart-gauge-value {
+        font-size: 24px;
+    }
+
+    .ac-chart-gauge-sublabel {
+        font-size: 11px;
+    }
+
+    .ac-chart-gauge-canvas-wrapper {
+        max-width: 250px;
+    }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .ac-chart-gauge-title {
+        color: #F3F3F3;
+    }
+
+    .ac-chart-gauge-value {
+        color: #60CDFF;
+    }
+
+    .ac-chart-gauge-sublabel,
+    .ac-chart-gauge-min,
+    .ac-chart-gauge-max,
+    .ac-chart-gauge-legend-label {
+        color: #B3B3B3;
+    }
+}

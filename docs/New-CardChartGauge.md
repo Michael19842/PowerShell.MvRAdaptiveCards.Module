@@ -14,10 +14,10 @@ Creates a Chart.Gauge element for an Adaptive Card.
 
 ```
 New-CardChartGauge [[-Value] <Double>] [[-Min] <Double>] [[-Max] <Double>] [[-Title] <String>]
- [[-SubLabel] <String>] [[-ValueFormat] <String>] [[-Segments] <Array>] [[-ShowLegend] <Boolean>]
+ [[-SubLabel] <String>] [[-ValueFormat] <String>] [[-Segments] <ScriptBlock>] [[-ShowLegend] <Boolean>]
  [[-ShowMinMax] <Boolean>] [[-ColorSet] <String>] [[-Id] <String>] [[-Height] <String>]
  [[-HorizontalAlignment] <String>] [-Separator] [[-Spacing] <String>] [[-IsVisible] <Boolean>]
- [[-Requires] <Hashtable>] [[-Fallback] <Object>] [[-TargetWidth] <String>] [[-GridArea] <String>]
+ [[-Requires] <Hashtable>] [[-Fallback] <ScriptBlock>] [[-TargetWidth] <String>] [[-GridArea] <String>]
  [[-Lang] <String>] [[-IsSortKey] <Boolean>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
  [<CommonParameters>]
 ```
@@ -170,7 +170,7 @@ a hashtable with properties like min, max, label, and color to create visual zon
 (e.g., red zone for low, yellow for medium, green for high).
 
 ```yaml
-Type: Array
+Type: ScriptBlock
 Parameter Sets: (All)
 Aliases:
 
@@ -348,7 +348,7 @@ Accept wildcard characters: False
 Alternate element or "drop" to render if this element type is unsupported.
 
 ```yaml
-Type: Object
+Type: ScriptBlock
 Parameter Sets: (All)
 Aliases:
 

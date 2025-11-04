@@ -74,7 +74,7 @@ function New-CardContainer {
         $Style = "Default",
 
         [Parameter(Mandatory = $false)]
-        [object]
+        [scriptblock]
         $BackgroundImage,
 
         [Parameter(Mandatory = $false)]
@@ -176,7 +176,7 @@ function New-CardContainer {
     }
 
     if ($BackgroundImage) {
-        $Container.backgroundImage = $BackgroundImage
+        $Container.backgroundImage = Invoke-Command -ScriptBlock $BackgroundImage
     }
 
     if ($MinHeight) {

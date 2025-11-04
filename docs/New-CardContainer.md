@@ -13,7 +13,7 @@ Creates a new Container element for an Adaptive Card.
 ## SYNTAX
 
 ```
-New-CardContainer [[-Content] <ScriptBlock>] [[-Style] <String>] [[-BackgroundImage] <Object>]
+New-CardContainer [[-Content] <ScriptBlock>] [[-Style] <String>] [[-BackgroundImage] <ScriptBlock>]
  [[-MinHeight] <Int32>] [[-MaxHeight] <Int32>] [[-Id] <String>] [[-VerticalContentAlignment] <String>] [-Bleed]
  [[-Fallback] <ScriptBlock>] [[-GridArea] <String>] [[-Height] <String>] [[-HorizontalAlignment] <String>]
  [[-IsSortKey] <Boolean>] [[-Lang] <String>] [[-Layouts] <ScriptBlock>] [[-Requires] <Hashtable>]
@@ -105,7 +105,7 @@ Accept wildcard characters: False
 {{ Fill BackgroundImage Description }}
 
 ```yaml
-Type: Object
+Type: ScriptBlock
 Parameter Sets: (All)
 Aliases:
 

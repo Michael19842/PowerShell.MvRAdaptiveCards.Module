@@ -74,6 +74,9 @@ Creates a new Container element for an Adaptive Card.
 ### [New-CardFactSet](New-CardFactSet.md)
 Creates a new FactSet element for an Adaptive Card to display key-value pairs.
 
+### [New-CardGaugeChartLegend](New-CardGaugeChartLegend.md)
+{{ Fill in the Synopsis }}
+
 ### [New-CardGridArea](New-CardGridArea.md)
 Creates a new GridArea definition for use in Layout.AreaGrid layouts.
 

@@ -153,7 +153,7 @@ function New-CardChartGauge {
         [string]$ValueFormat,
 
         [Parameter(Mandatory = $false)]
-        [array]$Segments,
+        [scriptblock]$Segments,
 
         [Parameter(Mandatory = $false)]
         [bool]$ShowLegend,
@@ -190,7 +190,7 @@ function New-CardChartGauge {
         [hashtable]$Requires,
 
         [Parameter(Mandatory = $false)]
-        [object]$Fallback,
+        [scriptblock]$Fallback,
 
         [Parameter(Mandatory = $false)]
         [ValidateSet("VeryNarrow", "Narrow", "Standard", "Wide", "atLeast:VeryNarrow", "atMost:VeryNarrow",
@@ -231,7 +231,7 @@ function New-CardChartGauge {
         $ChartGauge.valueFormat = $ValueFormat
     }
     if ($PSBoundParameters.ContainsKey('Segments')) {
-        $ChartGauge.segments = $Segments
+        $ChartGauge.segments = Invoke-Command -ScriptBlock $Segments
     }
     if ($PSBoundParameters.ContainsKey('ShowLegend')) {
         $ChartGauge.showLegend = $ShowLegend
@@ -264,7 +264,7 @@ function New-CardChartGauge {
         $ChartGauge.requires = $Requires
     }
     if ($PSBoundParameters.ContainsKey('Fallback')) {
-        $ChartGauge.fallback = $Fallback
+        $ChartGauge.fallback = Invoke-Command -ScriptBlock $Fallback
     }
     if ($PSBoundParameters.ContainsKey('TargetWidth')) {
         $ChartGauge.targetWidth = $TargetWidth
@@ -284,214 +284,3 @@ function New-CardChartGauge {
         return $ChartGauge
     }
 }
-
-
-# 1.0
-# colorSet
-# string
-# The name of the set of colors to use to render the chart. See Chart colors reference.
-
-# Valid values:
-# "categorical",
-# "sequential",
-# "diverging"
-# 1.5
-# fallback
-# One of
-# object
-# string
-# An alternate element to render if the type of this one is unsupported or if the host application doesn't support all the capabilities specified in the requires property.
-
-# Valid values:
-# Container,
-# ActionSet,
-# ColumnSet,
-# Media,
-# RichTextBlock,
-# Table,
-# TextBlock,
-# FactSet,
-# ImageSet,
-# Image,
-# Input.Text,
-# Input.Date,
-# Input.Time,
-# Input.Number,
-# Input.Toggle,
-# Input.ChoiceSet,
-# Input.Rating,
-# Rating,
-# CompoundButton,
-# Icon,
-# Carousel,
-# Badge,
-# ProgressRing,
-# ProgressBar,
-# Chart.Donut,
-# Chart.Pie,
-# Chart.VerticalBar.Grouped,
-# Chart.VerticalBar,
-# Chart.HorizontalBar,
-# Chart.HorizontalBar.Stacked,
-# Chart.Line,
-# Chart.Gauge,
-# CodeBlock,
-# Component.graph.microsoft.com/user,
-# Component.graph.microsoft.com/users,
-# Component.graph.microsoft.com/resource,
-# Component.graph.microsoft.com/file,
-# Component.graph.microsoft.com/event,
-# "drop"
-# 1.2
-# grid.area
-# string
-# Teams
-# The area of a Layout.AreaGrid layout in which an element should be displayed.
-
-# 1.5
-# height
-# string
-# "auto"
-# The height of the element. When set to stretch, the element will use the remaining vertical space in its container.
-
-# Valid values:
-# "auto",
-# "stretch"
-# 1.1
-# horizontalAlignment
-# string
-# Controls how the element should be horizontally aligned.
-
-# Valid values:
-# "Left",
-# "Center",
-# "Right"
-# 1.0
-# id
-# string
-# A unique identifier for the element or action. Input elements must have an id, otherwise they will not be validated and their values will not be sent to the Bot.
-
-# 1.0
-# isSortKey
-# boolean
-# false
-# Controls whether the element should be used as a sort key by elements that allow sorting across a collection of elements.
-
-# 1.5
-# isVisible
-# boolean
-# true
-# Controls the visibility of the element.
-
-# 1.2
-# lang
-# string
-# The locale associated with the element.
-
-# 1.1
-# max
-# number
-# The maximum value of the gauge.
-
-# 1.5
-# min
-# number
-# 0
-# The minimum value of the gauge.
-
-# 1.5
-# requires
-# object
-# {}
-# A list of capabilities the element requires the host application to support. If the host application doesn't support at least one of the listed capabilities, the element is not rendered (or its fallback is rendered if provided).
-
-# Valid values:
-# HostCapabilities
-# 1.2
-# segments
-# Array of
-# object
-# The segments to display in the gauge.
-
-# Valid values:
-# GaugeChartLegend
-# 1.5
-# separator
-# boolean
-# false
-# Controls whether a separator line should be displayed above the element to visually separate it from the previous element. No separator will be displayed for the first element in a container, even if this property is set to true.
-
-# 1.0
-# showLegend
-# boolean
-# true
-# Controls if the legend should be displayed.
-
-# 1.5
-# showMinMax
-# boolean
-# true
-# Controls if the min/max values should be displayed.
-
-# 1.5
-# spacing
-# string
-# "Default"
-# Controls the amount of space between this element and the previous one. No space will be added for the first element in a container.
-
-# Valid values:
-# "None",
-# "ExtraSmall"
-# Preview
-# ,
-# "Small",
-# "Default",
-# "Medium",
-# "Large",
-# "ExtraLarge",
-# "Padding"
-# 1.0
-# subLabel
-# string
-# The sub-label of the gauge.
-
-# 1.5
-# targetWidth
-# string
-# TeamsCopilot
-# Controls for which card width the element should be displayed. If targetWidth isn't specified, the element is rendered at all card widths. Using targetWidth makes it possible to author responsive cards that adapt their layout to the available horizontal space. For more details, see Responsive layout.
-
-# Valid values:
-# "VeryNarrow",
-# "Narrow",
-# "Standard",
-# "Wide",
-# "atLeast:VeryNarrow",
-# "atMost:VeryNarrow",
-# "atLeast:Narrow",
-# "atMost:Narrow",
-# "atLeast:Standard",
-# "atMost:Standard",
-# "atLeast:Wide",
-# "atMost:Wide"
-# 1.0
-# title
-# string
-# The title of the chart.
-
-# 1.5
-# value
-# number
-# 0
-# The value of the gauge.
-
-# 1.5
-# valueFormat
-# string
-# "Percentage"
-# The format used to display the gauge's value.
-
-# Valid values:
-# "Percentage",
-# "Fraction"
-# 1.5
