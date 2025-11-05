@@ -13,9 +13,13 @@ Creates a new Image element for an Adaptive Card.
 ## SYNTAX
 
 ```
-New-CardImage [[-Url] <String>] [[-AltText] <String>] [[-FitMode] <String>] [[-Size] <String>] [[-Id] <String>]
- [-Separator] [-AllowExpand] [-AsBase64] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+New-CardImage [-Url] <String> [[-AltText] <String>] [[-FitMode] <String>] [[-Size] <String>] [[-Id] <String>]
+ [[-BackgroundColor] <String>] [[-Height] <String>] [[-HorizontalAlignment] <String>]
+ [[-HorizontalContentAlignment] <String>] [[-VerticalContentAlignment] <String>] [[-Width] <String>]
+ [[-Style] <String>] [-Separator] [[-Spacing] <String>] [-AllowExpand] [[-SelectAction] <ScriptBlock>]
+ [[-Fallback] <ScriptBlock>] [[-Requires] <Hashtable>] [[-TargetWidth] <String>] [[-ThemedUrls] <Array>]
+ [[-Lang] <String>] [[-GridArea] <String>] [-IsHidden] [-IsSortKey] [-AsBase64]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -65,7 +69,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: False
@@ -148,6 +152,114 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -BackgroundColor
+The background color to render behind the image. Accepts CSS color values and host color resources.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Height
+Controls the height of the image. Valid values are "auto", "stretch", or a number followed by "px".
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HorizontalAlignment
+Controls how the image should be horizontally aligned within its parent container.
+Valid values are: Left, Center, Right.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HorizontalContentAlignment
+Controls how the image content is aligned horizontally within its bounding box when height and width are set.
+Valid values are: Left, Center, Right.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -VerticalContentAlignment
+Controls how the image content is aligned vertically within its bounding box when height and width are set.
+Valid values are: Top, Center, Bottom.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Width
+Controls the width of the image. Valid values are "auto", "stretch", or a number followed by "px".
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Style
+Specifies the image style. Valid values are: Default, Person, RoundedCorners.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Separator
 A switch parameter that adds a separator line above the image element.
 Useful for
@@ -165,9 +277,162 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Spacing
+Controls the amount of space between the image and the previous element.
+Valid values are: None, ExtraSmall, Small, Default, Medium, Large, ExtraLarge, Padding.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -AllowExpand
 A switch parameter that allows the image to be expanded when clicked/tapped.
 When enabled, users can interact with the image to view it in a larger format.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SelectAction
+A scriptblock that returns an Adaptive Card action to invoke when the image is clicked or tapped.
+
+```yaml
+Type: ScriptBlock
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Fallback
+A scriptblock that returns fallback content if the image cannot be rendered.
+
+```yaml
+Type: ScriptBlock
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Requires
+Hashtable of host capability requirements for the image element.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 16
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TargetWidth
+Controls the card widths at which this image should be displayed. Supports responsive values
+such as VeryNarrow, Narrow, Standard, Wide, atLeast:<Width>, and atMost:<Width>.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ThemedUrls
+Array of themed URLs for the image. Each entry should include theme-specific URLs, such as
+@{ theme = "dark"; url = "https://example.com/dark.png" }.
+
+```yaml
+Type: Array
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 18
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Lang
+Specifies the locale associated with the image element.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 19
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -GridArea
+Sets the layout grid area in which the image should render when using Layout.AreaGrid.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 20
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsHidden
+When specified, sets isVisible to false so the image starts hidden.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: Hide
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsSortKey
+When specified, marks the image as usable as a sort key in sortable collections.
 
 ```yaml
 Type: SwitchParameter

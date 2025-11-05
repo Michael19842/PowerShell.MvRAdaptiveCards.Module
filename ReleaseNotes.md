@@ -1,5 +1,14 @@
 # Release Notes
 
+## 0.9.0
+- Added support for AutoSize in EdgeApp view method in `Get-CardResponse`. The response window will now automatically adjust its size based on the content of the adaptive card when using the Edge app view method.
+- Added support for bleed in all containers in adaptive cards. This allows containers to extend their background color or image to the edges of the card, creating a more immersive visual experience.
+- Added support for targetWidth in all elements in adaptive cards. This allows you to specify a target width for elements, enabling better control over the layout and appearance of your cards across different devices and screen sizes.
+- Added missing logic to `New-CardImage` to handle all aspects supported by adaptive cards.
+- Added support for `New-CardIcon` to create icon elements in adaptive cards using Fluent UI icons.
+- Added a few more examples to the Examples folder to demonstrate new features and functionalities.
+- Removed padding from the adaptive card body to allow full bleed support.
+
 ## 0.8.7
 - Added `New-CardChartGauge` function to create gauge chart elements in adaptive cards.
 - Added `Chart.Gauge` extension to support rendering of gauge charts using `Chart.js` within adaptive cards.

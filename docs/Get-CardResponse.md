@@ -16,7 +16,7 @@ schema: 2.0.0
 Get-CardResponse [-Json] <String> [[-PromptTitle] <String>] [[-CardTitle] <String>] [[-LogoUrl] <String>]
  [[-LogoHeaderText] <String>] [[-ShowVersion] <Boolean>] [[-PortNumber] <Int32>]
  [[-HeaderBackgroundStart] <String>] [[-HeaderBackgroundEnd] <String>] [[-ViewMethod] <String>]
- [[-WindowWidth] <Int32>] [[-WindowHeight] <Int32>] [-HideHeader] [-ServeOnly] [-AutoSize]
+ [[-WindowWidth] <Int32>] [[-WindowHeight] <Int32>] [-HideHeader] [-ShowTitle] [-ServeOnly] [-AutoSize]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -186,6 +186,21 @@ Accept wildcard characters: False
 
 ### -ServeOnly
 {{ Fill ServeOnly Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShowTitle
+{{ Fill ShowTitle Description }}
 
 ```yaml
 Type: SwitchParameter

@@ -1,0 +1,147 @@
+/* AdaptiveCards Icon Component Styles */
+
+.ac-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    vertical-align: middle;
+    line-height: 1;
+    width: fit-content;
+    height: fit-content;
+}
+
+.ac-icon-svg-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.ac-icon-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.ac-icon-loading,
+.ac-icon-fallback {
+    display: inline-block;
+    font-size: inherit;
+}
+
+/* Size variants */
+.ac-icon-size-xxsmall {
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+}
+
+.ac-icon-size-xsmall {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+
+.ac-icon-size-small {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+}
+
+.ac-icon-size-standard {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+}
+
+.ac-icon-size-medium {
+    width: 28px;
+    height: 28px;
+    font-size: 28px;
+}
+
+.ac-icon-size-large {
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+}
+
+.ac-icon-size-xlarge {
+    width: 48px;
+    height: 48px;
+    font-size: 48px;
+}
+
+.ac-icon-size-xxlarge {
+    width: 48px;
+    height: 48px;
+    font-size: 48px;
+}
+
+/* Color variants */
+.ac-icon-color-default .ac-icon-svg {
+    fill: currentColor;
+    color: #323130;
+}
+
+.ac-icon-color-dark .ac-icon-svg {
+    fill: currentColor;
+    color: #201f1e;
+}
+
+.ac-icon-color-light .ac-icon-svg {
+    fill: currentColor;
+    color: #ffffff;
+}
+
+.ac-icon-color-accent .ac-icon-svg {
+    fill: currentColor;
+    color: #0078d4;
+}
+
+.ac-icon-color-good .ac-icon-svg {
+    fill: currentColor;
+    color: #107c10;
+}
+
+.ac-icon-color-warning .ac-icon-svg {
+    fill: currentColor;
+    color: #ffb900;
+}
+
+.ac-icon-color-attention .ac-icon-svg {
+    fill: currentColor;
+    color: #d13438;
+}
+
+/* Style variants */
+.ac-icon-style-regular .ac-icon-svg {
+    /* Regular icons are outline style */
+}
+
+.ac-icon-style-filled .ac-icon-svg {
+    /* Filled icons are solid style */
+}
+
+/* Fallback styling */
+.ac-icon-fallback {
+    opacity: 0.5;
+}
+
+/* Ensure proper SVG rendering */
+.ac-icon-svg path {
+    fill: currentColor;
+}
+
+/* Accessibility */
+.ac-icon[aria-label] {
+    cursor: default;
+}
+
+/* Loading state */
+.ac-icon-loading {
+    opacity: 0.5;
+    font-size: 0.6em;
+}

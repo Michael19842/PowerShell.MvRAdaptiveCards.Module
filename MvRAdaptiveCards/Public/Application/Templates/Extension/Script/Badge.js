@@ -6,6 +6,7 @@
             super();
             this.text = "";
             this.color = "default"; // default|accent|good|warning|attention|neutral|brand
+            this.icon = undefined; // Fluent UI icon name
             this.iconUrl = undefined;
             this.size = "small"; // extra-small|small|medium|large|extra-large
             this.appearance = "filled"; // filled|outline|ghost|subtle
@@ -30,6 +31,7 @@
             if (source.text !== undefined) this.text = source.text;
             if (source.style !== undefined) this.style = source.style;
             if (source.color !== undefined) this.style = source.color;
+            if (source.icon !== undefined) this.icon = source.icon;
             if (source.iconUrl !== undefined) this.iconUrl = source.iconUrl;
             if (source.size !== undefined) this.size = source.size;
             if (source.appearance !== undefined) this.appearance = source.appearance;
@@ -50,7 +52,7 @@
 
         // validation
         isValid() {
-            return super.isValid() && (this.text || this.iconUrl);
+            return super.isValid() && (this.text || this.icon || this.iconUrl);
         }
 
         // called to render the element into a DOM node
@@ -104,22 +106,28 @@
             const content = document.createElement("span");
             content.className = "ac-badge-content";
 
-            // Icon handling with position support
-            if (this.iconUrl) {
+            // Icon handling with position support (Fluent UI icon or iconUrl)
+            if (this.icon || this.iconUrl) {
                 const iconContainer = document.createElement("span");
                 iconContainer.className = "ac-badge-icon-container";
 
-                const img = document.createElement("img");
-                img.className = "ac-badge-icon";
-                img.src = this.iconUrl;
-                img.alt = this.tooltip || this.text || "";
+                if (this.icon) {
+                    // Use Fluent UI icon
+                    this.renderFluentIcon(iconContainer);
+                } else if (this.iconUrl) {
+                    // Use iconUrl (legacy support)
+                    const img = document.createElement("img");
+                    img.className = "ac-badge-icon";
+                    img.src = this.iconUrl;
+                    img.alt = this.tooltip || this.text || "";
 
-                // Apply icon size if specified
-                if (this.iconSize) {
-                    img.classList.add(`ac-badge-icon-size-${this.iconSize}`);
+                    // Apply icon size if specified
+                    if (this.iconSize) {
+                        img.classList.add(`ac-badge-icon-size-${this.iconSize}`);
+                    }
+
+                    iconContainer.appendChild(img);
                 }
-
-                iconContainer.appendChild(img);
 
                 // Position icon based on iconPosition
                 if (this.iconPosition === "end" && this.text) {
@@ -175,6 +183,65 @@
             return txt;
         }
 
+        // Convert icon name from PascalCase to snake_case for Fluent UI
+        convertIconName(name) {
+            return name
+                .replace(/([A-Z])/g, '_$1')
+                .toLowerCase()
+                .substring(1);
+        }
+
+        // Render Fluent UI icon
+        renderFluentIcon(container) {
+            const iconName = this.convertIconName(this.icon);
+
+            // Map badge sizes to icon sizes
+            const sizeMap = {
+                'extra-small': '12',
+                'small': '16',
+                'medium': '20',
+                'large': '20',
+                'extra-large': '24'
+            };
+
+            const size = sizeMap[this.size] || '16';
+            const style = 'regular'; // Badges typically use regular style
+            const url = `https://unpkg.com/@fluentui/svg-icons@1.1.222/icons/${iconName}_${size}_${style}.svg`;
+
+            // Create a placeholder
+            const iconSpan = document.createElement("span");
+            iconSpan.className = "ac-badge-icon ac-badge-icon-fluent";
+            iconSpan.innerHTML = `<span class="ac-badge-icon-loading">...</span>`;
+            container.appendChild(iconSpan);
+
+            // Load the SVG icon asynchronously
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    }
+                    throw new Error('Icon not found');
+                })
+                .then(svg => {
+                    iconSpan.innerHTML = svg;
+                    const svgElement = iconSpan.querySelector('svg');
+                    if (svgElement) {
+                        svgElement.classList.add('ac-badge-icon-svg');
+                        svgElement.setAttribute('aria-hidden', 'true');
+                        svgElement.setAttribute('focusable', 'false');
+
+                        // Apply icon size if specified
+                        if (this.iconSize) {
+                            svgElement.classList.add(`ac-badge-icon-size-${this.iconSize}`);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.warn(`Failed to load badge icon: ${iconName}`, error);
+                    iconSpan.innerHTML = `<span class="ac-badge-icon-fallback">◯</span>`;
+                });
+        }
+
         // Apply host config styles
         applyHostConfigStyles(element) {
             // Apply any host config specific styling
@@ -197,6 +264,7 @@
 
             if (this.text) result.text = this.text;
             if (this.color !== "default") result.color = this.color;
+            if (this.icon) result.icon = this.icon;
             if (this.iconUrl) result.iconUrl = this.iconUrl;
             if (this.size !== "small") result.size = this.size;
             if (this.appearance !== "filled") result.appearance = this.appearance;

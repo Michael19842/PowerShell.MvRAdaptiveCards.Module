@@ -40,7 +40,12 @@
         if ('$AutoSize' === 'True') {
             window.addEventListener('message', function (event) {
                 if (event.data && event.data.type === 'resize') {
-                    window.resizeTo(event.data.width, event.data.height);
+                    if (event.data.width && event.data.height) {
+                        window.resizeTo(event.data.width, event.data.height);
+                    } else if (event.data.height) {
+                        window.resizeTo(window.outerWidth, event.data.height);
+                    }
+
                 }
             });
         }

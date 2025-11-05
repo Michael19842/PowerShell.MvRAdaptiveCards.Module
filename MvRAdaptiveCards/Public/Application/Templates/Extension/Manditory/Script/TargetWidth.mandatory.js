@@ -23,7 +23,8 @@
         const resolvedLevel = level === 'debug' ? 'log' : level;
         const fn = consoleObj[resolvedLevel] || consoleObj.log;
         if (typeof fn === 'function') {
-            fn.call(consoleObj, '[TargetWidth]', ...args);
+            //disable logging
+            //fn.call(consoleObj, '[TargetWidth]', ...args);
         }
     };
 

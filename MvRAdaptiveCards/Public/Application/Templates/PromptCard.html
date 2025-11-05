@@ -75,10 +75,9 @@
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            overflow: hidden;
+            /* padding: 20px; */
         }
-
-
 
         .error-message {
             color: #d13438;
@@ -95,7 +94,8 @@
             padding: 20px;
         }
 
-        .hide-header {
+        .hide-header,
+        .hide-title {
             display: none;
         }
     </style>
@@ -108,7 +108,7 @@
     </div>
 
     <div class="content-wrapper">
-        <h2 class="header">$CardTitle</h2>
+        <h2 class="header $TitleClass">$CardTitle</h2>
         <div id="cardContainer">
             <div class="loading">Loading Adaptive Card...</div>
         </div>
@@ -231,6 +231,7 @@
                             }
 
                             adaptiveCard.onExecuteAction = function (action) {
+
                                 if (action.getJsonTypeName() === "Action.Submit") {
                                     console.log('Submit action triggered:', action.data);
 
@@ -283,6 +284,49 @@
                     console.error('Error parsing card JSON:', parseError);
                 }
             }
+            //Add a listener for the size of the card
+            const resizeObserver = new ResizeObserver(entries => {
+                for (let entry of entries) {
+                    const body = document.body;
+                    const html = document.documentElement;
+
+                    // Get the full content height including all elements
+                    const contentHeight = Math.max(
+                        body.scrollHeight,
+                        body.offsetHeight,
+                        // html.clientHeight,
+                        //html.scrollHeight,
+                        html.offsetHeight
+                    );
+
+                    // Get the full content width
+                    const contentWidth = Math.max(
+                        body.scrollWidth,
+                        body.offsetWidth,
+                        html.clientWidth,
+                        html.scrollWidth,
+                        html.offsetWidth
+                    );
+
+                    // Add some padding for scrollbars and borders
+                    const paddedWidth = Math.min(contentWidth + 40, $MaxWidth); // Max depending on screen size
+                    const paddedHeight = Math.min(contentHeight + 40, $MaxHeight); // Max 900px tall
+
+                    console.log('AutoSize: Sending resize request from ResizeObserver:', paddedWidth, 'x', paddedHeight);
+
+                    // Send resize message to parent window
+                    if ('$AutoSize' === 'True' && window.parent !== window) {
+                        window.parent.postMessage({
+                            type: 'resize',
+                            // width: paddedWidth,
+                            height: paddedHeight
+                        }, '*');
+                    }
+                }
+            });
+
+            // Observe the adaptable card container
+            resizeObserver.observe(document.getElementById('cardContainer'));
 
             // Start rendering when the page loads
             document.addEventListener('DOMContentLoaded', function () {

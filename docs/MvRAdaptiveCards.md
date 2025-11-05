@@ -41,6 +41,12 @@ Creates a new Action.ShowCard element that displays a card when the action is tr
 ### [New-CardActionToggleVisibility](New-CardActionToggleVisibility.md)
 Creates a new Action.ToggleVisibility element that shows or hides targeted card elements.
 
+### [New-CardBackgroundImage](New-CardBackgroundImage.md)
+Creates a backgroundImage object for use on Adaptive Card containers and layouts.
+
+### [New-CardBackgroundImageThemedUrl](New-CardBackgroundImageThemedUrl.md)
+Creates a ThemedUrl object for Adaptive Card background images.
+
 ### [New-CardBadge](New-CardBadge.md)
 {{ Fill in the Synopsis }}
 

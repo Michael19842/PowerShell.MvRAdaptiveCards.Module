@@ -1,0 +1,30 @@
+/* Remove preview wrapper padding so bleeding content can reach the edges */
+#cardContainerNormal,
+#cardContainerWide,
+#cardContainerSmall {
+    padding: 0 !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Strip padding/background applied to rendered Adaptive Card roots */
+#cardContainerNormal>.ac-adaptiveCard,
+#cardContainerWide>.ac-adaptiveCard,
+#cardContainerSmall>.ac-adaptiveCard {
+    padding: 0 !important;
+    background-color: transparent !important;
+}
+
+/* Force bleeding containers to span the available width */
+.mvr-bleed-container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    background-color: inherit !important;
+}

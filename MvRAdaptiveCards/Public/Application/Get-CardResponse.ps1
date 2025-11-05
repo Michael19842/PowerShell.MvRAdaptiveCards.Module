@@ -38,6 +38,8 @@
 
         [switch]$HideHeader,
 
+        [switch]$ShowTitle,
+
         [switch]$ServeOnly,
 
         [switch]$AutoSize
@@ -100,6 +102,13 @@
 
         if ( $ShowVersion ) {
             $LogoHeader = "$LogoHeaderText <span class='version'>v$ModuleVersion</span>"
+        }
+
+        if ( -not $ShowTitle ) {
+            $TitleClass = "hide-title"
+        }
+        else {
+            $TitleClass = ""
         }
 
         # Build the extensions payload using the provided JSON
