@@ -1,0 +1,98 @@
+/* Chart.HorizontalBar Styles */
+
+.ac-chart-horizontalbar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Title */
+.ac-chart-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* Canvas wrapper for responsive sizing */
+.ac-chart-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Canvas */
+.ac-chart-canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Error state */
+.ac-chart-error {
+    padding: 16px;
+    background-color: #FFF4CE;
+    border: 1px solid #FFB900;
+    border-radius: 4px;
+    color: #333333;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Loading state */
+.ac-chart-loading {
+    padding: 32px;
+    text-align: center;
+    color: #666666;
+    font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ac-chart-horizontalbar-container {
+        padding: 12px;
+    }
+
+    .ac-chart-title {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .ac-chart-canvas-wrapper {
+        max-width: 100%;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .ac-chart-title {
+        color: #E0E0E0;
+    }
+
+    .ac-chart-error {
+        background-color: #3D3D00;
+        border-color: #FFB900;
+        color: #E0E0E0;
+    }
+
+    .ac-chart-loading {
+        color: #B0B0B0;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .ac-chart-title {
+        font-weight: 700;
+    }
+
+    .ac-chart-error {
+        border-width: 2px;
+    }
+}

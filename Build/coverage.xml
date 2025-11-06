@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.1//EN" "report.dtd"[]>
-<report name="Pester (11/05/2025 21:53:56)">
-  <sessioninfo id="this" start="1762379622880" dump="1762379636179" />
+<report name="Pester (11/06/2025 21:32:47)">
+  <sessioninfo id="this" start="1762464735194" dump="1762464767339" />
   <package name="MvRAdaptiveCards">
     <class name="MvRAdaptiveCards/MvRAdaptiveCards" sourcefilename="MvRAdaptiveCards.psm1">
       <method name="&lt;script&gt;" desc="()" line="11">
@@ -1149,6 +1149,17 @@
       <counter type="METHOD" missed="1" covered="0" />
       <counter type="CLASS" missed="1" covered="0" />
     </class>
+    <class name="MvRAdaptiveCards/Public/Charts/New-CardChartHorizontalBar" sourcefilename="Public/Charts/New-CardChartHorizontalBar.ps1">
+      <method name="New-CardChartHorizontalBar" desc="()" line="152">
+        <counter type="INSTRUCTION" missed="40" covered="0" />
+        <counter type="LINE" missed="23" covered="0" />
+        <counter type="METHOD" missed="1" covered="0" />
+      </method>
+      <counter type="INSTRUCTION" missed="40" covered="0" />
+      <counter type="LINE" missed="23" covered="0" />
+      <counter type="METHOD" missed="1" covered="0" />
+      <counter type="CLASS" missed="1" covered="0" />
+    </class>
     <sourcefile name="Public/Charts/New-CardChartDonut.ps1">
       <line nr="142" mi="0" ci="1" mb="0" cb="0" />
       <line nr="143" mi="0" ci="1" mb="0" cb="0" />
@@ -1257,10 +1268,39 @@
       <counter type="METHOD" missed="1" covered="0" />
       <counter type="CLASS" missed="1" covered="0" />
     </sourcefile>
-    <counter type="INSTRUCTION" missed="49" covered="47" />
-    <counter type="LINE" missed="49" covered="47" />
-    <counter type="METHOD" missed="1" covered="1" />
-    <counter type="CLASS" missed="1" covered="1" />
+    <sourcefile name="Public/Charts/New-CardChartHorizontalBar.ps1">
+      <line nr="152" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="153" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="154" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="157" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="158" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="159" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="160" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="161" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="162" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="163" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="164" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="165" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="166" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="167" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="168" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="169" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="170" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="171" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="172" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="173" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="174" mi="1" ci="0" mb="0" cb="0" />
+      <line nr="176" mi="2" ci="0" mb="0" cb="0" />
+      <line nr="178" mi="1" ci="0" mb="0" cb="0" />
+      <counter type="INSTRUCTION" missed="40" covered="0" />
+      <counter type="LINE" missed="23" covered="0" />
+      <counter type="METHOD" missed="1" covered="0" />
+      <counter type="CLASS" missed="1" covered="0" />
+    </sourcefile>
+    <counter type="INSTRUCTION" missed="89" covered="47" />
+    <counter type="LINE" missed="72" covered="47" />
+    <counter type="METHOD" missed="2" covered="1" />
+    <counter type="CLASS" missed="2" covered="1" />
   </package>
   <package name="MvRAdaptiveCards/Public/Charts/Helper">
     <class name="MvRAdaptiveCards/Public/Charts/Helper/New-CardGaugeChartLegend" sourcefilename="Public/Charts/Helper/New-CardGaugeChartLegend.ps1">
@@ -3233,8 +3273,8 @@
     <counter type="METHOD" missed="0" covered="4" />
     <counter type="CLASS" missed="0" covered="3" />
   </package>
-  <counter type="INSTRUCTION" missed="1031" covered="1042" />
-  <counter type="LINE" missed="925" covered="959" />
-  <counter type="METHOD" missed="37" covered="38" />
-  <counter type="CLASS" missed="37" covered="35" />
+  <counter type="INSTRUCTION" missed="1071" covered="1042" />
+  <counter type="LINE" missed="948" covered="959" />
+  <counter type="METHOD" missed="38" covered="38" />
+  <counter type="CLASS" missed="38" covered="35" />
 </report>
