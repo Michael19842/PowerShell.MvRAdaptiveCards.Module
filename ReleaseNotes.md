@@ -1,5 +1,9 @@
 # Release Notes
 
+## 0.9.1
+- Added `New-CardChartHorizontalBar` function to create horizontal bar chart elements in adaptive cards.
+- Added `Chart.HorizontalBar` extension to support rendering of horizontal bar charts using `Chart.js` within adaptive cards.
+
 ## 0.9.0
 - Added support for AutoSize in EdgeApp view method in `Get-CardResponse`. The response window will now automatically adjust its size based on the content of the adaptive card when using the Edge app view method.
 - Added support for bleed in all containers in adaptive cards. This allows containers to extend their background color or image to the edges of the card, creating a more immersive visual experience.
