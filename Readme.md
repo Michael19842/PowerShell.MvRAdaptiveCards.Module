@@ -1,13 +1,16 @@
 # ![header](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/logo40x57.png) MvRAdaptiveCards
-PowerShell Module for creating (and posting) Adaptive Cards in PowerShell.
+PowerShell Module for creating, posting and actively using Adaptive Cards in PowerShell.
 
 ![PowerShell Gallery Downloads](https://img.shields.io/powershellgallery/dt/MvRAdaptiveCards)
 ![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/MvRAdaptiveCards)
 
 ## Overview
-This module provides a framework of easy-to-use functions for working with **Adaptive Cards** in **PowerShell** in a similar fashion as the popular module PSWriteHTML does for HTML generation. Creating Adaptive Cards in PowerShell can be complex due to the JSON structure required by Adaptive Cards. This module simplifies the process by providing cmdlets that allow you to build Adaptive Cards using PowerShell objects (and has built-in support for posting these cards to Microsoft Teams channels).
+This module provides a framework of easy-to-use functions for working with **Adaptive Cards** in **PowerShell** in a similar fashion as the popular module PSWriteHTML does for HTML generation. Creating Adaptive Cards in PowerShell can be complex due to the JSON structure required by Adaptive Cards. This module simplifies the process by providing cmdlets that allow you to build Adaptive Cards using PowerShell objects (and has built-in support for posting these cards to Microsoft Teams channels, sending via Outlook, and more).
 
 If you are familiar with PSWriteHTML, you'll find the approach in MvRAdaptiveCards quite similar.
+
+## What are Adaptive Cards?
+Adaptive Cards are a way to create interactive and visually appealing card-like interfaces that can be used across various platforms, including Microsoft Teams, Outlook, and other applications that support Adaptive Cards. They allow developers to design rich user interfaces with elements like text blocks, images, buttons, input fields, and more, all defined in a JSON format.
 
 ## Install MvRAdaptiveCards
 You can install the module directly from the PowerShell Gallery using the following command:
@@ -15,7 +18,6 @@ You can install the module directly from the PowerShell Gallery using the follow
 ```powershell
 Install-Module -Name MvRAdaptiveCards
 ```
-
 This module is compatible with PowerShell 5.1 and later versions.
 
 ## Release Notes
@@ -38,8 +40,29 @@ New-CardAdaptiveCard -Content {
 #This will output the JSON structure of the Adaptive Card which you can then use in your applications or post to Microsoft Teams.
 ```
 
-### Previewing cards in the Adaptive Cards Designer
+### Use Adaptive Cards as prompt in PowerShell
+You can use Adaptive Cards as interactive prompts in PowerShell using the `Get-CardResponse` cmdlet. Here's an example:
 
+```powershell
+$NewServerFormResponse = New-AdaptiveCard {
+    New-CardContainer -Content {
+        New-CardTextBlock -Text "Create New Server" -Size Large -Weight Bolder -Wrap
+        New-CardTextBlock -Text "Please provide the server details below." -Wrap
+    } -Style 'Emphasis'
+    New-CardInputText -Id "ServerName" -Placeholder "Enter server name" -IsRequired $true -Label "Server Name"
+    New-CardInputText -Id "ServerIP" -Placeholder "Enter server IP address" -IsRequired $true -Label "Server IP"
+    New-CardActionSet -Actions {
+        New-CardActionSubmit -Title "Create Server"
+    }
+
+} | Get-CardResponse -ViewMethod EdgeApp -AutoSize
+
+Write-Host "Creating a new server with the following details:"
+Write-Host "Server Name: $($NewServerFormResponse.ServerName)"
+Write-Host "Server IP: $($NewServerFormResponse.ServerIP)"
+```
+
+### Previewing cards in the Adaptive Cards Designer
 You can also directly open and edit your card in the [Adaptive Cards Online Designer](https://adaptivecards.microsoft.com/designer) using the `Out-OnlineDesigner` cmdlet:
 
 ```powershell
@@ -56,7 +79,6 @@ New-AdaptiveCard -Content {
 ![designer](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/example.png)
 
 ### Previewing cards locally using the built-in previewer
-
 You can also preview your card directly in a built-in previewer (Using the JavaScript based renderer) using the `Out-CardPreview` cmdlet:
 
 ```powershell
@@ -70,31 +92,8 @@ New-AdaptiveCard -Content {
     New-CardActionToggleVisibility -Title "Toggle Cat Image" -TargetElements @("CatImage")
 } | Out-CardPreview
 ```
+
 ![preview](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/previewsmall.png)
-
-### Use Adaptive Cards as prompt in PowerShell
-You can use Adaptive Cards as interactive prompts in PowerShell using the `Get-CardResponse` cmdlet. Here's an example:
-
-```powershell
-$NewServerFormResponse = New-AdaptiveCard {
-    New-CardContainer -Content {
-        New-CardTextBlock -Text "Create New Server" -Size Large -Weight Bolder -Wrap
-        New-CardTextBlock -Text "Please provide the server details below." -Wrap
-    } -Style 'Emphasis'
-    New-CardInputText -Id "ServerName" -Placeholder "Enter server name" -IsRequired $true -Label "Server Name"
-    New-CardInputText -Id "ServerIP" -Placeholder "Enter server IP address" -IsRequired $true -Label "Server IP"
-    New-CardActionSet -Actions {
-        New-CardActionSubmit -Title "Create Server"
-    }
-
-} | Get-CardResponse
-
-
-Write-Host "Creating a new server with the following details:"
-Write-Host "Server Name: $($NewServerFormResponse.ServerName)"
-Write-Host "Server IP: $($NewServerFormResponse.ServerIP)"
-```
-
 
 
 ## Sending Cards using Outlook as client

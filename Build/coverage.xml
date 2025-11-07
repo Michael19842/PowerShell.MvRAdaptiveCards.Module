@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.1//EN" "report.dtd"[]>
-<report name="Pester (11/07/2025 11:42:55)">
-  <sessioninfo id="this" start="1762515760808" dump="1762515775566" />
+<report name="Pester (11/07/2025 11:57:51)">
+  <sessioninfo id="this" start="1762516656579" dump="1762516671869" />
   <package name="MvRAdaptiveCards">
     <class name="MvRAdaptiveCards/MvRAdaptiveCards" sourcefilename="MvRAdaptiveCards.psm1">
       <method name="&lt;script&gt;" desc="()" line="11">

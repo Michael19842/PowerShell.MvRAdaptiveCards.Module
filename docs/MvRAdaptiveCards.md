@@ -20,6 +20,9 @@ Builds a complete Adaptive Card by replacing template tags with actual content.
 ### [Build-CardFromTemplate](Build-CardFromTemplate.md)
 Builds a complete Adaptive Card by replacing template tags with actual content.
 
+### [Get-ACR](Get-ACR.md)
+{{ Fill in the Synopsis }}
+
 ### [Get-CardResponse](Get-CardResponse.md)
 {{ Fill in the Synopsis }}
 
