@@ -61,6 +61,7 @@ Write-Host "Creating a new server with the following details:"
 Write-Host "Server Name: $($NewServerFormResponse.ServerName)"
 Write-Host "Server IP: $($NewServerFormResponse.ServerIP)"
 ```
+> You can use `Get-ACR` as an alias for `Get-CardResponse` with parameters `-ViewMethod EdgeApp -AutoSize -HideHeader` for convenience.
 
 ![prompt](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/prompt.png)
 
