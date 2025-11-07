@@ -62,7 +62,7 @@ Write-Host "Server Name: $($NewServerFormResponse.ServerName)"
 Write-Host "Server IP: $($NewServerFormResponse.ServerIP)"
 ```
 
-![designer](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/prompt.png)
+![prompt](https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module/blob/main/docs/images/prompt.png)
 
 ### Previewing cards in the Adaptive Cards Designer
 You can also directly open and edit your card in the [Adaptive Cards Online Designer](https://adaptivecards.microsoft.com/designer) using the `Out-OnlineDesigner` cmdlet:
