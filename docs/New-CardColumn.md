@@ -62,7 +62,7 @@ A ScriptBlock containing the card elements to be included inside the column.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases:
+Aliases: Items
 
 Required: False
 Position: 1

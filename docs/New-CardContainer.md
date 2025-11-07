@@ -69,7 +69,7 @@ This can include text blocks, images, other containers, and any other supported 
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases:
+Aliases: Items
 
 Required: False
 Position: 1

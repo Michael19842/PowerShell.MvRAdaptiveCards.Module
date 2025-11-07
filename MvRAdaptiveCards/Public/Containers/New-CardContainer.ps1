@@ -67,6 +67,8 @@ function New-CardContainer {
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
     [OutputType([hashtable])]
     param (
+        [Alias('Items')]
+        [Parameter(Mandatory = $false)]
         [scriptblock]$Content,
 
         [string]

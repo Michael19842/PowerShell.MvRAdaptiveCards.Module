@@ -62,6 +62,9 @@ Creates a new Donut Chart element for an Adaptive Card.
 ### [New-CardChartGauge](New-CardChartGauge.md)
 Creates a Chart.Gauge element for an Adaptive Card.
 
+### [New-CardChartHorizontalBar](New-CardChartHorizontalBar.md)
+Creates a horizontal bar chart element for Adaptive Cards.
+
 ### [New-CardCodeBlock](New-CardCodeBlock.md)
 Creates a new CodeBlock element for an Adaptive Card to display formatted code snippets.
 

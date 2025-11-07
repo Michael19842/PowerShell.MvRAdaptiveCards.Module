@@ -1,5 +1,11 @@
 # Release Notes
 
+## 0.9.2
+- Improved closure detection in `Get-CardResponse` for Edge app view method by implementing a heartbeat mechanism. The adaptive card will now send periodic heartbeat signals to the host application to indicate that it is still active. If the host application does not receive a heartbeat within a specified timeout period, it will assume that the Edge app window has been closed by the user and terminate the waiting for a response.
+- Bugfix on `New-CardIcon` to correctly apply the specified size and style parameters when creating icon elements. Previously, the function did not properly set these properties, resulting in icons being rendered with default settings regardless of user input.
+- Added heartbeat tracking to browser view method in `Get-CardResponse` to enhance closure detection. Similar to the Edge app view method, the adaptive card will send heartbeat signals to the host application.
+
+
 ## 0.9.1
 - Added `New-CardChartHorizontalBar` function to create horizontal bar chart elements in adaptive cards.
 - Added `Chart.HorizontalBar` extension to support rendering of horizontal bar charts using `Chart.js` within adaptive cards.

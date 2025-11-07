@@ -54,41 +54,7 @@
         $CurrentPort = $PortNumber
         $PortFound = $false
 
-        for ($i = 0; $i -lt $MaxPortRetries; $i++) {
-            $TestPort = $CurrentPort + $i
-
-            # Test if port is available
-            try {
-                $TestListener = [System.Net.HttpListener]::new()
-                if ($IsWindows) {
-                    $TestListener.Prefixes.Add("http://localhost:$TestPort/")
-                }
-                else {
-                    $TestListener.Prefixes.Add("http://+:$TestPort/")
-                }
-                $TestListener.Start()
-                $TestListener.Stop()
-                $TestListener.Close()
-
-                # Port is available
-                $CurrentPort = $TestPort
-                $PortFound = $true
-                if ($i -gt 0) {
-                    Write-Verbose "Port $PortNumber was in use, using port $CurrentPort instead"
-                }
-                break
-            }
-            catch {
-                # Port is in use, try next one
-                Write-Verbose "Port $TestPort is in use, trying next port..."
-                continue
-            }
-        }
-
-        if (-not $PortFound) {
-            Write-Error "Could not find an available port after $MaxPortRetries attempts starting from $PortNumber"
-            return
-        }
+        $CurrentPort = Find-AvailablePort -StartPort $CurrentPort -MaxAttempts $MaxPortRetries
 
         # Set the service URL based on OS
         if ($IsWindows) {
@@ -150,8 +116,14 @@
         # Expand any variables in the HTML template (ResponseGuid, ServiceUrl, CardTitle, LogoUrl, etc)
         $html = $ExecutionContext.InvokeCommand.ExpandString($html)
 
+
+        # Create a synchronized hashtable for heartbeat tracking
+        $HeartbeatTracker = [hashtable]::Synchronized(@{
+                LastHeartbeat = Get-Date
+            })
+
         #Start the local web server to serve the card and listen for response
-        $WSSession = New-LocalCardWebserver -Html $html -ServiceUrl $ServiceUrl -ResponseGuid $ResponseGuid
+        $WSSession = New-LocalCardWebserver -Html $html -ServiceUrl $ServiceUrl -ResponseGuid $ResponseGuid -HeartbeatTracker $HeartbeatTracker
 
         #Start the listener
         $asyncResult = $WSSession.PowerShell.BeginInvoke()
@@ -170,30 +142,16 @@
                         # Create a wrapper HTML that resizes window and redirects
                         $wrapperHtml = $ExecutionContext.InvokeCommand.ExpandString((Get-Content -Path "$PSScriptRoot\Templates\EdgeAppLoader.html" -Raw))
 
+                        $StartTime = Get-Date
+
                         $tempFile = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), "AdaptiveCard_$(Get-Random).html")
                         [System.IO.File]::WriteAllText($tempFile, $wrapperHtml, [System.Text.Encoding]::UTF8)
 
                         # Open with Edge app mode and capture the process
                         $ParentEdgeProcess = Start-Process "msedge" -ArgumentList "--app=file:///$($tempFile.Replace('\','/'))" -PassThru
 
-                        # Wait for Edge to create the app window
-                        Start-Sleep -Milliseconds 100
-
-                        #loop to find the correct Edge window
-                        $MaxPollTries = 50
-                        do {
-                            Start-Sleep -Milliseconds 100
-                            $EdgeAppProcess = Get-Process -Name "msedge" -ErrorAction SilentlyContinue |
-                            Where-Object { $_.MainWindowTitle -eq $CardTitle -and $_.HasExited -eq $false -and $_.MainWindowHandle -ne 0 }
-
-                        } while (-not $EdgeAppProcess -and $MaxPollTries--)
-
-                        if ($EdgeAppProcess) {
-                            Write-Verbose "Found Edge app process: ID=$($EdgeAppProcess.Id), Title='$($EdgeAppProcess.MainWindowTitle)'"
-                        }
-                        else {
-                            Write-Warning "Could not find Edge app window. Window close detection will not work."
-                        }
+                        #Give the Edge app some time to start
+                        Start-Sleep -Seconds 1
 
                         # Clean up temp file after a delay
                         Start-Job -ScriptBlock {
@@ -262,14 +220,19 @@
                     Write-ColoredHost ("`r" + $PromptToShow) -NoNewLine
 
 
-                    #If the the viewMode is EdgeApp and the window is no longer open, cancel waiting
-                    if ( $ViewMethod -eq "EdgeApp") {
-                        # Check if the Edge process is still running
-                        if ($EdgeAppProcess -and $EdgeAppProcess.HasExited -and $asyncResult.IsCompleted -eq $false) {
-                            Write-Verbose "EdgeApp window was closed by user"
-                            throw "WindowClosed"
-                        }
+
+                    # Check if the Edge process is still running
+                    $TimeSinceLastHeartbeat = (Get-Date) - $HeartbeatTracker.LastHeartbeat
+                    if ($TimeSinceLastHeartbeat.TotalSeconds -gt 5) {
+                        Write-Verbose "No heartbeat detected for 5 seconds - window likely closed"
+                        throw "WindowClosed"
                     }
+
+                    # if ($EdgeAppProcess -and $EdgeAppProcess.HasExited -and $asyncResult.IsCompleted -eq $false) {
+                    #     Write-Verbose "EdgeApp window was closed by user"
+                    #     throw "WindowClosed"
+                    # }
+
                 }
                 Write-ColoredHost "{Green}[V]"
                 #Show the cursor again

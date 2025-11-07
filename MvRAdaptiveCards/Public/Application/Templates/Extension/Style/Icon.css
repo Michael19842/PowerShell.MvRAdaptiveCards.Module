@@ -7,8 +7,13 @@
     box-sizing: border-box;
     vertical-align: middle;
     line-height: 1;
-    width: fit-content;
-    height: fit-content;
+    flex-shrink: 0;
+    margin: 2px;
+    /* Add spacing between icons */
+    position: relative;
+    /* Ensure icons don't overlap */
+    overflow: visible;
+    /* Allow scaled icons to extend beyond container if needed */
 }
 
 .ac-icon-svg-container {
@@ -17,12 +22,22 @@
     justify-content: center;
     width: 100%;
     height: 100%;
+    overflow: visible;
+    /* Allow scaled content */
 }
 
 .ac-icon-svg {
     display: block;
     width: 100%;
     height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Scaled icons need special handling */
+.ac-icon-svg.ac-icon-scaled {
+    /* The transform is applied inline, but ensure transform-origin is preserved */
+    transform-origin: center;
 }
 
 .ac-icon-loading,
@@ -80,59 +95,39 @@
     font-size: 48px;
 }
 
-/* Color variants */
+/* Color variants - using filters for img-based SVGs */
 .ac-icon-color-default .ac-icon-svg {
-    fill: currentColor;
-    color: #323130;
+    opacity: 1;
+    /* Default - no filter */
 }
 
 .ac-icon-color-dark .ac-icon-svg {
-    fill: currentColor;
-    color: #201f1e;
+    filter: brightness(0.2);
 }
 
 .ac-icon-color-light .ac-icon-svg {
-    fill: currentColor;
-    color: #ffffff;
+    filter: brightness(2);
 }
 
 .ac-icon-color-accent .ac-icon-svg {
-    fill: currentColor;
-    color: #0078d4;
+    filter: invert(39%) sepia(98%) saturate(2468%) hue-rotate(195deg) brightness(98%) contrast(101%);
 }
 
 .ac-icon-color-good .ac-icon-svg {
-    fill: currentColor;
-    color: #107c10;
+    filter: invert(35%) sepia(98%) saturate(1412%) hue-rotate(85deg) brightness(96%) contrast(101%);
 }
 
 .ac-icon-color-warning .ac-icon-svg {
-    fill: currentColor;
-    color: #ffb900;
+    filter: invert(74%) sepia(98%) saturate(2298%) hue-rotate(359deg) brightness(105%) contrast(101%);
 }
 
 .ac-icon-color-attention .ac-icon-svg {
-    fill: currentColor;
-    color: #d13438;
-}
-
-/* Style variants */
-.ac-icon-style-regular .ac-icon-svg {
-    /* Regular icons are outline style */
-}
-
-.ac-icon-style-filled .ac-icon-svg {
-    /* Filled icons are solid style */
+    filter: invert(31%) sepia(96%) saturate(3084%) hue-rotate(344deg) brightness(88%) contrast(91%);
 }
 
 /* Fallback styling */
 .ac-icon-fallback {
     opacity: 0.5;
-}
-
-/* Ensure proper SVG rendering */
-.ac-icon-svg path {
-    fill: currentColor;
 }
 
 /* Accessibility */

@@ -43,37 +43,42 @@
                 .substring(1); // remove leading underscore
         }
 
-        // Get the SVG icon from Fluent UI CDN
-        async loadFluentIcon() {
-            const iconName = this.convertIconName(this.name);
+        // Get the SVG size and scale factor for the requested size
+        // Fluent UI icons are typically available in: 20, 24
+        // Some icons may have 16, 28, 32, 48 but not consistently
+        // We'll use the most common sizes and scale as needed
+        getSizeMapping(requestedSize) {
+            const normalizedSize = requestedSize.toLowerCase().replace(/([a-z])([A-Z])/g, '$1$2').toLowerCase();
+
             const sizeMap = {
-                'xxsmall': '12',
-                'xsmall': '16',
-                'small': '20',
-                'standard': '24',
-                'medium': '28',
-                'large': '32',
-                'xlarge': '48',
-                'xxlarge': '48'
+                'xxsmall': { svgSize: '20', targetSize: 12, scale: 0.6 },    // 12px - scale down 20px
+                'xsmall': { svgSize: '20', targetSize: 16, scale: 0.8 },     // 16px - scale down 20px
+                'small': { svgSize: '20', targetSize: 20, scale: 1.0 },      // 20px - exact match
+                'standard': { svgSize: '24', targetSize: 24, scale: 1.0 },   // 24px - exact match
+                'medium': { svgSize: '24', targetSize: 28, scale: 1.167 },   // 28px - scale up 24px
+                'large': { svgSize: '24', targetSize: 32, scale: 1.333 },    // 32px - scale up 24px
+                'xlarge': { svgSize: '24', targetSize: 40, scale: 1.667 },   // 40px - scale up 24px
+                'xxlarge': { svgSize: '24', targetSize: 48, scale: 2.0 }     // 48px - scale up 24px
             };
+
+            return sizeMap[normalizedSize] || sizeMap['standard'];
+        }
+
+        // Get the SVG icon URL from Fluent UI CDN
+        getFluentIconUrl() {
+            const iconName = this.convertIconName(this.name);
+            const sizeMapping = this.getSizeMapping(this.size);
             const styleMap = {
                 'regular': 'regular',
                 'filled': 'filled'
             };
 
-            const size = sizeMap[this.size.toLowerCase()] || '24';
             const style = styleMap[this.style.toLowerCase()] || 'regular';
-            const url = `https://unpkg.com/@fluentui/svg-icons@1.1.222/icons/${iconName}_${size}_${style}.svg`;
+            const url = `https://unpkg.com/@fluentui/svg-icons@1.1.222/icons/${iconName}_${sizeMapping.svgSize}_${style}.svg`;
 
-            try {
-                const response = await fetch(url);
-                if (response.ok) {
-                    return await response.text();
-                }
-            } catch (error) {
-                console.warn(`Failed to load icon: ${iconName}`, error);
-            }
-            return null;
+            console.log(`Icon URL: ${this.name} (size: ${this.size}) -> ${iconName}_${sizeMapping.svgSize}_${style}.svg (scale: ${sizeMapping.scale}x) = ${url}`);
+
+            return { url, scale: sizeMapping.scale };
         }
 
         // called to render the element into a DOM node
@@ -81,9 +86,12 @@
             const wrapper = document.createElement("span");
             wrapper.className = "ac-icon";
 
+            // Normalize size for CSS classes
+            const normalizedSize = this.size.toLowerCase().replace(/([a-z])([A-Z])/g, '$1$2').toLowerCase();
+
             // Apply size class
-            wrapper.setAttribute("data-ac-icon-size", this.size.toLowerCase());
-            wrapper.classList.add(`ac-icon-size-${this.size.toLowerCase()}`);
+            wrapper.setAttribute("data-ac-icon-size", normalizedSize);
+            wrapper.classList.add(`ac-icon-size-${normalizedSize}`);
 
             // Apply color class
             wrapper.setAttribute("data-ac-icon-color", this.color.toLowerCase());
@@ -96,28 +104,35 @@
             // Create icon container
             const iconContainer = document.createElement("span");
             iconContainer.className = "ac-icon-svg-container";
-            iconContainer.innerHTML = `<span class="ac-icon-loading">Loading...</span>`;
 
+            // Get icon URL and scale factor
+            const { url, scale } = this.getFluentIconUrl();
+
+            // Create img element pointing to Fluent UI CDN (avoids CORS issues)
+            const img = document.createElement("img");
+            img.className = "ac-icon-svg";
+            img.src = url;
+            img.alt = this.name;
+            img.setAttribute('aria-hidden', 'true');
+            img.setAttribute('focusable', 'false');
+
+            // Apply scale if needed
+            if (scale !== 1.0) {
+                img.style.transform = `scale(${scale})`;
+                img.style.transformOrigin = 'center';
+                // Add a class to identify scaled icons
+                img.classList.add('ac-icon-scaled');
+            }
+
+            // Handle load errors
+            img.onerror = () => {
+                const convertedName = this.convertIconName(this.name);
+                console.error(`Failed to load icon: ${this.name} (${convertedName})`);
+                iconContainer.innerHTML = `<span class="ac-icon-fallback" title="${this.name}">⚠</span>`;
+            };
+
+            iconContainer.appendChild(img);
             wrapper.appendChild(iconContainer);
-
-            // Load the SVG icon asynchronously
-            this.loadFluentIcon().then(svg => {
-                if (svg) {
-                    iconContainer.innerHTML = svg;
-                    const svgElement = iconContainer.querySelector('svg');
-                    if (svgElement) {
-                        svgElement.classList.add('ac-icon-svg');
-                        svgElement.setAttribute('aria-hidden', 'true');
-                        svgElement.setAttribute('focusable', 'false');
-                    }
-                } else {
-                    // Fallback if icon cannot be loaded
-                    iconContainer.innerHTML = `<span class="ac-icon-fallback" title="${this.name}">◯</span>`;
-                }
-            }).catch(error => {
-                console.error('Error rendering icon:', error);
-                iconContainer.innerHTML = `<span class="ac-icon-fallback" title="${this.name}">◯</span>`;
-            });
 
             return wrapper;
         }

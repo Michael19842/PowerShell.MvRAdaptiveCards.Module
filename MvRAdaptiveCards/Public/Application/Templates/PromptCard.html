@@ -175,6 +175,22 @@
                 }
             };
 
+            //Send a Heartbeat message to the hostaddress every 1 second
+            let heartbeatInterval = setInterval(() => {
+                fetch('/heartbeat', {
+                    method: 'POST',
+                    keepalive: true
+                }).catch(() => {
+                    // Server stopped responding, stop heartbeat
+                    clearInterval(heartbeatInterval);
+                });
+            }, 2500); // Send heartbeat every 2.5 seconds
+
+            // Stop heartbeat when window unloads
+            window.addEventListener('beforeunload', () => {
+                clearInterval(heartbeatInterval);
+            });
+
             function renderCard() {
                 const cardContainer = document.getElementById('cardContainer');
 
@@ -229,6 +245,7 @@
                                     height: cardHeight + 70  // adding some padding
                                 }, '*');
                             }
+
 
                             adaptiveCard.onExecuteAction = function (action) {
 

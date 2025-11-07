@@ -8,7 +8,10 @@ function New-LocalCardWebserver {
         [string]$ServiceUrl,
 
         [Parameter(Mandatory = $true)]
-        [string]$ResponseGuid
+        [string]$ResponseGuid,
+
+        [Parameter(Mandatory = $false)]
+        [hashtable]$HeartbeatTracker
     )
 
 
@@ -17,14 +20,14 @@ function New-LocalCardWebserver {
     $Runspace.Open()
 
     $ScriptBlock = {
-        param ($html, $ServiceUrl, $ResponseGuid )
+        param ($html, $ServiceUrl, $ResponseGuid, $HeartbeatTracker)
 
         $listener = [System.Net.HttpListener]::new()
         #Test if the host is a windows system to determine the correct prefix
 
         #Dot source Read-HttpRequest function
         $listener.Prefixes.Add($ServiceUrl)
-
+        $LastHeartbeat = Get-Date
         $listener.Start()
         while ($listener.IsListening) {
             # Wait for request, but handle Ctrl+C safely
@@ -52,7 +55,15 @@ function New-LocalCardWebserver {
                     $data = $reader.ReadToEnd()
                     $reader.Close()
 
-                    $responseString = "Thanks! Data received"
+
+                    #Test if the request is a heartbeat
+                    if ($request.Url.AbsolutePath -eq '/heartbeat') {
+                        $responseString = "Heartbeat received"
+                        $HeartbeatTracker.LastHeartbeat = Get-Date
+                    }
+                    else {
+                        $responseString = "Thanks! Data received"
+                    }
                     $buffer = [System.Text.Encoding]::UTF8.GetBytes($responseString)
 
                     # Set response headers
@@ -88,7 +99,7 @@ function New-LocalCardWebserver {
     $PowerShell.Runspace = $Runspace
 
     if ( $PSCmdlet.ShouldProcess("Starting local webserver to host Adaptive Card") ) {
-        [void]($PowerShell.AddScript($ScriptBlock).AddArgument($html).AddArgument($ServiceUrl).AddArgument($ResponseGuid).AddArgument($IsPesterTest))
+        [void]($PowerShell.AddScript($ScriptBlock).AddArgument($html).AddArgument($ServiceUrl).AddArgument($ResponseGuid).AddArgument($HeartbeatTracker))
 
 
     }
