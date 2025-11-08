@@ -18,6 +18,8 @@ $ModuleVersion = (Test-ModuleManifest -Path "$PSScriptRoot\MvRAdaptiveCards.psd1
 foreach ($Folder in @('Private', 'Public', 'Collection', 'ArgumentCompleters')) {
     $LogicFiles = Get-ChildItem -Path $PSScriptRoot\$Folder -Filter '*.ps1' -Recurse
 
+    Write-Verbose "Loading $($LogicFiles.Count) files from $Folder..."
+
     # dot source each file except tests
     $LogicFiles | Where-Object { $_.name -notlike '*.Tests.ps1' } | ForEach-Object {
         . $_.FullName

@@ -179,10 +179,19 @@
             let heartbeatInterval = setInterval(() => {
                 fetch('/heartbeat', {
                     method: 'POST',
-                    keepalive: true
+                    keepalive: true,
+                    signal: AbortSignal.timeout(2000)
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Heartbeat failed');
+                    }
+                    return response.text();
                 }).catch(() => {
                     // Server stopped responding, stop heartbeat
                     clearInterval(heartbeatInterval);
+                    // add a disconnected message to the card container
+                    const cardContainer = document.getElementById('cardContainer');
+                    cardContainer.innerHTML = '<div class="error-message">Connection to the host has been lost. Please close the card and try again.</div>';
                 });
             }, 2500); // Send heartbeat every 2.5 seconds
 

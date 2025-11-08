@@ -1,5 +1,23 @@
 # Release Notes
 
+## 0.9.3
+- Enhanced error handling in the heartbeat mechanism for `Get-CardResponse`. The adaptive card will now display a more informative error message if the connection to the host is lost, prompting the user to close the card and try again.
+- Added missing arguments in `New-CardActionOpenUrl` to support all features of Adaptive Card actions. This includes support for themed icon URLs, fallback content, and requirement conditions.
+- Improved documentation for `New-CardActionOpenUrl` to provide clearer guidance on how to use the new parameters and features.
+- Added an extension for `OpenUrl` actions to allow the opening of URLs.
+- Added `New-CardActionOpenUrlDialog` function to create OpenUrl in dialog actions in adaptive cards.
+
+```PowerShell
+New-AdaptiveCard {
+    New-CardActionOpenUrlDialog -Url "https://www.example.com" -Title "Open Example.com" -Fallback {
+        New-CardTextBlock -Text "This action is not supported." -Size Medium -Weight Bolder -Wrap
+    }
+} -Actions {
+    New-CardActionSubmit -Title "Close"
+} | Get-CardResponse
+````
+- Added validation for scriptblock parameters to ensure they return the expected Adaptive Card elements.
+
 ## 0.9.2
 - Improved closure detection in `Get-CardResponse` for Edge app view method by implementing a heartbeat mechanism. The adaptive card will now send periodic heartbeat signals to the host application to indicate that it is still active. If the host application does not receive a heartbeat within a specified timeout period, it will assume that the Edge app window has been closed by the user and terminate the waiting for a response.
 - Bugfix on `New-CardIcon` to correctly apply the specified size and style parameters when creating icon elements. Previously, the function did not properly set these properties, resulting in icons being rendered with default settings regardless of user input.

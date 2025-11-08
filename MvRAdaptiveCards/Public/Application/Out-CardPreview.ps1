@@ -90,6 +90,7 @@
 #>
 function Out-CardPreview {
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '', Justification = 'Variable used in template')]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '', Justification = 'Variable used in template')]
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
     [OutputType([void])]
     param (

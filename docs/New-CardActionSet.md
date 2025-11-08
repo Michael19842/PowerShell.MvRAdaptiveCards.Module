@@ -13,7 +13,9 @@ Creates a new ActionSet element for an Adaptive Card to group multiple actions t
 ## SYNTAX
 
 ```
-New-CardActionSet [-Actions] <ScriptBlock[]> [[-Fallback] <ScriptBlock>] [[-Id] <String>]
+New-CardActionSet [-Actions] <ScriptBlock[]> [[-Fallback] <ScriptBlock>] [[-Id] <String>] [[-Height] <String>]
+ [[-HorizontalAlignment] <String>] [[-IsSortKey] <Boolean>] [[-IsVisible] <Boolean>] [[-Lang] <String>]
+ [[-Requires] <Hashtable>] [-Separator] [[-Spacing] <String>] [[-TargetWidth] <String>] [[-GridArea] <String>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -109,6 +111,156 @@ Aliases:
 
 Required: False
 Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Height
+{{ Fill Height Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HorizontalAlignment
+{{ Fill HorizontalAlignment Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsSortKey
+{{ Fill IsSortKey Description }}
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsVisible
+{{ Fill IsVisible Description }}
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Lang
+{{ Fill Lang Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Requires
+{{ Fill Requires Description }}
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Separator
+{{ Fill Separator Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Spacing
+{{ Fill Spacing Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TargetWidth
+{{ Fill TargetWidth Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -GridArea
+{{ Fill GridArea Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

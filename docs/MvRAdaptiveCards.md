@@ -32,6 +32,9 @@ Creates a new Adaptive Card with the specified content and configuration options
 ### [New-CardActionOpenUrl](New-CardActionOpenUrl.md)
 {{ Fill in the Synopsis }}
 
+### [New-CardActionOpenUrlDialog](New-CardActionOpenUrlDialog.md)
+Creates an Action.OpenUrlDialog action for Adaptive Cards.
+
 ### [New-CardActionSet](New-CardActionSet.md)
 Creates a new ActionSet element for an Adaptive Card to group multiple actions together.
 

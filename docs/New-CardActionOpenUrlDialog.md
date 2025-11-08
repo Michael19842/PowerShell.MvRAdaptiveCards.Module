@@ -5,81 +5,72 @@ online version:
 schema: 2.0.0
 ---
 
-# New-CardActionOpenUrl
+# New-CardActionOpenUrlDialog
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Creates an Action.OpenUrlDialog action for Adaptive Cards.
 
 ## SYNTAX
 
 ```
-New-CardActionOpenUrl [-Url] <String> [[-Title] <String>] [[-Style] <String>] [[-Id] <String>]
+New-CardActionOpenUrlDialog [-Url] <String> [[-Title] <String>] [[-DialogTitle] <String>]
+ [[-DialogWidth] <String>] [[-DialogHeight] <String>] [[-Style] <String>] [[-Id] <String>]
  [[-IconUrl] <String>] [[-IsEnabled] <Boolean>] [[-Mode] <String>] [[-Tooltip] <String>]
  [[-MenuActions] <Array>] [[-ThemedIconUrls] <Array>] [[-Fallback] <ScriptBlock>] [[-Requires] <Hashtable>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Creates an action that opens a URL in a dialog/modal window within the host application,
+rather than in a new browser tab.
+This provides a more integrated experience.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+New-CardActionOpenUrlDialog -Title "View Details" -Url "https://example.com/details" -DialogWidth "large" -DialogHeight "medium"
 ```
 
-{{ Add example description here }}
+### EXAMPLE 2
+```
+New-CardActionOpenUrlDialog -Title "Help" -Url "https://docs.example.com" -DialogTitle "Help Documentation" -DialogWidth "800px" -DialogHeight "600px"
+```
 
 ## PARAMETERS
 
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Fallback
-{{ Fill Fallback Description }}
-
-```yaml
-Type: ScriptBlock
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 10
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -IconUrl
-{{ Fill IconUrl Description }}
+### -Url
+The URL to open in the dialog.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: Icon
+Aliases:
 
-Required: False
-Position: 4
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Id
-{{ Fill Id Description }}
+### -Title
+The title of the action as it appears on buttons.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DialogTitle
+The title to be displayed in the dialog header.
 
 ```yaml
 Type: String
@@ -93,11 +84,28 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IsEnabled
-{{ Fill IsEnabled Description }}
+### -DialogWidth
+The width of the dialog.
+Can be "small", "medium", "large", or a pixel value like "500px".
 
 ```yaml
-Type: Boolean
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DialogHeight
+The height of the dialog.
+Can be "small", "medium", "large", or a pixel value like "400px".
+
+```yaml
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -108,29 +116,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -MenuActions
-{{ Fill MenuActions Description }}
-
-```yaml
-Type: Array
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Mode
-{{ Fill Mode Description }}
+### -Style
+Control the style of the action.
+Valid values: default, positive, destructive.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: primary, secondary
 
 Required: False
 Position: 6
@@ -139,69 +132,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Requires
-{{ Fill Requires Description }}
-
-```yaml
-Type: Hashtable
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 11
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Style
-{{ Fill Style Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-Accepted values: default, positive, destructive
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ThemedIconUrls
-{{ Fill ThemedIconUrls Description }}
-
-```yaml
-Type: Array
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 9
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Title
-{{ Fill Title Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Tooltip
-{{ Fill Tooltip Description }}
+### -Id
+A unique identifier for the action.
 
 ```yaml
 Type: String
@@ -215,16 +147,123 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Url
-{{ Fill Url Description }}
+### -IconUrl
+A URL or icon name to display on the left of the action's title.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
-Position: 0
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsEnabled
+Controls the enabled state of the action.
+Default is true.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Mode
+Controls if the action is primary or secondary.
+Valid values: primary, secondary.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Tooltip
+The tooltip text to display when the action is hovered over.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MenuActions
+The actions to display in the overflow menu of a Split action button.
+
+```yaml
+Type: Array
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ThemedIconUrls
+A set of theme-specific icon URLs.
+
+```yaml
+Type: Array
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Fallback
+An alternate action to render if this action type is unsupported.
+
+```yaml
+Type: ScriptBlock
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Requires
+A hashtable of capabilities the element requires the host application to support.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -238,6 +277,21 @@ The cmdlet is not run.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
 
 Required: False
 Position: Named
@@ -266,12 +320,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None
-
 ## OUTPUTS
 
 ### System.Collections.Hashtable
-
 ## NOTES
 
 ## RELATED LINKS

@@ -1,0 +1,95 @@
+/* Action.OpenUrl Styles */
+
+/* Base button styling for OpenUrl actions */
+.ac-pushButton[aria-label*="OpenUrl"],
+.ac-pushButton[data-action-type="Action.OpenUrl"] {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* External link indicator */
+.ac-pushButton[data-action-type="Action.OpenUrl"]::after {
+    content: " ↗";
+    font-size: 0.85em;
+    opacity: 0.7;
+    margin-left: 4px;
+}
+
+/* Hover effect */
+.ac-pushButton[aria-label*="OpenUrl"]:hover,
+.ac-pushButton[data-action-type="Action.OpenUrl"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Active/clicked effect */
+.ac-pushButton[aria-label*="OpenUrl"]:active,
+.ac-pushButton[data-action-type="Action.OpenUrl"]:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Style variants */
+.ac-pushButton[data-action-style="positive"] {
+    background-color: #107c10;
+    border-color: #107c10;
+}
+
+.ac-pushButton[data-action-style="positive"]:hover {
+    background-color: #0e6b0e;
+}
+
+.ac-pushButton[data-action-style="destructive"] {
+    background-color: #d13438;
+    border-color: #d13438;
+}
+
+.ac-pushButton[data-action-style="destructive"]:hover {
+    background-color: #b52b2f;
+}
+
+/* Disabled state */
+.ac-pushButton[disabled],
+.ac-pushButton[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Secondary actions (overflow menu) */
+.ac-pushButton[data-action-mode="secondary"] {
+    background-color: transparent;
+    border: 1px solid #e1e1e1;
+    color: #333333;
+}
+
+.ac-pushButton[data-action-mode="secondary"]:hover {
+    background-color: #f3f3f3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ac-pushButton[data-action-type="Action.OpenUrl"] {
+        min-width: 100%;
+        margin-bottom: 8px;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .ac-pushButton[data-action-type="Action.OpenUrl"] {
+        border-width: 2px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .ac-pushButton[data-action-mode="secondary"] {
+        border-color: #3d3d3d;
+        color: #e0e0e0;
+    }
+
+    .ac-pushButton[data-action-mode="secondary"]:hover {
+        background-color: #2d2d2d;
+    }
+}

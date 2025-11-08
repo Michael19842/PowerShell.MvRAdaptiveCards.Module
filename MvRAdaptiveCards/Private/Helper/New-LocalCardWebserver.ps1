@@ -1,5 +1,8 @@
+
 function New-LocalCardWebserver {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '', Justification = 'Variables are used in dot-sourced scripts')]
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
+    [OutputType([hashtable])]
     param(
         [Parameter(Mandatory = $true)]
         [string]$Html,

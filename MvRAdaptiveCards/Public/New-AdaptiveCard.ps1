@@ -307,6 +307,11 @@ function New-AdaptiveCard {
         [void]($BaseCard.body.Add($ContentResult))
     }
 
+    #Test if the elements are allowed in the Adaptive Card schema
+    if (!(Test-CardAllowedElementType -TestedContent $BaseCard.body -AllowedElementTypes $script:_AdaptiveCardAllowedElementTypes -ElementType "$($BaseCard.type).Body")) {
+        throw "One or more elements in the Adaptive Card body are of an invalid type."
+    }
+
 
     if ($Id) {
         $BaseCard.id = $Id
@@ -317,6 +322,11 @@ function New-AdaptiveCard {
         $BaseCard.actions = @()
         Invoke-Command -ScriptBlock $Actions | ForEach-Object {
             $BaseCard.actions += $_
+        }
+
+        #Test the actions to make sure they are valid
+        if (!(Test-CardAllowedElementType -TestedContent $BaseCard.actions -AllowedElementTypes $script:_AdaptiveCardAllowedActionTypes -ElementType "$($BaseCard.type).Action")) {
+            throw "One or more actions in the Adaptive Card are of an invalid type."
         }
     }
 
