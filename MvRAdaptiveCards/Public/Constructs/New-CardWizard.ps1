@@ -1,8 +1,9 @@
 
 
 function New-CardWizard {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '', Justification = 'Variable used in underlying logic')]
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
-    [OutputType([hashtable])]
+    [OutputType([System.Collections.ArrayList])]
     param (
         [Parameter(Mandatory = $true)]
         [object[]]$WizardPages,

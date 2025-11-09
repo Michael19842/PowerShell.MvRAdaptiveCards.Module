@@ -1,5 +1,7 @@
 
 function Start-CardSetupGuide {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText', '', Justification = 'There is no other way to convert plain text to secure string for storage')]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'None')]
     param (
 
     )
@@ -24,7 +26,7 @@ function Start-CardSetupGuide {
         }  | Get-CardResponse -PromptTitle "Setup Wizard" -ShowTitle:$false -ViewMethod EdgeApp -AutoSize -WindowWidth 600 -CardTitle "MvRAdaptiveCards Setup Wizard" -LogoHeaderText "MvRAdaptiveCards Setup Wizard"
 
         if ($Response.Action -eq "Cancel" -or $null -eq $Response) {
-            Write-Host "Setup wizard cancelled by user."
+            Write-ColoredHost "Setup wizard cancelled by user."
             return
         }
 
@@ -48,7 +50,7 @@ function Start-CardSetupGuide {
                 }
 
                 if ($UseExisting.Action -eq "UseExisting") {
-                    Write-Host "Using existing Teams Webhook URL. Setup complete."
+                    Write-ColoredHost "Using existing Teams Webhook URL. Setup complete."
                     return
                 }
 
@@ -97,7 +99,7 @@ function Start-CardSetupGuide {
                 }
 
                 if ($WizardResponse.Action -eq "Cancel" -or $null -eq $WizardResponse) {
-                    Write-Host "Setup wizard cancelled by user."
+                    Write-ColoredHost "Setup wizard cancelled by user."
                     return
                 }
 
@@ -108,7 +110,7 @@ function Start-CardSetupGuide {
 
                 #test if the webhook URL is a valid URL
                 try {
-                    $uri = [uri]$WizardResponse.WebhookUrl
+                    [void]([uri]$WizardResponse.WebhookUrl)
                 }
                 catch {
                     Write-Warning "The provided Webhook URL is not valid. Please check the URL and try again."
@@ -136,7 +138,7 @@ function Start-CardSetupGuide {
 
                     try {
                         Send-CardViaTeams -WebhookUrl $WizardResponse.WebhookUrl -CardJson $TestCard
-                        Write-Host "Test Adaptive Card sent successfully to the Teams channel."
+                        Write-ColoredHost "Test Adaptive Card sent successfully to the Teams channel."
                     }
                     catch {
                         Write-Warning "Failed to send test Adaptive Card. Please check the Webhook URL and your network connection."
@@ -164,7 +166,10 @@ function Start-CardSetupGuide {
 
                     $_MvRACSettings.TeamsWebhook.WebhookUrl = $WizardResponse.WebhookUrl
                     #Set the webhook URL in the module settings for future use
-                    Set-CardSetting -Settings $_MvRACSettings
+                    if ( $PSCmdlet.ShouldProcess("Saving Teams Webhook URL to module configuration")) {
+                        Write-ColoredHost "{green}[V]{white} Teams Webhook URL saved successfully."
+                        Set-CardSetting -Settings $_MvRACSettings
+                    }
 
                 }
 
@@ -186,7 +191,7 @@ function Start-CardSetupGuide {
                     } | Get-CardResponse -PromptTitle "Existing SMTP Settings" -ShowTitle:$false -ViewMethod EdgeApp -AutoSize -WindowWidth 400 -CardTitle "MvRAdaptiveCards Setup Wizard" -LogoHeaderText "MvRAdaptiveCards Setup Wizard"
 
                     if ( $UseExistingSmtp.Action -eq "UseExistingSmtp") {
-                        Write-Host "Using existing SMTP settings. Setup complete."
+                        Write-ColoredHost "Using existing SMTP settings. Setup complete."
                         return
                     }
                 }
@@ -207,7 +212,7 @@ function Start-CardSetupGuide {
                 } | Get-CardResponse -PromptTitle "SMTP Configuration" -ShowTitle:$false -ViewMethod EdgeApp -AutoSize -WindowWidth 500 -CardTitle "MvRAdaptiveCards Setup Wizard" -LogoHeaderText "MvRAdaptiveCards Setup Wizard"
 
                 if ($SMTPResponse.Action -eq "Cancel" -or $null -eq $SMTPResponse) {
-                    Write-Host "Setup wizard cancelled by user."
+                    Write-ColoredHost "Setup wizard cancelled by user."
                     return
                 }
 
@@ -219,7 +224,10 @@ function Start-CardSetupGuide {
                 $_MvRACSettings.DefaultSmtpSettings.Password = $SMTPResponse.Password | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString
                 $_MvRACSettings.DefaultSmtpSettings.UseSsl = [bool]$SMTPResponse.UseSsl
 
-                Set-CardSetting -Settings $_MvRACSettings
+                if ( $PSCmdlet.ShouldProcess("Saving SMTP settings to module configuration")) {
+                    Write-ColoredHost "{green}[V]{white} SMTP settings saved successfully."
+                    Set-CardSetting -Settings $_MvRACSettings
+                }
 
             }
             "Outlook" {

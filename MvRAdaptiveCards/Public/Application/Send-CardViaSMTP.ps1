@@ -1,5 +1,6 @@
 function Send-CardViaSMTP {
     [system.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '', Justification = 'The parameters are used in the html body')]
+    [system.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidDefaultValueForMandatoryParameter', '', Justification = 'it is acceptable to have default values for mandatory parameters in this context')]
     [CmdletBinding(SupportsShouldProcess = $true)]
     [OutputType([void])]
 

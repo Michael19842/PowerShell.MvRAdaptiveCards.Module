@@ -12,23 +12,25 @@ function Send-CardViaTeams {
 
     #If the WebhookUrl is set to default, check for module settings
 
-    if ([string]::IsNullOrWhiteSpace($WebhookUrl)) {
-        throw "No WebhookUrl provided and no default found in module settings."
-    }
+    process {
+        if ([string]::IsNullOrWhiteSpace($WebhookUrl)) {
+            throw "No WebhookUrl provided and no default found in module settings."
+        }
 
-    # Create the payload for the Teams message
-    $Payload = @{
-        type        = "message"
-        attachments = @(
-            @{
-                contentType = "application/vnd.microsoft.card.adaptive"
-                content     = ($CardJson | ConvertFrom-Json)
-            }
-        )
-    }
+        # Create the payload for the Teams message
+        $Payload = @{
+            type        = "message"
+            attachments = @(
+                @{
+                    contentType = "application/vnd.microsoft.card.adaptive"
+                    content     = ($CardJson | ConvertFrom-Json)
+                }
+            )
+        }
 
-    # Send the message to the Teams webhook
-    if ($PSCmdlet.ShouldProcess("Send message to Teams webhook at $WebhookUrl")) {
-        Invoke-RestMethod -Uri $WebhookUrl -Method Post -Body ($Payload | ConvertTo-Json -Depth $_MaxDepth) -ContentType "application/json"
+        # Send the message to the Teams webhook
+        if ($PSCmdlet.ShouldProcess("Send message to Teams webhook at $WebhookUrl")) {
+            Invoke-RestMethod -Uri $WebhookUrl -Method Post -Body ($Payload | ConvertTo-Json -Depth $_MaxDepth) -ContentType "application/json"
+        }
     }
 }

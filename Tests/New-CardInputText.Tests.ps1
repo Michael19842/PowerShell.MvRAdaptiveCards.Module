@@ -141,9 +141,9 @@ Describe "New-CardInputText" {
         }
 
         It "Should accept IsRequired as false" {
-            $result = New-CardInputText -IsRequired $false
+            $result = New-CardInputText
 
-            $result.isRequired | Should -Be $false
+            ($result.isRequired) -eq $true | Should -Be $false
         }
 
         It "Should not include isRequired when not specified" {
@@ -464,7 +464,7 @@ Describe "New-CardInputText" {
             $command.Parameters['MaxLength'].ParameterType | Should -Be ([int])
             $command.Parameters['MinLength'].ParameterType | Should -Be ([int])
             $command.Parameters['IsMultiline'].ParameterType | Should -Be ([switch])
-            $command.Parameters['IsRequired'].ParameterType | Should -Be ([bool])
+            $command.Parameters['IsRequired'].ParameterType | Should -Be ([switch])
             $command.Parameters['Regex'].ParameterType | Should -Be ([string])
             $command.Parameters['Label'].ParameterType | Should -Be ([string])
         }

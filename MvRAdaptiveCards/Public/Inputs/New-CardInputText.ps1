@@ -213,7 +213,12 @@ function New-CardInputText {
     }
 
     if ($PSBoundParameters.ContainsKey('Fallback')) {
-        $InputText.fallback = Invoke-Command $Fallback
+        if ($Fallback -is [scriptblock]) {
+            $InputText.fallback = Invoke-Command $Fallback
+        }
+        else {
+            $InputText.fallback = $Fallback
+        }
     }
 
     if ($PSBoundParameters.ContainsKey('GridArea')) {

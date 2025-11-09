@@ -6,6 +6,21 @@
 - Added a setup guide function `Start-CardSetupGuide` to assist users in configuring essential settings for the module. This interactive guide walks users through the process of setting up SMTP settings and other configurations, making it easier to get started with the module.
 - Improved and tested the `Send-CardViaTeams` function to ensure reliable sending of adaptive cards via Microsoft Teams webhooks.
 - Added validation for webhook URLs to ensure they are correctly formatted and reachable before attempting to send the card.
+- Added a construct `New-CardWizard` to facilitate the creation of multi-page wizards within adaptive cards. This construct allows users to define a series of pages with navigation controls, enabling the creation of step-by-step forms and surveys.
+
+```PowerShell
+New-AdaptiveCard {
+    New-CardWizard -WizardPages {
+        New-CardTextBlock -Text "Page 1 Content"
+    },
+    {
+        New-CardTextBlock -Text "Page 2 Content"
+    },
+    {
+        New-CardTextBlock -Text "Page 3 Content"
+    }
+} | Get-ACR
+```
 
 ## 0.9.3
 - Enhanced error handling in the heartbeat mechanism for `Get-CardResponse`. The adaptive card will now display a more informative error message if the connection to the host is lost, prompting the user to close the card and try again.

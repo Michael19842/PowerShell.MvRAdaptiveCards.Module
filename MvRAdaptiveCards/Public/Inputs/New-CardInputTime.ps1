@@ -153,7 +153,7 @@ function New-CardInputTime {
         [hashtable]$Requires,
 
         [Parameter(Mandatory = $false)]
-        [scriptblock]$Fallback,
+        [object]$Fallback,
 
         [Parameter(Mandatory = $false)]
         [ValidateSet("VeryNarrow", "Narrow", "Standard", "Wide", "atLeast:VeryNarrow", "atMost:VeryNarrow",
@@ -218,7 +218,12 @@ function New-CardInputTime {
         $InputTime.requires = $Requires
     }
     if ($PSBoundParameters.ContainsKey('Fallback')) {
-        $InputTime.fallback = Invoke-Command $Fallback
+        if ($Fallback -is [scriptblock]) {
+            $InputTime.fallback = Invoke-Command $Fallback
+        }
+        else {
+            $InputTime.fallback = $Fallback
+        }
     }
     if ($PSBoundParameters.ContainsKey('TargetWidth')) {
         $InputTime.targetWidth = $TargetWidth
