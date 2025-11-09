@@ -153,7 +153,7 @@ function New-CardInputTime {
         [hashtable]$Requires,
 
         [Parameter(Mandatory = $false)]
-        [object]$Fallback,
+        [scriptblock]$Fallback,
 
         [Parameter(Mandatory = $false)]
         [ValidateSet("VeryNarrow", "Narrow", "Standard", "Wide", "atLeast:VeryNarrow", "atMost:VeryNarrow",
@@ -175,6 +175,9 @@ function New-CardInputTime {
         type = "Input.Time"
     }
 
+    if ($Null -eq $Fallback -and $_MvRACSettings.General.DefaultFallback) {
+        $Fallback = [scriptblock]::Create($_MvRACSettings.General.DefaultFallback)
+    }
     if ($PSBoundParameters.ContainsKey('Id')) {
         $InputTime.id = $Id
     }
@@ -215,7 +218,7 @@ function New-CardInputTime {
         $InputTime.requires = $Requires
     }
     if ($PSBoundParameters.ContainsKey('Fallback')) {
-        $InputTime.fallback = $Fallback
+        $InputTime.fallback = Invoke-Command $Fallback
     }
     if ($PSBoundParameters.ContainsKey('TargetWidth')) {
         $InputTime.targetWidth = $TargetWidth

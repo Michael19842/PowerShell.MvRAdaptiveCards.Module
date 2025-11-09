@@ -1,5 +1,12 @@
 # Release Notes
 
+## 0.9.4
+- Bugfix in hide and toggle visibility functionality to ensure that elements are properly hidden when using the `Hidden` style. The fix addresses issues where elements were not being hidden as expected due to CSS specificity conflicts. An extension has been added to enforce the hidden state using more specific CSS selectors.
+- Changed isRequired on New-CardInputText to a switch parameter for better usability. This allows users to simply include the `-IsRequired` switch when creating a required text input, improving the clarity and conciseness of the code.
+- Added a setup guide function `Start-CardSetupGuide` to assist users in configuring essential settings for the module. This interactive guide walks users through the process of setting up SMTP settings and other configurations, making it easier to get started with the module.
+- Improved and tested the `Send-CardViaTeams` function to ensure reliable sending of adaptive cards via Microsoft Teams webhooks.
+- Added validation for webhook URLs to ensure they are correctly formatted and reachable before attempting to send the card.
+
 ## 0.9.3
 - Enhanced error handling in the heartbeat mechanism for `Get-CardResponse`. The adaptive card will now display a more informative error message if the connection to the host is lost, prompting the user to close the card and try again.
 - Added missing arguments in `New-CardActionOpenUrl` to support all features of Adaptive Card actions. This includes support for themed icon URLs, fallback content, and requirement conditions.

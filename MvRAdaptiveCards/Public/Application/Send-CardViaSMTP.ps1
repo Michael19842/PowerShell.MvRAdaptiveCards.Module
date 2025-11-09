@@ -11,43 +11,29 @@ function Send-CardViaSMTP {
         [string]$To,
 
         [Parameter(Mandatory = $true)]
-        [string]$Subject,
+        [string]$Subject = "Adaptive Card via SMTP",
 
         [Parameter(Mandatory = $false)]
-        [string]$From,
+        [string]$From = $_MvRACSettings.Smtp.From,
 
         [Parameter(Mandatory = $false)]
-        [string]$SmtpServer = 'default',
+        [string]$SmtpServer = $_MvRACSettings.Smtp.Server,
 
         [Parameter(Mandatory = $false)]
-        [int]$SmtpPort = 25,
+        [int]$SmtpPort = $_MvRACSettings.Smtp.Port,
 
         [Parameter(Mandatory = $false)]
-        [string]$SmtpUsername,
+        [string]$SmtpUsername = $_MvRACSettings.Smtp.Username,
 
         [Parameter(Mandatory = $false)]
-        [securestring]$SmtpPassword
+        [securestring]$SmtpPassword = ($_MvRACSettings.Smtp.Password | ConvertTo-SecureString),
+
+        [Parameter(Mandatory = $false)]
+        [bool]$UseSsl = $_MvRACSettings.Smtp.UseSsl
 
     )
 
     process {
-        #If the SMTPServer is set to default, check for module settings
-        if ($SmtpServer -eq 'default' -and $_MvRACSettings.Smtp.Server) {
-            $SmtpServer = $_MvRACSettings.Smtp.Server
-            $SmtpPort = $_MvRACSettings.Smtp.Port
-
-            if ($_MvRACSettings.Smtp.From -and -not $From) {
-                $From = $_MvRACSettings.Smtp.From
-            }
-
-            if ($_MvRACSettings.Smtp.Username) {
-                $SmtpUsername = $_MvRACSettings.Smtp.Username
-            }
-            if ($_MvRACSettings.Smtp.Password) {
-                $SmtpPassword = ConvertTo-SecureString -String $_MvRACSettings.Smtp.Password
-            }
-        }
-
         #If Smtp is Gmail trow a warning that script tags are not supported
         if ($SmtpServer -like 'smtp.gmail.com*') {
             Write-Warning "Gmail does not support script tags in Adaptive Cards. The card may not render correctly in Gmail clients."

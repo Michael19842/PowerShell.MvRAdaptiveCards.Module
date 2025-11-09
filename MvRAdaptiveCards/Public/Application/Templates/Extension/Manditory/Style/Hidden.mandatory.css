@@ -1,0 +1,52 @@
+/* Hidden Elements Extension - Mandatory */
+/* This extension ensures that elements with isVisible=false are properly hidden */
+
+/* Hide elements that have isVisible set to false */
+[data-is-visible="false"],
+.ac-hidden,
+.ac-container[data-is-visible="false"],
+.ac-textBlock[data-is-visible="false"],
+.ac-image[data-is-visible="false"],
+.ac-columnSet[data-is-visible="false"],
+.ac-column[data-is-visible="false"],
+.ac-actionSet[data-is-visible="false"] {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Very specific rule to override inline styles */
+div.ac-container[data-is-visible="false"][data-element-id],
+div.ac-container.ac-hidden,
+div[data-is-visible="false"][data-element-id] {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Ensure hidden class takes precedence */
+*[hidden],
+*.hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Smooth transition when toggling visibility */
+.ac-container,
+.ac-textBlock,
+.ac-image,
+.ac-columnSet,
+.ac-column,
+.ac-actionSet {
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* When becoming visible, fade in */
+[data-is-visible="true"] {
+    opacity: 1;
+}
+
+/* Additional specificity for deeply nested hidden elements */
+.ac-container .ac-container[data-is-visible="false"],
+.ac-columnSet .ac-column[data-is-visible="false"],
+body [data-is-visible="false"] {
+    display: none !important;
+}

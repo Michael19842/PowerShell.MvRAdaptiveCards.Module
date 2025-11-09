@@ -20,6 +20,13 @@ Install-Module -Name MvRAdaptiveCards
 ```
 This module is compatible with PowerShell 5.1 and later versions.
 
+# Table of Contents
+- [Overview](#overview)
+- [What are Adaptive Cards?](#what-are-adaptive-cards)
+- [Install MvRAdaptiveCards](#install-mvradaptivecards)
+- [Release Notes](#release-notes)
+
+
 ## Release Notes
 See the [Release Notes](ReleaseNotes.md) for detailed information on changes and updates in each version.
 
@@ -39,6 +46,16 @@ New-CardAdaptiveCard -Content {
 }
 #This will output the JSON structure of the Adaptive Card which you can then use in your applications or post to Microsoft Teams.
 ```
+
+## Quick setup
+To help you get started quickly, the module includes a setup guide that walks you through the initial configuration. You can start the setup guide by running:
+
+```powershell
+Start-CardSetupGuide
+```
+You will be guided through setting up default configurations for sending your first cards via Microsoft Teams. The setup is a breeze and will have you sending cards in no time! Sending card is realized using your Teams Incoming Webhook connector and your PowerShell environment. No additional services are required or needed in order to send cards. This setup will store your configuration in a secure manner for future use in your *Appdata* folder so you don't have to reconfigure it every time. The setup will overwrite existing settings (only after your consent), so you can always re-run it to change your configuration.
+
+> *MvRAdapitiveCards logo and links will **only** be shown in the test cards during setup, and will not appear in your actual cards.
 
 ### Use Adaptive Cards as prompt in PowerShell
 You can use Adaptive Cards as interactive prompts in PowerShell using the `Get-CardResponse` cmdlet. Here's an example:

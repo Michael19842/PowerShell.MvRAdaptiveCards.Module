@@ -155,6 +155,9 @@ Creates a template tag placeholder that can be replaced with dynamic content in 
 ### [New-CardTextBlock](New-CardTextBlock.md)
 Creates a new TextBlock element for an Adaptive Card.
 
+### [New-CardWizard](New-CardWizard.md)
+{{ Fill in the Synopsis }}
+
 ### [Out-CardPreview](Out-CardPreview.md)
 Opens an Adaptive Card in the online Adaptive Cards Designer for visualization and testing.
 
@@ -181,4 +184,7 @@ Opens an Adaptive Card in the online Adaptive Cards Designer for visualization a
 
 ### [Set-CardDefaultTeamsSetting](Set-CardDefaultTeamsSetting.md)
 Sets the default Microsoft Teams webhook settings for Adaptive Card delivery.
+
+### [Start-CardSetupGuide](Start-CardSetupGuide.md)
+{{ Fill in the Synopsis }}
 

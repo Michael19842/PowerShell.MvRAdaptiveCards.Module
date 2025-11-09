@@ -187,7 +187,51 @@ function New-CardRichTextBlock {
             })]
         [hashtable]
         $NamedSelectActions,
-        [switch]$Separator
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $LabelFor,
+
+        [Parameter(Mandatory = $false)]
+        [scriptblock]
+        $Fallback,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $GridArea,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("auto", "stretch")]
+        [string]
+        $Height,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsSortKey,
+
+        [Parameter(Mandatory = $false)]
+        [bool]
+        $IsVisible,
+
+        [Parameter(Mandatory = $false)]
+        [string]
+        $Lang,
+
+        [Parameter(Mandatory = $false)]
+        [hashtable]
+        $Requires,
+
+        [switch]$Separator,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("None", "ExtraSmall", "Small", "Default", "Medium", "Large", "ExtraLarge", "Padding")]
+        [string]
+        $Spacing,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("VeryNarrow", "Narrow", "Standard", "Wide", "atLeast:VeryNarrow", "atMost:VeryNarrow", "atLeast:Narrow", "atMost:Narrow", "atLeast:Standard", "atMost:Standard", "atLeast:Wide", "atMost:Wide")]
+        [string]
+        $TargetWidth
 
     )
 
@@ -224,6 +268,12 @@ function New-CardRichTextBlock {
     $ActiveStyle = @{}
 
     foreach ($TagMatch in $TagsMatches) {
+
+        # Apply default fallback from settings if none provided and default is set
+        if ($Null -eq $Fallback -and $_MvRACSettings.General.DefaultFallback) {
+            $Fallback = [scriptblock]::Create($_MvRACSettings.General.DefaultFallback)
+        }
+
 
         $CurrentText = $Text.Substring($CurrentIndex, $TagMatch.Index - $CurrentIndex) -replace '!{{#(.*?)#}}', '!{{$1}}'
 
@@ -508,31 +558,235 @@ function New-CardRichTextBlock {
         $RichTextBlock.inlines = @($RichTextBlock.inlines)
     }
 
-    if ($Id) {
+    if ($PSBoundParameters.ContainsKey('Id')) {
         $RichTextBlock.id = $Id
     }
 
-    if ($HorizontalAlignment) {
+    if ($PSBoundParameters.ContainsKey('HorizontalAlignment')) {
         $RichTextBlock.horizontalAlignment = $HorizontalAlignment
     }
 
-    if ($FontType) {
+    if ($PSBoundParameters.ContainsKey('FontType')) {
         $RichTextBlock.fontType = $FontType
     }
 
-    if ($Size) {
+    if ($PSBoundParameters.ContainsKey('Size')) {
         $RichTextBlock.size = $Size
     }
 
-    if ($Weight) {
+    if ($PSBoundParameters.ContainsKey('Weight')) {
         $RichTextBlock.weight = $Weight
     }
 
-    if ($Separator) {
+    if ($PSBoundParameters.ContainsKey('Separator')) {
         $RichTextBlock.separator = $true
+    }
+
+    if ($PSBoundParameters.ContainsKey('LabelFor')) {
+        $RichTextBlock.labelFor = $LabelFor
+    }
+
+    if ($PSBoundParameters.ContainsKey('Fallback')) {
+        $RichTextBlock.fallback = Invoke-Command $Fallback
+    }
+
+    if ($PSBoundParameters.ContainsKey('GridArea')) {
+        $RichTextBlock.'grid.area' = $GridArea
+    }
+
+    if ($PSBoundParameters.ContainsKey('Height')) {
+        $RichTextBlock.height = $Height
+    }
+
+    if ($PSBoundParameters.ContainsKey('IsSortKey')) {
+        $RichTextBlock.isSortKey = $IsSortKey
+    }
+
+    if ($PSBoundParameters.ContainsKey('IsVisible')) {
+        $RichTextBlock.isVisible = $IsVisible
+    }
+
+    if ($PSBoundParameters.ContainsKey('Lang')) {
+        $RichTextBlock.lang = $Lang
+    }
+
+    if ($PSBoundParameters.ContainsKey('Requires')) {
+        $RichTextBlock.requires = $Requires
+    }
+
+    if ($PSBoundParameters.ContainsKey('Spacing')) {
+        $RichTextBlock.spacing = $Spacing
+    }
+
+    if ($PSBoundParameters.ContainsKey('TargetWidth')) {
+        $RichTextBlock.targetWidth = $TargetWidth
     }
 
     if ( $PSCmdlet.ShouldProcess("Creating RichTextBlock element with text '$Text'." ) ) {
         return $RichTextBlock
     }
 }
+
+
+# type
+# string
+# Must be RichTextBlock.
+
+# 1.0
+# inlines
+# Array of
+# object
+# string
+# The inlines making up the rich text block.
+
+# Valid values:
+# TextRun
+# 1.2
+# labelFor
+# string
+# Preview
+# The Id of the input the RichTextBlock should act as the label of.
+
+# 1.5
+# fallback
+# One of
+# object
+# string
+# An alternate element to render if the type of this one is unsupported or if the host application doesn't support all the capabilities specified in the requires property.
+
+# Valid values:
+# Container,
+# ActionSet,
+# ColumnSet,
+# Media,
+# RichTextBlock,
+# Table,
+# TextBlock,
+# FactSet,
+# ImageSet,
+# Image,
+# Input.Text,
+# Input.Date,
+# Input.Time,
+# Input.Number,
+# Input.Toggle,
+# Input.ChoiceSet,
+# Input.Rating,
+# Rating,
+# CompoundButton,
+# Icon,
+# Carousel,
+# Badge,
+# ProgressRing,
+# ProgressBar,
+# Chart.Donut,
+# Chart.Pie,
+# Chart.VerticalBar.Grouped,
+# Chart.VerticalBar,
+# Chart.HorizontalBar,
+# Chart.HorizontalBar.Stacked,
+# Chart.Line,
+# Chart.Gauge,
+# CodeBlock,
+# Component.graph.microsoft.com/user,
+# Component.graph.microsoft.com/users,
+# Component.graph.microsoft.com/resource,
+# Component.graph.microsoft.com/file,
+# Component.graph.microsoft.com/event,
+# "drop"
+# 1.2
+# grid.area
+# string
+# Teams
+# The area of a Layout.AreaGrid layout in which an element should be displayed.
+
+# 1.5
+# height
+# string
+# "auto"
+# The height of the element. When set to stretch, the element will use the remaining vertical space in its container.
+
+# Valid values:
+# "auto",
+# "stretch"
+# 1.1
+# horizontalAlignment
+# string
+# Controls how the element should be horizontally aligned.
+
+# Valid values:
+# "Left",
+# "Center",
+# "Right"
+# 1.0
+# id
+# string
+# A unique identifier for the element or action. Input elements must have an id, otherwise they will not be validated and their values will not be sent to the Bot.
+
+# 1.0
+# isSortKey
+# boolean
+# false
+# Controls whether the element should be used as a sort key by elements that allow sorting across a collection of elements.
+
+# 1.5
+# isVisible
+# boolean
+# true
+# Controls the visibility of the element.
+
+# 1.2
+# lang
+# string
+# The locale associated with the element.
+
+# 1.1
+# requires
+# object
+# {}
+# A list of capabilities the element requires the host application to support. If the host application doesn't support at least one of the listed capabilities, the element is not rendered (or its fallback is rendered if provided).
+
+# Valid values:
+# HostCapabilities
+# 1.2
+# separator
+# boolean
+# false
+# Controls whether a separator line should be displayed above the element to visually separate it from the previous element. No separator will be displayed for the first element in a container, even if this property is set to true.
+
+# 1.0
+# spacing
+# string
+# "Default"
+# Controls the amount of space between this element and the previous one. No space will be added for the first element in a container.
+
+# Valid values:
+# "None",
+# "ExtraSmall"
+# Preview
+# ,
+# "Small",
+# "Default",
+# "Medium",
+# "Large",
+# "ExtraLarge",
+# "Padding"
+# 1.0
+# targetWidth
+# string
+# TeamsCopilot
+# Controls for which card width the element should be displayed. If targetWidth isn't specified, the element is rendered at all card widths. Using targetWidth makes it possible to author responsive cards that adapt their layout to the available horizontal space. For more details, see Responsive layout.
+
+# Valid values:
+# "VeryNarrow",
+# "Narrow",
+# "Standard",
+# "Wide",
+# "atLeast:VeryNarrow",
+# "atMost:VeryNarrow",
+# "atLeast:Narrow",
+# "atMost:Narrow",
+# "atLeast:Standard",
+# "atMost:Standard",
+# "atLeast:Wide",
+# "atMost:Wide"

@@ -15,7 +15,10 @@ Creates a new RichTextBlock element for an Adaptive Card with advanced inline fo
 ```
 New-CardRichTextBlock [[-Text] <String>] [[-Id] <String>] [[-HorizontalAlignment] <String>]
  [[-FontType] <String>] [[-Size] <String>] [[-Weight] <String>] [[-NamedSelectActions] <Hashtable>]
- [-Separator] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-LabelFor] <String>] [[-Fallback] <ScriptBlock>] [[-GridArea] <String>] [[-Height] <String>]
+ [[-IsSortKey] <Boolean>] [[-IsVisible] <Boolean>] [[-Lang] <String>] [[-Requires] <Hashtable>] [-Separator]
+ [[-Spacing] <String>] [[-TargetWidth] <String>] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -254,6 +257,126 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -LabelFor
+{{ Fill LabelFor Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Fallback
+{{ Fill Fallback Description }}
+
+```yaml
+Type: ScriptBlock
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -GridArea
+{{ Fill GridArea Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Height
+{{ Fill Height Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsSortKey
+{{ Fill IsSortKey Description }}
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsVisible
+{{ Fill IsVisible Description }}
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Lang
+{{ Fill Lang Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Requires
+{{ Fill Requires Description }}
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Separator
 A switch parameter that adds a separator line above the RichTextBlock element.
 Useful for
@@ -267,6 +390,36 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Spacing
+{{ Fill Spacing Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 16
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TargetWidth
+{{ Fill TargetWidth Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

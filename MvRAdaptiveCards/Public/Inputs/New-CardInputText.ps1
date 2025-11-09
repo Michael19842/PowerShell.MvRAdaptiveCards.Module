@@ -119,30 +119,74 @@ function New-CardInputText {
         [Parameter(Mandatory = $false)]
         [switch]$IsMultiline,
 
-        [Parameter(Mandatory = $false)]
-        [bool]$IsRequired,
+        [switch]$IsRequired,
 
         [Parameter(Mandatory = $false)]
         [string]$Regex,
 
         [Parameter(Mandatory = $false)]
-        [string]$Label
+        [string]$Label,
+
+        [Parameter(Mandatory = $false)]
+        [string]$ErrorMessage,
+
+        [Parameter(Mandatory = $false)]
+        [object]$Fallback,
+
+        [Parameter(Mandatory = $false)]
+        [string]$GridArea,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("auto", "stretch")]
+        [string]$Height,
+
+        [Parameter(Mandatory = $false)]
+        [object]$InlineAction,
+
+        [Parameter(Mandatory = $false)]
+        [bool]$IsSortKey,
+
+        [Parameter(Mandatory = $false)]
+        [bool]$IsVisible,
+
+        [Parameter(Mandatory = $false)]
+        [string]$Lang,
+
+        [Parameter(Mandatory = $false)]
+        [hashtable]$Requires,
+
+        [Parameter(Mandatory = $false)]
+        [switch]$Separator,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("None", "ExtraSmall", "Small", "Default", "Medium", "Large", "ExtraLarge", "Padding")]
+        [string]$Spacing,
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet("VeryNarrow", "Narrow", "Standard", "Wide", "atLeast:VeryNarrow", "atMost:VeryNarrow", "atLeast:Narrow", "atMost:Narrow", "atLeast:Standard", "atMost:Standard", "atLeast:Wide", "atMost:Wide")]
+        [string]$TargetWidth,
+
+        [Parameter(Mandatory = $false)]
+        [object]$ValueChangedAction
     )
 
     $InputText = @{
         type = "Input.Text"
     }
+    if ($Null -eq $Fallback -and $_MvRACSettings.General.DefaultFallback) {
+        $Fallback = [scriptblock]::Create($_MvRACSettings.General.DefaultFallback)
+    }
 
-    if ($Id) {
+    if ($PSBoundParameters.ContainsKey('Id')) {
         $InputText.id = $Id
     }
-    if ($Placeholder) {
+    if ($PSBoundParameters.ContainsKey('Placeholder')) {
         $InputText.placeholder = $Placeholder
     }
-    if ($Value) {
+    if ($PSBoundParameters.ContainsKey('Value')) {
         $InputText.value = $Value
     }
-    if ($Style) {
+    if ($PSBoundParameters.ContainsKey('Style')) {
         $InputText.style = $Style
     }
     if ($PSBoundParameters.ContainsKey('MaxLength')) {
@@ -151,17 +195,69 @@ function New-CardInputText {
     if ($PSBoundParameters.ContainsKey('MinLength')) {
         $InputText.minLength = $MinLength
     }
-    if ($IsMultiline) {
-        $InputText.isMultiline = $IsMultiline
+    if ($PSBoundParameters.ContainsKey('IsMultiline')) {
+        $InputText.isMultiline = $IsMultiline.IsPresent
     }
     if ($PSBoundParameters.ContainsKey('IsRequired')) {
-        $InputText.isRequired = $IsRequired
+        $InputText.isRequired = $IsRequired.IsPresent
     }
-    if ($Regex) {
+    if ($PSBoundParameters.ContainsKey('Regex')) {
         $InputText.regex = $Regex
     }
-    if ($Label) {
+    if ($PSBoundParameters.ContainsKey('Label')) {
         $InputText.label = $Label
+    }
+
+    if ($PSBoundParameters.ContainsKey('ErrorMessage')) {
+        $InputText.errorMessage = $ErrorMessage
+    }
+
+    if ($PSBoundParameters.ContainsKey('Fallback')) {
+        $InputText.fallback = Invoke-Command $Fallback
+    }
+
+    if ($PSBoundParameters.ContainsKey('GridArea')) {
+        $InputText.'grid.area' = $GridArea
+    }
+
+    if ($PSBoundParameters.ContainsKey('Height')) {
+        $InputText.height = $Height
+    }
+
+    if ($PSBoundParameters.ContainsKey('InlineAction')) {
+        $InputText.inlineAction = Invoke-Command $InlineAction
+    }
+
+    if ($PSBoundParameters.ContainsKey('IsSortKey')) {
+        $InputText.isSortKey = $IsSortKey
+    }
+
+    if ($PSBoundParameters.ContainsKey('IsVisible')) {
+        $InputText.isVisible = $IsVisible
+    }
+
+    if ($PSBoundParameters.ContainsKey('Lang')) {
+        $InputText.lang = $Lang
+    }
+
+    if ($PSBoundParameters.ContainsKey('Requires')) {
+        $InputText.requires = $Requires
+    }
+
+    if ($PSBoundParameters.ContainsKey('Separator')) {
+        $InputText.separator = $true
+    }
+
+    if ($PSBoundParameters.ContainsKey('Spacing')) {
+        $InputText.spacing = $Spacing
+    }
+
+    if ($PSBoundParameters.ContainsKey('TargetWidth')) {
+        $InputText.targetWidth = $TargetWidth
+    }
+
+    if ($PSBoundParameters.ContainsKey('ValueChangedAction')) {
+        $InputText.valueChangedAction = Invoke-Command $ValueChangedAction
     }
 
     #Return the Input.Text object
