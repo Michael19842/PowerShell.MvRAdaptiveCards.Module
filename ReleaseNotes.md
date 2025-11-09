@@ -1,5 +1,12 @@
 # Release Notes
 
+## 1.0.0
+- Official stable release of MvRAdaptiveCards module. (First version to be marked as stable)
+- Added `New-CardActionPopover` function to create popover actions in adaptive cards.
+- Added `New-CardActionResetInputs` function to create reset input actions in adaptive cards.
+- Added `New-CardActionExecute` function to create execute actions in adaptive cards.
+- Added `New-CardProgressRing` function to create progress ring elements in adaptive cards.
+
 ## 0.9.5
 - Bugfix in `Get-CardSetting` to correctly retrieve settings from the settings file. The function now properly reads and returns the requested setting values, ensuring that users can access their configuration as intended.
 

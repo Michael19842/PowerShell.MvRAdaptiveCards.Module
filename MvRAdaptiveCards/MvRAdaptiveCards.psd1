@@ -12,7 +12,7 @@
 	RootModule           = 'MvRAdaptiveCards.psm1'
 
 	# Version number of this module.
-	ModuleVersion        = '0.9.5'
+	ModuleVersion        = '1.0.0'
 
 	# Supported PSEditions
 	CompatiblePSEditions = 'Desktop', 'Core'
@@ -288,6 +288,13 @@ See full changelog: https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.
 
 	# Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 	# DefaultCommandPrefix = ''
+
+}
+
+HelpInfoURI = 'https://github.com/Michael19842/PowerShell.MvRAdaptiveCards.Module'
+
+# Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
+# DefaultCommandPrefix = ''
 
 }
 

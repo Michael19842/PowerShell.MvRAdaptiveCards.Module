@@ -200,7 +200,7 @@
                 Write-Warning "Async operation did not complete as expected."
 
                 #Grab the log stream from the runspace
-                $Global:logStream = $PowerShell.Streams.Error
+                $LogStream = $PowerShell.Streams.Error
 
                 $logStream | ForEach-Object { Write-Verbose "Error: $_" }
             }

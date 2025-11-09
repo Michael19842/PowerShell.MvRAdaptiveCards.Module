@@ -29,11 +29,20 @@ Builds a complete Adaptive Card by replacing template tags with actual content.
 ### [New-AdaptiveCard](New-AdaptiveCard.md)
 Creates a new Adaptive Card with the specified content and configuration options.
 
+### [New-CardActionExecute](New-CardActionExecute.md)
+Creates a new Action.Execute element for executing bot commands in Adaptive Cards.
+
 ### [New-CardActionOpenUrl](New-CardActionOpenUrl.md)
 {{ Fill in the Synopsis }}
 
 ### [New-CardActionOpenUrlDialog](New-CardActionOpenUrlDialog.md)
 Creates an Action.OpenUrlDialog action for Adaptive Cards.
+
+### [New-CardActionPopover](New-CardActionPopover.md)
+Creates a new Action.Popover element that displays content in a popup overlay.
+
+### [New-CardActionResetInputs](New-CardActionResetInputs.md)
+Creates a new Action.ResetInputs element that resets specified input fields in an Adaptive Card.
 
 ### [New-CardActionSet](New-CardActionSet.md)
 Creates a new ActionSet element for an Adaptive Card to group multiple actions together.
@@ -142,6 +151,9 @@ Creates a caption source object for use with Media elements in Adaptive Cards.
 
 ### [New-CardProgressBar](New-CardProgressBar.md)
 Creates a new ProgressBar element for an Adaptive Card.
+
+### [New-CardProgressRing](New-CardProgressRing.md)
+Creates a new ProgressRing element for an Adaptive Card.
 
 ### [New-CardRichTextBlock](New-CardRichTextBlock.md)
 Creates a new RichTextBlock element for an Adaptive Card with advanced inline formatting capabilities.

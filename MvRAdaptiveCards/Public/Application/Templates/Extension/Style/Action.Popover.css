@@ -1,0 +1,256 @@
+/* Action.Popover CSS Styles */
+
+/* Popover overlay - covers the entire screen */
+.ac-popover-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Show animation for overlay */
+.ac-popover-overlay.ac-popover-show {
+    opacity: 1 !important;
+}
+
+/* Popover container - the main balloon/modal */
+.ac-popover-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    max-width: 400px;
+    max-height: 80vh;
+    overflow: hidden;
+    transform: scale(0.8);
+    transition: transform 0.2s ease-out;
+    position: relative;
+    margin: 20px;
+    border: none;
+}
+
+/* Balloon pointer/tail - positioned at the bottom center */
+.ac-popover-container::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 10px;
+    background: white;
+    clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Show animation for container */
+.ac-popover-container.ac-popover-show {
+    transform: scale(1) !important;
+}
+
+/* Popover header area */
+.ac-popover-header {
+    position: relative;
+    min-height: 40px;
+}
+
+/* Close button */
+.ac-popover-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.1);
+    border: none;
+    font-size: 18px;
+    font-weight: normal;
+    cursor: pointer;
+    color: #666;
+    z-index: 10;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+/* Close button hover effects */
+.ac-popover-close:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #333;
+    transform: scale(1.1);
+}
+
+.ac-popover-close:focus {
+    outline: 2px solid #0078d4;
+    outline-offset: 2px;
+}
+
+.ac-popover-close:active {
+    transform: scale(0.95);
+}
+
+/* Popover content area */
+.ac-popover-content {
+    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 25px;
+    overflow: visible;
+}
+
+/* Remove scrollbars from adaptive card content */
+.ac-popover-content .ac-adaptiveCard {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+.ac-popover-content .ac-container {
+    padding: 0 !important;
+    overflow: visible !important;
+}
+
+/* Hide any scrollbars */
+.ac-popover-content * {
+    overflow: visible !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.ac-popover-content *::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+/* Error message styling */
+.ac-popover-error {
+    color: #d32f2f;
+    padding: 20px;
+    text-align: left;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    border: 1px solid #ffcdd2;
+    background-color: #ffebee;
+    border-radius: 4px;
+}
+
+/* Debug information styling */
+.ac-popover-content pre {
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .ac-popover-container {
+        max-width: 90vw !important;
+        max-height: 70vh !important;
+        margin: 20px !important;
+    }
+
+    .ac-popover-content {
+        padding: 15px;
+        padding-top: 40px;
+        padding-bottom: 20px;
+    }
+
+    .ac-popover-close {
+        top: 12px;
+        right: 12px;
+        width: 22px;
+        height: 22px;
+        font-size: 16px;
+    }
+
+    /* Adjust balloon pointer for mobile */
+    .ac-popover-container::after {
+        width: 16px;
+        height: 8px;
+        bottom: -8px;
+    }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+    .ac-popover-container {
+        max-width: 85vw !important;
+        margin: 15px !important;
+    }
+
+    .ac-popover-content {
+        padding: 12px;
+        padding-top: 35px;
+        padding-bottom: 15px;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .ac-popover-overlay {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    .ac-popover-container {
+        border: 2px solid #000;
+    }
+
+    .ac-popover-close {
+        border: 1px solid #666;
+    }
+
+    .ac-popover-close:hover {
+        background-color: #000;
+        color: #fff;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+    .ac-popover-overlay,
+    .ac-popover-container,
+    .ac-popover-close {
+        transition: none;
+    }
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .ac-popover-container {
+        background: #2d2d30;
+        color: #ffffff;
+    }
+
+    .ac-popover-container::after {
+        background: #2d2d30;
+    }
+
+    .ac-popover-close {
+        color: #cccccc;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .ac-popover-close:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+    }
+
+    .ac-popover-error {
+        color: #f48fb1;
+        background-color: rgba(244, 143, 177, 0.1);
+        border-color: rgba(244, 143, 177, 0.3);
+    }
+}
