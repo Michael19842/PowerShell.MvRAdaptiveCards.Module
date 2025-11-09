@@ -1,8 +1,8 @@
 ---
 Module Name: MvRAdaptiveCards
 Module Guid: 55db3db7-b8a1-4d0e-ade3-b10d047518ef
-Download Help Link: {{ Update Download Link }}
-Help Version: {{ Please enter version of help manually (X.X.X.X) format }}
+Download Help Link: 
+Help Version: 0.9.5
 Locale: en-US
 ---
 

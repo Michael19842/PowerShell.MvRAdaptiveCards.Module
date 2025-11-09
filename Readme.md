@@ -53,7 +53,10 @@ To help you get started quickly, the module includes a setup guide that walks yo
 ```powershell
 Start-CardSetupGuide
 ```
-You will be guided through setting up default configurations for sending your first cards via Microsoft Teams. The setup is a breeze and will have you sending cards in no time! Sending card is realized using your Teams Incoming Webhook connector and your PowerShell environment. No additional services are required or needed in order to send cards. This setup will store your configuration in a secure manner for future use in your *Appdata* folder so you don't have to reconfigure it every time. The setup will overwrite existing settings (only after your consent), so you can always re-run it to change your configuration.
+
+You will be guided through setting up default configurations for sending your first cards via **Microsoft Teams**. The setup is a breeze and will have you sending cards in no time!
+
+Sending card is realized using your Teams Incoming Webhook connector and your PowerShell environment. No additional services are required or needed in order to send cards. This setup will store your configuration in a secure manner for future use in your *Appdata* folder so you don't have to reconfigure it every time. The setup will overwrite existing settings (only after your consent), so you can always re-run it to change your configuration.
 
 > *MvRAdapitiveCards logo and links will **only** be shown in the test cards during setup, and will not appear in your actual cards.
 
