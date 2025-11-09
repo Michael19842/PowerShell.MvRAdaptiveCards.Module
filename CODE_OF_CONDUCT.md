@@ -1,5 +1,13 @@
 # Code of Conduct
 
+## Description
+
+The MvRAdaptiveCards PowerShell module community is dedicated to providing a welcoming, inclusive, and productive environment for all contributors, users, and maintainers. This Code of Conduct outlines our expectations for behavior within our community spaces, including GitHub repositories, discussions, issues, pull requests, and any other forums where our project is represented.
+
+This document serves as a guide to foster collaboration, learning, and innovation while ensuring that everyone can participate safely and respectfully. Whether you're a PowerShell expert, new to Adaptive Cards, contributing code, reporting bugs, asking questions, or simply using the module, these guidelines apply to all interactions within our community.
+
+By participating in this project, you agree to abide by this Code of Conduct and help us create a positive environment where developers of all backgrounds and skill levels can contribute to making PowerShell and Adaptive Cards more accessible and powerful.
+
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our
