@@ -16,7 +16,8 @@
         [parameter(Mandatory = $false)]
         [string]$LogoHeaderText = $_MvRACSettings.'Get-Response'.LogoHeader,
 
-        [bool]$ShowVersion = $_MvRACSettings.'Get-Response'.ShowVersion,
+        [parameter(Mandatory = $false)]
+        [bool]$ShowVersion = ($_MvRACSettings.'Get-Response'.ShowVersion -eq $true),
 
         [parameter(Mandatory = $false)]
         [int]$PortNumber = $_MvRACSettings.'Get-Response'.PortNumber,
@@ -125,6 +126,9 @@
         #Start the local web server to serve the card and listen for response
         $WSSession = New-LocalCardWebserver -Html $html -ServiceUrl $ServiceUrl -ResponseGuid $ResponseGuid -HeartbeatTracker $HeartbeatTracker
 
+        Write-Verbose "Webserver started at $ServiceUrl to serve Adaptive Card and capture response."
+        Write-Verbose "Listening for user response..."
+
         #Start the listener
         $asyncResult = $WSSession.PowerShell.BeginInvoke()
 
@@ -196,7 +200,7 @@
                 Write-Warning "Async operation did not complete as expected."
 
                 #Grab the log stream from the runspace
-                $logStream = $PowerShell.Streams.Error
+                $Global:logStream = $PowerShell.Streams.Error
 
                 $logStream | ForEach-Object { Write-Verbose "Error: $_" }
             }

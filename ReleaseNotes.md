@@ -1,5 +1,8 @@
 # Release Notes
 
+## 0.9.5
+- Bugfix in `Get-CardSetting` to correctly retrieve settings from the settings file. The function now properly reads and returns the requested setting values, ensuring that users can access their configuration as intended.
+
 ## 0.9.4
 - Bugfix in hide and toggle visibility functionality to ensure that elements are properly hidden when using the `Hidden` style. The fix addresses issues where elements were not being hidden as expected due to CSS specificity conflicts. An extension has been added to enforce the hidden state using more specific CSS selectors.
 - Changed isRequired on New-CardInputText to a switch parameter for better usability. This allows users to simply include the `-IsRequired` switch when creating a required text input, improving the clarity and conciseness of the code.

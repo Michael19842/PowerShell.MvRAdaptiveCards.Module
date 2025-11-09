@@ -16,3 +16,6 @@ New-AdaptiveCard {
         -DisplayMode "AbsoluteWithAxis" `
         -ColorSet "categorical"
 } | Get-CardResponse -ViewMethod EdgeApp -AutoSize
+
+
+8
