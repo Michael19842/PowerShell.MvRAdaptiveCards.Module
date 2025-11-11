@@ -13,10 +13,12 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-New-CardInputChoiceSet [-Id] <String> [[-Title] <String>] [[-Choices] <Hashtable>] [[-Value] <String>]
- [[-IsRequired] <Boolean>] [[-Placeholder] <String>] [[-Label] <String>] [[-Style] <String>]
- [[-Spacing] <String>] [[-TargetWidth] <String>] [[-GridArea] <String>] [-IsHidden] [-isSortKey] [-separator]
- [-isMultiSelect] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-CardInputChoiceSet [-Id] <String> [-Choices] <Object> [[-ChoicesData] <Object>] [[-Value] <String>]
+ [-IsMultiSelect] [[-Style] <String>] [-IsRequired] [[-Label] <String>] [[-Placeholder] <String>]
+ [[-ErrorMessage] <String>] [-Wrap] [[-Height] <String>] [[-HorizontalAlignment] <String>]
+ [[-Spacing] <String>] [[-TargetWidth] <String>] [[-GridArea] <String>] [[-Lang] <String>]
+ [[-ValueChangedAction] <ScriptBlock>] [[-Requires] <Hashtable>] [[-Fallback] <ScriptBlock>] [-Separator]
+ [-IsHidden] [-IsSortKey] [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -33,51 +35,6 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Choices
-{{ Fill Choices Description }}
-
-```yaml
-Type: Hashtable
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -GridArea
-{{ Fill GridArea Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 10
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Id
 {{ Fill Id Description }}
 
@@ -87,22 +44,82 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 0
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IsHidden
-{{ Fill IsHidden Description }}
+### -Choices
+{{ Fill Choices Description }}
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ChoicesData
+{{ Fill ChoicesData Description }}
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Value
+{{ Fill Value Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsMultiSelect
+{{ Fill isMultiSelect Description }}
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: Hide
+Aliases:
 
 Required: False
 Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Style
+{{ Fill Style Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -112,12 +129,12 @@ Accept wildcard characters: False
 {{ Fill IsRequired Description }}
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -147,7 +164,70 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ErrorMessage
+Custom error message to display when input validation fails.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Wrap
+When specified, allows choice titles to wrap to multiple lines if needed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Height
+Controls the height behavior of the input element:
+- auto: Height adjusts to content (default)
+- stretch: Fills available vertical space
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HorizontalAlignment
+Controls horizontal alignment within the container:
+- Left, Center, Right
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -160,26 +240,9 @@ Accept wildcard characters: False
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: None, Small, Default, Medium, Large, ExtraLarge, Padding
 
 Required: False
-Position: 8
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Style
-{{ Fill Style Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-Accepted values: compact, expanded, filtered
-
-Required: False
-Position: 7
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -192,17 +255,16 @@ Accept wildcard characters: False
 Type: String
 Parameter Sets: (All)
 Aliases:
-Accepted values: VeryNarrow, Narrow, Standard, Wide, atLeast:VeryNarrow, atMost:VeryNarrow, atLeast:Narrow, atMost:Narrow, atLeast:Standard, atMost:Standard, atLeast:Wide, atMost:Wide
 
 Required: False
-Position: 9
+Position: 12
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Title
-{{ Fill Title Description }}
+### -GridArea
+{{ Fill GridArea Description }}
 
 ```yaml
 Type: String
@@ -210,14 +272,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: 13
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Value
-{{ Fill Value Description }}
+### -Lang
+Language/locale code for the element.
 
 ```yaml
 Type: String
@@ -225,7 +287,97 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ValueChangedAction
+ScriptBlock that returns an action to execute when the value changes (Teams feature).
+
+```yaml
+Type: ScriptBlock
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Requires
+Hashtable of required host capabilities.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 16
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Fallback
+ScriptBlock that returns fallback content if ChoiceSet is not supported.
+
+```yaml
+Type: ScriptBlock
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Separator
+{{ Fill separator Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsHidden
+{{ Fill IsHidden Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: Hide
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsSortKey
+{{ Fill isSortKey Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -247,43 +399,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -isMultiSelect
-{{ Fill isMultiSelect Description }}
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -isSortKey
-{{ Fill isSortKey Description }}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -separator
-{{ Fill separator Description }}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
+Aliases: cf
 
 Required: False
 Position: Named
